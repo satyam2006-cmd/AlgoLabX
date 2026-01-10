@@ -47,15 +47,15 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className="w-72 h-screen bg-dark-900/95 backdrop-blur-xl border-r border-dark-700/50 flex flex-col">
+    <div className="w-72 h-screen bg-dark-900/95 backdrop-blur-xl border-r border-dark-700/20 flex flex-col">
       {/* Brand Section */}
-      <div className="p-6 border-b border-dark-700/30">
+      <div className="p-6 border-b border-dark-700/10">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-3"
         >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-500 to-dark-700 flex items-center justify-center shadow-lg border border-dark-500/30 text-dark-200">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-500 to-dark-700 flex items-center justify-center shadow-lg border border-dark-500/20 text-dark-200">
             <BoltIcon />
           </div>
           <div>
@@ -83,8 +83,8 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${activeTab === item.id
-                    ? 'bg-gradient-to-r from-dark-600/50 to-dark-700/50 text-dark-100 border border-dark-500/40 shadow-lg'
-                    : 'text-dark-300 hover:bg-dark-800/50 hover:text-dark-100 border border-transparent'
+                  ? 'bg-gradient-to-r from-dark-600/50 to-dark-700/50 text-dark-100 border border-dark-600/30 shadow-lg'
+                  : 'text-dark-300 hover:bg-dark-800/30 hover:text-dark-100 border border-transparent'
                   }`}
               >
                 <Icon />
@@ -124,8 +124,8 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       </div>
 
       {/* Footer Section */}
-      <div className="p-4 border-t border-dark-700/30">
-        <div className="p-4 rounded-xl bg-gradient-to-br from-dark-750/60 to-dark-800/60 border border-dark-600/30">
+      <div className="p-4 border-t border-dark-700/10">
+        <div className="p-4 rounded-xl bg-gradient-to-br from-dark-750/60 to-dark-800/60 border border-dark-700/20">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 rounded-lg bg-dark-600/40 flex items-center justify-center text-dark-300">
               <LightBulbIcon />

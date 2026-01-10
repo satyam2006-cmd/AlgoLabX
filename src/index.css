@@ -108,11 +108,14 @@
   --bg-glass: rgba(15, 15, 18, 0.9);
   --bg-glass-light: rgba(26, 26, 31, 0.7);
 
-  /* Border Colors */
-  --border-primary: rgba(63, 63, 72, 0.5);
-  --border-secondary: rgba(42, 42, 50, 0.5);
-  --border-accent: rgba(139, 139, 139, 0.3);
-  --border-glow: rgba(139, 139, 139, 0.4);
+  /* Border Colors - Refined for premium dark feel */
+  --border-primary: rgba(42, 42, 50, 0.4);
+  /* Subtler gray-dark */
+  --border-secondary: rgba(30, 30, 36, 0.3);
+  /* Even darker */
+  --border-accent: rgba(139, 139, 139, 0.15);
+  /* Reduced opacity */
+  --border-glow: rgba(139, 139, 139, 0.25);
 
   /* Text Colors */
   --text-primary: #fafafa;

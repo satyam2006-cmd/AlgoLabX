@@ -118,7 +118,7 @@ const Home = ({ setActiveTab }) => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-10"
         >
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/80 to-dark-900/80 border border-dark-700/40 p-8 md:p-12">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/80 to-dark-900/80 border border-dark-700/20 p-8 md:p-12">
             {/* Background Glow */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-dark-600/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4" />
             <div className="absolute bottom-0 left-0 w-60 h-60 bg-dark-500/10 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/4" />
@@ -128,7 +128,7 @@ const Home = ({ setActiveTab }) => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-700/40 border border-dark-600/40 text-dark-300 text-sm font-medium mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-700/40 border border-dark-700/20 text-dark-300 text-sm font-medium mb-6"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 Virtual Algorithm Laboratory
@@ -151,7 +151,7 @@ const Home = ({ setActiveTab }) => {
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveTab('learn')}
-                  className="px-6 py-3 bg-gradient-to-r from-dark-500 to-dark-600 rounded-xl font-semibold text-dark-50 shadow-lg border border-dark-500/50 transition-all duration-300 hover:shadow-xl flex items-center gap-2"
+                  className="px-6 py-3 bg-gradient-to-r from-dark-500 to-dark-600 rounded-xl font-semibold text-dark-50 shadow-lg border border-dark-500/20 transition-all duration-300 hover:shadow-xl flex items-center gap-2"
                 >
                   Get Started
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,7 +162,7 @@ const Home = ({ setActiveTab }) => {
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveTab('experiment')}
-                  className="px-6 py-3 bg-dark-800/50 border border-dark-600/50 rounded-xl font-medium text-dark-200 transition-all duration-300 hover:bg-dark-700/50 hover:border-dark-500/50"
+                  className="px-6 py-3 bg-dark-800/50 border border-dark-700/30 rounded-xl font-medium text-dark-200 transition-all duration-300 hover:bg-dark-700/50 hover:border-dark-600/30"
                 >
                   Explore Algorithms
                 </motion.button>
@@ -187,7 +187,7 @@ const Home = ({ setActiveTab }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + index * 0.1 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="p-5 rounded-xl bg-dark-800/40 border border-dark-700/40 hover:border-dark-500/40 transition-all duration-300 hover:shadow-lg"
+                className="p-5 rounded-xl bg-dark-800/40 border border-dark-700/20 hover:border-dark-600/30 transition-all duration-300 hover:shadow-lg"
               >
                 <div className="flex items-center gap-3 mb-2">
                   <div className="text-dark-400">
@@ -211,7 +211,7 @@ const Home = ({ setActiveTab }) => {
           className="mb-10"
         >
           <h2 className="text-2xl font-semibold text-dark-100 mb-6 flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-600 to-dark-800 flex items-center justify-center text-dark-200 border border-dark-500/30">
+            <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-600 to-dark-800 flex items-center justify-center text-dark-200 border border-dark-700/30">
               <TargetIcon />
             </span>
             Features
@@ -227,13 +227,13 @@ const Home = ({ setActiveTab }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
                   whileHover={{ y: -4 }}
-                  className="group relative p-6 rounded-2xl bg-gradient-to-br from-dark-800/60 to-dark-900/60 border border-dark-700/40 overflow-hidden transition-all duration-300 hover:border-dark-500/50 hover:shadow-xl"
+                  className="group relative p-6 rounded-2xl bg-gradient-to-br from-dark-800/60 to-dark-900/60 border border-dark-700/30 overflow-hidden transition-all duration-300 hover:border-dark-600/40 hover:shadow-xl"
                 >
                   {/* Hover Glow Effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-dark-600/0 to-dark-600/0 group-hover:from-dark-600/5 group-hover:to-dark-700/5 transition-all duration-500" />
 
                   <div className="relative z-10 flex items-start gap-4">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center text-white shadow-lg flex-shrink-0 border border-white/10`}>
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center text-white shadow-lg flex-shrink-0 border border-white/5`}>
                       <Icon />
                     </div>
 
@@ -263,7 +263,7 @@ const Home = ({ setActiveTab }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="p-6 rounded-2xl bg-dark-800/30 border border-dark-700/40"
+          className="p-6 rounded-2xl bg-dark-800/30 border border-dark-700/20"
         >
           <h2 className="text-2xl font-semibold text-dark-100 mb-6 flex items-center gap-3">
             <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center text-white border border-emerald-500/30">
@@ -284,7 +284,7 @@ const Home = ({ setActiveTab }) => {
                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.color === 'gray' ? 'from-gray-500 to-gray-700' :
                   item.color === 'emerald' ? 'from-emerald-600 to-emerald-800' :
                     'from-purple-600 to-purple-800'
-                  } flex items-center justify-center font-bold text-white shadow-lg flex-shrink-0 border border-white/10`}>
+                  } flex items-center justify-center font-bold text-white shadow-lg flex-shrink-0 border border-white/5`}>
                   {item.step}
                 </div>
                 <div>
