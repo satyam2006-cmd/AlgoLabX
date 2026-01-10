@@ -77,10 +77,10 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
       {/* Left Section - Title */}
       <div className="flex items-center gap-4">
         <h1 className="text-xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent">
-          AlgoLabX
+          LabX
         </h1>
-        <span className="text-dark-600">–</span>
-        <span className="text-white text-sm font-medium">Virtual Lab</span>
+        <span className="text-gray-600">–</span>
+        <span className="text-white text-sm font-medium">Dashboard</span>
       </div>
 
       {/* Center Section - Advanced Search */}
@@ -154,15 +154,19 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
 
       {/* Right Section - Actions */}
       <div className="flex items-center gap-3">
-        <motion.button
+        <motion.a
+          href="https://github.com/satyam2006-cmd/AlgoLabX"
+          target="_blank"
+          rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-10 h-10 rounded-xl bg-dark-800/50 border border-white flex items-center justify-center text-white hover:text-dark-200 transition-colors"
+          className="w-10 h-10 rounded-xl bg-dark-800/50 border border-white flex items-center justify-center text-white hover:text-yellow-400 transition-colors"
+          title="Star on GitHub"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
           </svg>
-        </motion.button>
+        </motion.a>
 
         <motion.a
           href="https://github.com/satyam2006-cmd/AlgoLabX"
@@ -177,12 +181,18 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
           </svg>
         </motion.a>
 
-        <motion.div
+        <motion.a
+          href="https://github.com/satyam2006-cmd/AlgoLabX/graphs/contributors"
+          target="_blank"
+          rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
-          className="w-10 h-10 rounded-xl bg-gradient-to-br from-dark-500 to-dark-700 flex items-center justify-center text-dark-50 font-bold border border-white/40 shadow-lg cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-br from-dark-500 to-dark-700 text-dark-50 font-medium border border-white shadow-lg cursor-pointer"
         >
-          U
-        </motion.div>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span className="text-sm">Contributors</span>
+        </motion.a>
       </div>
     </motion.div>
   );
