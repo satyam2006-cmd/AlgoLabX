@@ -127,7 +127,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       <div className="p-4 border-t border-white">
         <div className="p-4 rounded-xl bg-gradient-to-br from-dark-750/60 to-dark-800/60 border border-white">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-dark-600/40 flex items-center justify-center text-white">
+            <div className="w-8 h-8 rounded-lg bg-yellow-600/40 flex items-center justify-center text-white">
               <LightBulbIcon />
             </div>
             <span className="text-dark-200 text-sm font-medium">Pro Tip</span>

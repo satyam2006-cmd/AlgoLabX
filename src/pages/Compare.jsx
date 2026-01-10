@@ -360,7 +360,7 @@ const Compare = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-6">
+          <div className="bg-dark-800/40 backdrop-blur-xl border border-white-700/40 rounded-2xl p-6">
             <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
               <span className="w-8 h-8 rounded-lg bg-green-700/50 flex items-center justify-center text-white"><TrendingUpIcon /></span>
               Step Progress

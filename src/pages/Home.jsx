@@ -288,7 +288,7 @@ const Home = ({ setActiveTab }) => {
                   {item.step}
                 </div>
                 <div>
-                  <h4 className={`font-semibold mb-1 ${item.color === 'gray' ? 'text-gray-200' :
+                  <h4 className={`font-semibold mb-1 ${item.color === 'gray' ? 'text-yellow-200' :
                     item.color === 'emerald' ? 'text-emerald-400' :
                       'text-purple-400'
                     }`}>

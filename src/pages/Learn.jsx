@@ -429,7 +429,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             className="space-y-5"
           >
             {/* Algorithm Info Card */}
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
+            <div className="bg-dark-800/40 backdrop-blur-xl border border-white-700/40 rounded-2xl p-5">
               <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-lg bg-blue-700/50 flex items-center justify-center text-white">
                   <ChartBarIcon />
@@ -457,7 +457,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             </div>
 
             {/* Statistics Card */}
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
+            <div className="bg-dark-800/40 backdrop-blur-xl border border-white-700/40 rounded-2xl p-5">
               <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
                 <span className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                   <TrendingUpIcon />
@@ -485,7 +485,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             </div>
 
             {/* Pro Tip Card */}
-            <div className="bg-gradient-to-br from-dark-750/60 to-dark-800/60 border border-dark-600/30 rounded-2xl p-5">
+            <div className="bg-gradient-to-br from-dark-750/60 to-dark-800/60 border border-white-600/30 rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-3">
                 <span className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
                   <LightBulbIcon />
