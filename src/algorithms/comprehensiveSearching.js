@@ -380,6 +380,7 @@ export function getBinarySearchSteps(arr) {
         array: [...sortedArr],
         active: [mid],
         swapped: true,
+        targetIndex: mid,
         message: `Found target ${target} at index ${mid}!`
       });
       return steps;
@@ -450,6 +451,7 @@ export function getLinearSearchSteps(arr) {
         array: [...searchArr],
         active: [i],
         swapped: true,
+        targetIndex: i,
         message: `Found target ${target} at index ${i}!`
       });
       return steps;
@@ -519,6 +521,7 @@ export function getJumpSearchSteps(arr) {
         array: [...sortedArr],
         active: [i],
         swapped: true,
+        targetIndex: i,
         message: `Found target ${target} at index ${i}!`
       });
       return steps;
@@ -596,6 +599,7 @@ export function getInterpolationSearchSteps(arr) {
         array: [...sortedArr],
         active: [pos],
         swapped: true,
+        targetIndex: pos,
         message: `Found target ${target} at index ${pos}!`
       });
       return steps;
@@ -697,6 +701,7 @@ export function getExponentialSearchSteps(arr) {
         array: [...sortedArr],
         active: [j],
         swapped: true,
+        targetIndex: j,
         message: `Found target ${target} at index ${j}!`
       });
       return steps;

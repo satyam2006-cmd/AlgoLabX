@@ -1070,16 +1070,18 @@ export function getCountingSortSteps(arr) {
     });
   }
   
-  // Build output array
-  const output = new Array(n);
+  // Build output array (filled with zeros initially for better visualization)
+  const output = new Array(n).fill(0);
   for (let i = n - 1; i >= 0; i--) {
-    output[count[workArray[i]] - 1] = workArray[i];
+    const position = count[workArray[i]] - 1;
+    output[position] = workArray[i];
     count[workArray[i]]--;
+    
     steps.push({
       array: [...output],
-      active: [count[workArray[i]]],
+      active: [position],
       swapped: true,
-      message: `Placed ${workArray[i]} at position ${count[workArray[i]]}`
+      message: `Placed ${workArray[i]} at position ${position}`
     });
   }
   
