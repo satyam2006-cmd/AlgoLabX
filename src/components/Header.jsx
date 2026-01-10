@@ -5,6 +5,7 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isStarred, setIsStarred] = useState(false);
 
   const searchData = [
     // Tabs
@@ -154,19 +155,17 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
 
       {/* Right Section - Actions */}
       <div className="flex items-center gap-3">
-        <motion.a
-          href="https://github.com/satyam2006-cmd/AlgoLabX"
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-10 h-10 rounded-xl bg-dark-800/50 border border-white flex items-center justify-center text-white hover:text-yellow-400 transition-colors"
-          title="Star on GitHub"
+        <motion.button
+          onClick={() => setIsStarred(!isStarred)}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className={`w-10 h-10 rounded-xl bg-dark-800/50 border border-white flex items-center justify-center transition-all ${isStarred ? 'text-yellow-400' : 'text-white'}`}
+          title={isStarred ? "Starred!" : "Star on GitHub"}
         >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          <svg className="w-5 h-5" fill={isStarred ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.921-.755 1.688-1.54 1.118l-3.976-2.888a1 1 0 00-1.175 0l-3.976 2.888c-.784.57-1.838-.197-1.539-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
           </svg>
-        </motion.a>
+        </motion.button>
 
         <motion.a
           href="https://github.com/satyam2006-cmd/AlgoLabX"
@@ -186,12 +185,16 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-br from-dark-500 to-dark-700 text-dark-50 font-medium border border-white shadow-lg cursor-pointer"
+          className="flex items-center gap-3 px-4 py-1.5 rounded-xl bg-gradient-to-br from-dark-500 to-dark-700 text-dark-50 font-medium border border-white shadow-lg cursor-pointer"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
           <span className="text-sm">Contributors</span>
+          <div className="w-8 h-8 rounded-full border border-white/40 overflow-hidden bg-white/10">
+            <img
+              src="/assets/contributor_avatar.png"
+              alt="Contributor"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </motion.a>
       </div>
     </motion.div>
