@@ -1,18 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const ArrayVisualizer = ({ 
-  array, 
-  activeIndices = [], 
-  swappedIndices = [], 
+const ArrayVisualizer = ({
+  array,
+  activeIndices = [],
+  swappedIndices = [],
   maxValue = 100,
   barWidth = 40,
-  barGap = 4 
+  barGap = 4
 }) => {
   const getBarColor = (index) => {
-    if (swappedIndices.includes(index)) return '#ef4444'; // red-500
-    if (activeIndices.includes(index)) return '#3b82f6'; // blue-500
-    return '#6b7280'; // gray-500
+    if (swappedIndices.includes(index)) return '#366346ff'; // User Dark Green for swapped
+    if (activeIndices.includes(index)) return '#7bcbe9ff'; // User Pale Blue for active
+    return '#2a2a32'; // Dark gray/border color for inactive
   };
 
   const getBarHeight = (value) => {
@@ -20,7 +20,7 @@ const ArrayVisualizer = ({
   };
 
   return (
-    <div className="flex items-end justify-center gap-2 p-8 bg-gray-800/30 rounded-xl backdrop-blur-sm border border-gray-700/50">
+    <div className="flex items-end justify-center gap-2 p-8 bg-black/40 rounded-xl backdrop-blur-sm border border-white">
       {array.map((value, index) => (
         <motion.div
           key={index}
@@ -49,7 +49,7 @@ const ArrayVisualizer = ({
               {value}
             </div>
           </motion.div>
-          <div className="mt-2 text-gray-400 text-xs">
+          <div className="mt-2 text-white text-xs">
             {index}
           </div>
         </motion.div>

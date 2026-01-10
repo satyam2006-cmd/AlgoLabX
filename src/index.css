@@ -58,25 +58,25 @@
   /* Muted text */
   --dark-300: #71717d;
   /* Secondary text */
-  --dark-200: #a1a1ab;
-  /* Primary text muted */
-  --dark-100: #d4d4dc;
-  /* Primary text */
-  --dark-50: #fafafa;
-  /* Bright white */
+  --dark-200: #ffffff;
+  /* Primary text muted -> white */
+  --dark-100: #ffffff;
+  /* Primary text -> white */
+  --dark-50: #ffffff;
+  /* Purest white */
 
   /* Accent Colors for Visual Interest */
-  --accent-primary: #8b8b8b;
-  /* Neutral gray accent */
-  --accent-secondary: #6b6b6b;
-  /* Darker gray */
-  --accent-highlight: #a0a0a0;
-  /* Light gray highlight */
+  --accent-primary: #ffffff;
+  /* Pure white accent */
+  --accent-secondary: #a1a1ab;
+  /* Light gray */
+  --accent-highlight: #fafafa;
+  /* Bright white highlight */
 
   /* Semantic Colors */
-  --primary: #8b8b8b;
-  --primary-dark: #6b6b6b;
-  --primary-light: #a0a0a0;
+  --primary: #fafafa;
+  --primary-dark: #a1a1ab;
+  --primary-light: #ffffff;
 
   --secondary: #52525e;
   --secondary-dark: #3f3f48;
@@ -108,20 +108,21 @@
   --bg-glass: rgba(15, 15, 18, 0.9);
   --bg-glass-light: rgba(26, 26, 31, 0.7);
 
-  /* Border Colors - Refined for premium dark feel */
-  --border-primary: rgba(42, 42, 50, 0.4);
-  /* Subtler gray-dark */
-  --border-secondary: rgba(30, 30, 36, 0.3);
-  /* Even darker */
-  --border-accent: rgba(139, 139, 139, 0.15);
-  /* Reduced opacity */
-  --border-glow: rgba(139, 139, 139, 0.25);
+  /* Border Colors */
+  --border-primary: rgba(255, 255, 255, 1);
+  /* Brilliant white border */
+  --border-secondary: rgba(255, 255, 255, 0.8);
+  /* Near-solid white border */
+  --border-accent: rgba(255, 255, 255, 1);
+  /* Brilliant accent */
+  --border-glow: rgba(255, 255, 255, 1);
+  /* Maximum glow */
 
   /* Text Colors */
-  --text-primary: #fafafa;
-  --text-secondary: #d4d4dc;
-  --text-muted: #a1a1ab;
-  --text-dim: #71717d;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-muted: #ffffff;
+  --text-dim: #ffffff;
 
   /* Gradient Colors */
   --gradient-primary: linear-gradient(135deg, #1a1a1f 0%, #2a2a32 100%);
@@ -214,7 +215,7 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #fafafa 0%, #a1a1ab 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -410,7 +411,7 @@ body {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, var(--dark-500), var(--dark-400), var(--dark-500));
+  background: linear-gradient(135deg, white, white, white);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -435,8 +436,8 @@ body {
 
 .saas-input:focus {
   outline: none;
-  border-color: var(--dark-400);
-  box-shadow: 0 0 0 3px rgba(139, 139, 139, 0.1);
+  border-color: #fafafa;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
 .saas-input::placeholder {

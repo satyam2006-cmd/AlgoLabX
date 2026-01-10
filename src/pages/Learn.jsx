@@ -165,12 +165,12 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-4 mb-8"
         >
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-500 to-gray-700 flex items-center justify-center text-dark-200 shadow-lg border border-dark-500/30">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-500 to-dark-700 flex items-center justify-center text-dark-200 shadow-lg border border-white">
             <BookIcon />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-dark-50">Learn Algorithms</h1>
-            <p className="text-dark-400 text-sm">Interactive algorithm visualization and learning</p>
+            <p className="text-white text-sm">Interactive algorithm visualization and learning</p>
           </div>
         </motion.div>
 
@@ -179,15 +179,15 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-6 mb-6"
+          className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-6 mb-6"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Algorithm</label>
+              <label className="block text-sm font-medium text-white mb-2">Algorithm</label>
               <select
                 value={selectedAlgorithm}
                 onChange={(e) => setSelectedAlgorithm(e.target.value)}
-                className="w-full px-4 py-3 bg-dark-900/60 border border-dark-600/50 rounded-xl text-dark-100 focus:outline-none focus:ring-2 focus:ring-dark-500/50 focus:border-dark-500/50 transition-all duration-300"
+                className="w-full px-4 py-3 bg-dark-900/60 border border-white rounded-xl text-dark-100 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
               >
                 <optgroup label="Simple Sorts (O(n²))">
                   <option value="bubble">Bubble Sort</option>
@@ -222,20 +222,20 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Custom Array</label>
+              <label className="block text-sm font-medium text-white mb-2">Custom Array</label>
               <div className="flex gap-2">
                 <input
                   type="text"
                   value={customInput}
                   onChange={(e) => setCustomInput(e.target.value)}
-                  className="flex-1 px-4 py-3 bg-dark-900/60 border border-dark-600/50 rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-dark-500/50 focus:border-dark-500/50 transition-all duration-300"
+                  className="flex-1 px-4 py-3 bg-dark-900/60 border border-white rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
                   placeholder="e.g., 5, 3, 8, 1, 9"
                 />
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleCustomInput}
-                  className="px-5 py-3 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-xl border border-dark-500/30 transition-all duration-300"
+                  className="px-5 py-3 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-xl border border-white transition-all duration-300"
                 >
                   Set
                 </motion.button>
@@ -244,7 +244,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
             {['binary', 'linear', 'jump', 'interpolation', 'exponential'].includes(selectedAlgorithm) && (
               <div>
-                <label className="block text-sm font-medium text-dark-300 mb-2">Search Target</label>
+                <label className="block text-sm font-medium text-white mb-2">Search Target</label>
                 <input
                   type="number"
                   value={searchTarget}
@@ -256,7 +256,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Random Array</label>
+              <label className="block text-sm font-medium text-white mb-2">Random Array</label>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -279,15 +279,15 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             transition={{ delay: 0.2 }}
             className="lg:col-span-2"
           >
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl overflow-hidden">
+            <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl overflow-hidden">
               {/* Panel Header */}
-              <div className="px-6 py-4 border-b border-dark-700/40 bg-gradient-to-r from-dark-800/60 to-dark-900/60">
+              <div className="px-6 py-4 border-b border-white bg-gradient-to-r from-dark-800/60 to-dark-900/60">
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-lg font-semibold text-dark-100">{currentAlgo.name}</h2>
-                    <p className="text-dark-400 text-sm mt-1">{currentAlgo.description}</p>
+                    <p className="text-white text-sm mt-1">{currentAlgo.description}</p>
                   </div>
-                  <span className="px-3 py-1.5 rounded-lg bg-dark-700/50 text-dark-300 text-sm font-medium border border-dark-600/30">
+                  <span className="px-3 py-1.5 rounded-lg bg-dark-700/50 text-white text-sm font-medium border border-dark-600/30">
                     {currentAlgo.complexity}
                   </span>
                 </div>
@@ -306,7 +306,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   />
                 ) : (
                   <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                    <p className="text-dark-500">No step data available</p>
+                    <p className="text-white">No step data available</p>
                   </div>
                 )}
 
@@ -316,9 +316,9 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     key={currentStep}
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 p-4 bg-dark-900/50 rounded-xl border border-dark-700/30"
+                    className="mt-4 p-4 bg-dark-900/50 rounded-xl border border-white"
                   >
-                    <p className="text-dark-300 text-sm">{currentStepData.description}</p>
+                    <p className="text-white text-sm">{currentStepData.description}</p>
                   </motion.div>
                 )}
               </div>
@@ -331,7 +331,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={isPlaying ? controls.pause : controls.play}
-                    className="px-5 py-2.5 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-xl border border-dark-500/30 transition-all duration-300 flex items-center gap-2"
+                    className="px-5 py-2.5 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-xl border border-white transition-all duration-300 flex items-center gap-2"
                   >
                     {isPlaying ? <PauseIcon /> : <PlayIcon />}
                     {isPlaying ? 'Pause' : 'Play'}
@@ -341,7 +341,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.stepBackward}
                     disabled={currentStep <= 0}
-                    className="px-4 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-xl border border-dark-600/40 transition-all duration-300 flex items-center gap-1"
+                    className="px-4 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-xl border border-white transition-all duration-300 flex items-center gap-1"
                   >
                     <ChevronLeftIcon /> Prev
                   </motion.button>
@@ -350,7 +350,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.stepForward}
                     disabled={currentStep >= totalSteps - 1}
-                    className="px-4 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-xl border border-dark-600/40 transition-all duration-300 flex items-center gap-1"
+                    className="px-4 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-xl border border-white transition-all duration-300 flex items-center gap-1"
                   >
                     Next <ChevronRightIcon />
                   </motion.button>
@@ -366,14 +366,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
                 {/* Speed Control with +/- buttons */}
                 <div className="flex items-center gap-4 p-4 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                  <span className="text-sm font-medium text-dark-400">Speed:</span>
+                  <span className="text-sm font-medium text-white">Speed:</span>
                   <div className="flex items-center gap-2">
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={decreaseSpeed}
                       disabled={speedMultiplier === speedOptions[0]}
-                      className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-dark-600/40 transition-all"
+                      className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all"
                     >
                       <MinusIcon />
                     </motion.button>
@@ -385,7 +385,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       whileTap={{ scale: 0.9 }}
                       onClick={increaseSpeed}
                       disabled={speedMultiplier === speedOptions[speedOptions.length - 1]}
-                      className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-dark-600/40 transition-all"
+                      className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all"
                     >
                       <PlusIcon />
                     </motion.button>
@@ -397,7 +397,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                         onClick={() => setSpeedMultiplier(opt)}
                         className={`px-2 py-1 text-xs rounded-md transition-all ${speedMultiplier === opt
                           ? 'bg-dark-500 text-dark-100'
-                          : 'bg-dark-800/50 text-dark-400 hover:bg-dark-700/50'
+                          : 'bg-dark-800/50 text-white hover:bg-dark-700/50'
                           }`}
                       >
                         {opt}x
@@ -408,14 +408,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
                 {/* Step Progress */}
                 <div className="flex items-center gap-4 p-4 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                  <span className="text-sm font-medium text-dark-400 whitespace-nowrap">Progress:</span>
+                  <span className="text-sm font-medium text-white whitespace-nowrap">Progress:</span>
                   <div className="flex-1 h-2 bg-dark-700/50 rounded-full overflow-hidden">
                     <motion.div
                       className="h-full bg-gradient-to-r from-dark-400 to-dark-300 rounded-full"
                       animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                     />
                   </div>
-                  <span className="text-sm text-dark-300 w-16 text-right">{currentStep + 1}/{totalSteps}</span>
+                  <span className="text-sm text-white w-16 text-right">{currentStep + 1}/{totalSteps}</span>
                 </div>
               </div>
             </div>
@@ -431,26 +431,26 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             {/* Algorithm Info Card */}
             <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
               <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-blue-700/50 flex items-center justify-center text-dark-300">
+                <span className="w-8 h-8 rounded-lg bg-blue-700/50 flex items-center justify-center text-white">
                   <ChartBarIcon />
                 </span>
                 Algorithm Info
               </h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-dark-400 text-sm">Time Complexity</span>
+                  <span className="text-white text-sm">Time Complexity</span>
                   <span className="text-dark-200 font-semibold">{currentAlgo.complexity}</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-dark-400 text-sm">Space Complexity</span>
+                  <span className="text-white text-sm">Space Complexity</span>
                   <span className="text-dark-200 font-semibold">O(1)</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-dark-400 text-sm">Current Step</span>
+                  <span className="text-white text-sm">Current Step</span>
                   <span className="text-dark-200 font-semibold">{currentStep + 1} / {totalSteps}</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-dark-400 text-sm">Array Size</span>
+                  <span className="text-white text-sm">Array Size</span>
                   <span className="text-dark-200 font-semibold">{inputArray.length}</span>
                 </div>
               </div>
@@ -467,19 +467,19 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 bg-dark-900/40 rounded-xl text-center">
                   <p className="text-2xl font-bold text-dark-200">{totalSteps}</p>
-                  <p className="text-dark-500 text-xs mt-1">Total Steps</p>
+                  <p className="text-white text-xs mt-1">Total Steps</p>
                 </div>
                 <div className="p-3 bg-dark-900/40 rounded-xl text-center">
                   <p className="text-2xl font-bold text-dark-200">{Math.floor(totalSteps * 0.7)}</p>
-                  <p className="text-dark-500 text-xs mt-1">Comparisons</p>
+                  <p className="text-white text-xs mt-1">Comparisons</p>
                 </div>
                 <div className="p-3 bg-dark-900/40 rounded-xl text-center">
                   <p className="text-2xl font-bold text-dark-200">{Math.floor(totalSteps * 0.3)}</p>
-                  <p className="text-dark-500 text-xs mt-1">Swaps</p>
+                  <p className="text-white text-xs mt-1">Swaps</p>
                 </div>
                 <div className="p-3 bg-dark-900/40 rounded-xl text-center">
                   <p className="text-2xl font-bold text-emerald-400">{isPlaying ? 'Running' : 'Paused'}</p>
-                  <p className="text-dark-500 text-xs mt-1">Status</p>
+                  <p className="text-white text-xs mt-1">Status</p>
                 </div>
               </div>
             </div>
@@ -492,7 +492,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                 </span>
                 <span className="text-dark-200 font-medium">Pro Tip</span>
               </div>
-              <p className="text-dark-400 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Use the speed buttons to slow down and observe each step in detail. Step through manually for deeper understanding!
               </p>
             </div>

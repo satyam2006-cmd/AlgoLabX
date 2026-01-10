@@ -290,33 +290,33 @@ const Experiment = () => {
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white shadow-lg border border-purple-500/30">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-dark-800 flex items-center justify-center text-white shadow-lg border border-white/20">
             <BeakerIcon />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-dark-50">Experiment Lab</h1>
-            <p className="text-dark-400 text-sm">Write and test your own algorithms with Python</p>
+            <p className="text-white text-sm">Write and test your own algorithms with Python</p>
           </div>
         </motion.div>
 
         {!pyodideLoaded && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-amber-500/20 border border-amber-500/40 rounded-xl p-4 mb-6 flex items-center gap-3">
-            <div className="w-5 h-5 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
-            <p className="text-amber-300">Loading Python runtime... This may take a few seconds.</p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-dark-700/20 border border-dark-600/40 rounded-xl p-4 mb-6 flex items-center gap-3">
+            <div className="w-5 h-5 border-2 border-dark-400 border-t-transparent rounded-full animate-spin" />
+            <p className="text-white">Loading Python runtime... This may take a few seconds.</p>
           </motion.div>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Code Editor Section */}
           <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="space-y-5">
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl overflow-hidden">
-              <div className="px-6 py-4 border-b border-dark-700/40 bg-gradient-to-r from-dark-800/60 to-dark-900/60">
+            <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-white bg-gradient-to-r from-dark-800/60 to-dark-900/60">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-semibold text-dark-100 flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-lg bg-dark-700/50 flex items-center justify-center text-dark-300"><CodeIcon /></span>
+                    <span className="w-8 h-8 rounded-lg bg-dark-700/50 flex items-center justify-center text-white"><CodeIcon /></span>
                     Python Code Editor
                   </h3>
-                  <select onChange={(e) => handleLoadExample(e.target.value)} className="px-4 py-2 bg-dark-900/60 border border-dark-600/50 rounded-xl text-dark-200 text-sm focus:outline-none" defaultValue="">
+                  <select onChange={(e) => handleLoadExample(e.target.value)} className="px-4 py-2 bg-dark-900/60 border border-white rounded-xl text-dark-200 text-sm focus:outline-none" defaultValue="">
                     <option value="" disabled>Load Example</option>
                     <option value="bubble">Bubble Sort</option>
                     <option value="merge">Merge Sort</option>
@@ -327,26 +327,26 @@ const Experiment = () => {
               <div className="p-1">
                 <Editor height="400px" language="python" theme="vs-dark" value={code} onChange={(value) => setCode(value || '')} options={{ minimap: { enabled: false }, fontSize: 14, lineNumbers: 'on', automaticLayout: true, padding: { top: 16 }, scrollBeyondLastLine: false }} />
               </div>
-              <div className="px-6 py-4 border-t border-dark-700/40 bg-dark-900/40">
-                <p className="text-dark-400 text-sm mb-2">Available helper functions:</p>
+              <div className="px-6 py-4 border-t border-white bg-dark-900/40">
+                <p className="text-white text-sm mb-2">Available helper functions:</p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="px-3 py-1.5 bg-dark-700/40 border border-dark-600/30 rounded-lg text-dark-300 text-sm"><code>step()</code> - Count operation</span>
-                  <span className="px-3 py-1.5 bg-dark-700/40 border border-dark-600/30 rounded-lg text-dark-300 text-sm"><code>record(arr)</code> - Record state</span>
+                  <span className="px-3 py-1.5 bg-dark-700/40 border border-white rounded-lg text-white text-sm"><code>step()</code> - Count operation</span>
+                  <span className="px-3 py-1.5 bg-dark-700/40 border border-white rounded-lg text-white text-sm"><code>record(arr)</code> - Record state</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
+            <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-5">
               <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400"><InboxIcon /></span>
+                <span className="w-8 h-8 rounded-lg bg-dark-700/20 flex items-center justify-center text-white"><InboxIcon /></span>
                 Input Array
               </h3>
               <div className="flex gap-3">
-                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="e.g., 64, 34, 25, 12, 22, 11" className="flex-1 px-4 py-3 bg-dark-900/60 border border-dark-600/50 rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-dark-500/50 transition-all duration-300" />
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleGenerateInput} className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-medium rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2">
+                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="e.g., 64, 34, 25, 12, 22, 11" className="flex-1 px-4 py-3 bg-dark-900/60 border border-white rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300" />
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleGenerateInput} className="px-5 py-3 bg-gradient-to-r from-dark-600 to-dark-700 text-white font-medium rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2">
                   <ShuffleIcon /> Random
                 </motion.button>
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleRun} disabled={isRunning || !pyodideLoaded} className="px-6 py-3 bg-gradient-to-r from-dark-600 to-dark-700 disabled:opacity-50 text-dark-100 font-medium rounded-xl border border-dark-500/30 transition-all duration-300 flex items-center gap-2">
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleRun} disabled={isRunning || !pyodideLoaded} className="px-6 py-3 bg-gradient-to-r from-dark-600 to-dark-700 disabled:opacity-50 text-dark-100 font-medium rounded-xl border border-white transition-all duration-300 flex items-center gap-2">
                   {isRunning ? <><div className="w-4 h-4 border-2 border-dark-200 border-t-transparent rounded-full animate-spin" /> Running...</> : <><PlayIcon /> Run Code</>}
                 </motion.button>
               </div>
@@ -364,57 +364,57 @@ const Experiment = () => {
 
             {result && (
               <>
-                <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
+                <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-5">
                   <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-lg bg-dark-700/50 flex items-center justify-center text-dark-300"><ChartBarIcon /></span>
+                    <span className="w-8 h-8 rounded-lg bg-gray-700/50 flex items-center justify-center text-white"><ChartBarIcon /></span>
                     Performance Metrics
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 bg-dark-900/40 rounded-xl text-center">
                       <p className="text-2xl font-bold text-dark-200">{result.time_taken ? (result.time_taken * 1000).toFixed(2) : '0.00'}</p>
-                      <p className="text-dark-500 text-xs mt-1">Time (ms)</p>
+                      <p className="text-white text-xs mt-1">Time (ms)</p>
                     </div>
                     <div className="p-4 bg-dark-900/40 rounded-xl text-center">
                       <p className="text-2xl font-bold text-dark-200">{result.memory_used ? (result.memory_used / 1024).toFixed(2) : '0.00'}</p>
-                      <p className="text-dark-500 text-xs mt-1">Memory (KB)</p>
+                      <p className="text-white text-xs mt-1">Memory (KB)</p>
                     </div>
                     <div className="p-4 bg-dark-900/40 rounded-xl text-center">
-                      <p className="text-2xl font-bold text-emerald-400">{result.steps || 0}</p>
-                      <p className="text-dark-500 text-xs mt-1">Steps</p>
+                      <p className="text-2xl font-bold text-white">{result.steps || 0}</p>
+                      <p className="text-white text-xs mt-1">Steps</p>
                     </div>
                     <div className="p-4 bg-dark-900/40 rounded-xl text-center">
-                      <p className="text-2xl font-bold text-purple-400">{result.states?.length || 0}</p>
-                      <p className="text-dark-500 text-xs mt-1">States Recorded</p>
+                      <p className="text-2xl font-bold text-dark-200">{result.states?.length || 0}</p>
+                      <p className="text-white text-xs mt-1">States Recorded</p>
                     </div>
                   </div>
                 </div>
 
                 {debugInfo && (
-                  <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
+                  <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-5">
                     <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                      <span className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400"><SearchIcon /></span>
+                      <span className="w-8 h-8 rounded-lg bg-yellow-700/50 flex items-center justify-center text-white"><SearchIcon /></span>
                       Debug Information
                     </h3>
                     <div className="bg-dark-900/50 rounded-xl p-4">
-                      <pre className="text-dark-300 font-mono text-sm whitespace-pre-wrap">{debugInfo}</pre>
+                      <pre className="text-white font-mono text-sm whitespace-pre-wrap">{debugInfo}</pre>
                     </div>
                   </div>
                 )}
 
-                <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
+                <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-5">
                   <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400"><CheckCircleIcon /></span>
+                    <span className="w-8 h-8 rounded-lg bg-green-700/20 flex items-center justify-center text-white"><CheckCircleIcon /></span>
                     Output
                   </h3>
                   <div className="bg-dark-900/50 rounded-xl p-4">
-                    <p className="text-emerald-400 font-mono">{JSON.stringify(result.output)}</p>
+                    <p className="text-white font-mono">{JSON.stringify(result.output)}</p>
                   </div>
                 </div>
 
                 {result.states && result.states.length > 0 && (
-                  <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-5">
+                  <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-5">
                     <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                      <span className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400"><SparklesIcon /></span>
+                      <span className="w-8 h-8 rounded-lg bg-blue-700/50 flex items-center justify-center text-white"><SparklesIcon /></span>
                       Visualization
                     </h3>
 
@@ -429,30 +429,30 @@ const Experiment = () => {
                         <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleStepForward} disabled={currentVisualizationIndex >= result.states.length - 1} className="px-4 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 text-dark-200 rounded-xl border border-dark-600/40 flex items-center gap-1">
                           Next <ChevronRightIcon />
                         </motion.button>
-                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleReset} className="px-4 py-2.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-xl border border-red-500/30 flex items-center gap-2">
+                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleReset} className="px-4 py-2.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-xl border border-white flex items-center gap-2">
                           <RefreshIcon /> Reset
                         </motion.button>
                       </div>
 
                       <div className="flex items-center gap-4 p-4 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                        <span className="text-sm font-medium text-dark-400">Speed:</span>
+                        <span className="text-sm font-medium text-white">Speed:</span>
                         <div className="flex items-center gap-2">
                           <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={decreaseSpeed} disabled={speedMultiplier === speedOptions[0]} className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 text-dark-200 flex items-center justify-center border border-dark-600/40">
                             <MinusIcon />
                           </motion.button>
                           <span className="w-12 text-center text-dark-100 font-semibold">{speedMultiplier}x</span>
-                          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={increaseSpeed} disabled={speedMultiplier === speedOptions[speedOptions.length - 1]} className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 text-dark-200 flex items-center justify-center border border-dark-600/40">
+                          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={increaseSpeed} disabled={speedMultiplier === speedOptions[speedOptions.length - 1]} className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 text-dark-200 flex items-center justify-center border border-white">
                             <PlusIcon />
                           </motion.button>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-4 p-4 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                        <span className="text-sm font-medium text-dark-400 whitespace-nowrap">Progress:</span>
+                        <span className="text-sm font-medium text-white whitespace-nowrap">Progress:</span>
                         <div className="flex-1 h-2 bg-dark-700/50 rounded-full overflow-hidden">
                           <motion.div animate={{ width: `${((currentVisualizationIndex + 1) / result.states.length) * 100}%` }} className="h-full bg-gradient-to-r from-dark-400 to-dark-300 rounded-full" />
                         </div>
-                        <span className="text-sm text-dark-300 w-16 text-right">{currentVisualizationIndex + 1} / {result.states.length}</span>
+                        <span className="text-sm text-white w-16 text-right">{currentVisualizationIndex + 1} / {result.states.length}</span>
                       </div>
                     </div>
 
@@ -466,11 +466,11 @@ const Experiment = () => {
 
             {!result && !error && (
               <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-dark-700/40 to-dark-800/40 flex items-center justify-center text-dark-500">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-dark-700/40 to-dark-800/40 flex items-center justify-center text-white">
                   <CubeIcon />
                 </div>
                 <h3 className="text-dark-200 font-semibold mb-2">Ready to Experiment</h3>
-                <p className="text-dark-500 text-sm max-w-xs mx-auto">Write your algorithm in the editor, set an input array, and click Run to see the results.</p>
+                <p className="text-white text-sm max-w-xs mx-auto">Write your algorithm in the editor, set an input array, and click Run to see the results.</p>
               </div>
             )}
           </motion.div>

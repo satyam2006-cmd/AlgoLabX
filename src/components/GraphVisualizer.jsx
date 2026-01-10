@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const GraphVisualizer = ({ 
-  nodes = [], 
-  edges = [], 
-  visitedNodes = [], 
+const GraphVisualizer = ({
+  nodes = [],
+  edges = [],
+  visitedNodes = [],
   currentNode = -1,
   activeNodes = [],
   message = "",
@@ -13,7 +13,7 @@ const GraphVisualizer = ({
   try {
     if (!nodes || nodes.length === 0) {
       return (
-        <div className="flex items-center justify-center p-8 bg-gray-800/30 rounded-xl backdrop-blur-sm border border-gray-700/50">
+        <div className="flex items-center justify-center p-8 bg-black/40 rounded-xl backdrop-blur-sm border border-white">
           <p className="text-gray-400">No nodes to visualize</p>
         </div>
       );
@@ -27,7 +27,7 @@ const GraphVisualizer = ({
       const spacing = 80;
       const startX = 50;
       const startY = 50;
-      
+
       let index = 0;
       for (let row = 0; row < rows && index < nodeCount; row++) {
         for (let col = 0; col < cols && index < nodeCount; col++) {
@@ -45,36 +45,36 @@ const GraphVisualizer = ({
     const nodePositions = calculateNodePositions(nodes.length);
 
     const getEdgeColor = (edge, visitedNodes, activeNodes, shortestPath = []) => {
-  // Check if this edge is part of the shortest path
-  const isInShortestPath = shortestPath.some((node, index) => 
-    index < shortestPath.length - 1 && 
-    ((edge.from === node && edge.to === shortestPath[index + 1]) || 
-     (edge.to === node && edge.from === shortestPath[index + 1]))
-  );
-  
-  if (isInShortestPath) return '#10b981'; // green-500 for shortest path
-  if (activeNodes.includes(edge.from) || activeNodes.includes(edge.to)) return '#f59e0b'; // amber-500 for active
-  if (visitedNodes.includes(edge.from) && visitedNodes.includes(edge.to)) return '#6b7280'; // gray-500 for visited
-  return '#374151'; // gray-700 for unvisited
-};
+      // Check if this edge is part of the shortest path
+      const isInShortestPath = shortestPath.some((node, index) =>
+        index < shortestPath.length - 1 &&
+        ((edge.from === node && edge.to === shortestPath[index + 1]) ||
+          (edge.to === node && edge.from === shortestPath[index + 1]))
+      );
+
+      if (isInShortestPath) return '#366346ff'; // Dark Green for shortest path
+      if (activeNodes.includes(edge.from) || activeNodes.includes(edge.to)) return '#7bcbe9ff'; // Pale Blue for active
+      if (visitedNodes.includes(edge.from) && visitedNodes.includes(edge.to)) return '#36634688'; // Muted green visited
+      return '#2a2a32'; // Unvisited
+    };
 
     const getEdgeWidth = (edge, visitedNodes, activeNodes, shortestPath = []) => {
-      const isInShortestPath = shortestPath.some((node, index) => 
-        index < shortestPath.length - 1 && 
-        ((edge.from === node && edge.to === shortestPath[index + 1]) || 
-         (edge.to === node && edge.from === shortestPath[index + 1]))
+      const isInShortestPath = shortestPath.some((node, index) =>
+        index < shortestPath.length - 1 &&
+        ((edge.from === node && edge.to === shortestPath[index + 1]) ||
+          (edge.to === node && edge.from === shortestPath[index + 1]))
       );
-      
+
       if (isInShortestPath) return 4;
       if (activeNodes.includes(edge.from) || activeNodes.includes(edge.to)) return 3;
       return 2;
     };
 
     const getNodeColor = (nodeId) => {
-      if (currentNode === nodeId) return '#ef4444'; // red-500 for current
-      if (visitedNodes.includes(nodeId)) return '#10b981'; // green-500 for visited
-      if (activeNodes.includes(nodeId)) return '#f59e0b'; // amber-500 for active
-      return '#6b7280'; // gray-500 for unvisited
+      if (currentNode === nodeId) return '#7bcbe9ff'; // Pale Blue for current
+      if (visitedNodes.includes(nodeId)) return '#366346ff'; // Dark Green for visited
+      if (activeNodes.includes(nodeId)) return '#7bcbe988'; // Muted blue for active
+      return '#2a2a32'; // Dark gray/border color for unvisited
     };
 
     const getNodeSize = (nodeId) => {
@@ -84,20 +84,20 @@ const GraphVisualizer = ({
     };
 
     return (
-      <div className="flex flex-col items-center space-y-4 p-8 bg-gray-800/30 rounded-xl backdrop-blur-sm border border-gray-700/50">
+      <div className="flex flex-col items-center space-y-4 p-6 bg-black/40 rounded-xl backdrop-blur-sm border border-white overflow-x-auto">
         {/* SVG Graph */}
-        <svg width="500" height="400" className="border border-gray-600 rounded-lg bg-gray-900/50">
+        <svg width="500" height="400" className="border border-white/20 rounded-lg bg-dark-950/50">
           {/* Edges */}
           {edges && edges.map((edge, index) => {
             try {
               const fromNode = nodePositions.find(n => n.id === edge.from);
               const toNode = nodePositions.find(n => n.id === edge.to);
-              
+
               if (!fromNode || !toNode) return null;
-              
+
               const edgeColor = getEdgeColor(edge, visitedNodes, activeNodes);
               const edgeWidth = getEdgeWidth(edge, visitedNodes, activeNodes);
-              
+
               return (
                 <g key={index}>
                   <motion.line
@@ -132,13 +132,13 @@ const GraphVisualizer = ({
               return null;
             }
           })}
-          
+
           {/* Nodes */}
           {nodes.map((node, index) => {
             try {
               const position = nodePositions[index];
               if (!position) return null;
-              
+
               return (
                 <g key={index}>
                   <motion.circle
@@ -185,16 +185,16 @@ const GraphVisualizer = ({
             }
           })}
         </svg>
-        
+
         {/* Message */}
         {message && (
           <div className="text-center">
-            <p className="text-blue-400 text-sm mb-2">{message}</p>
+            <p className="text-dark-200 text-sm mb-2">{message}</p>
             {/* Extract and display traversal order if present */}
             {message.includes('Traversal order:') && (
               <div className="bg-gray-700/50 rounded-lg p-3 mt-2">
                 <p className="text-white font-semibold">Traversal Order:</p>
-                <p className="text-green-400 text-lg font-mono">
+                <p className="text-white text-lg font-mono">
                   {message.match(/Traversal order: \[(.*?)\]/)?.[1] || ''}
                 </p>
               </div>
@@ -202,7 +202,7 @@ const GraphVisualizer = ({
             {message.includes('Final distances:') && (
               <div className="bg-gray-700/50 rounded-lg p-3 mt-2">
                 <p className="text-white font-semibold">Final Distances:</p>
-                <p className="text-yellow-400 text-sm font-mono">
+                <p className="text-dark-200 text-sm font-mono">
                   {message.match(/Final distances: \[(.*?)\]/)?.[1] || ''}
                 </p>
               </div>
@@ -214,7 +214,7 @@ const GraphVisualizer = ({
   } catch (error) {
     console.error('GraphVisualizer error:', error);
     return (
-      <div className="flex items-center justify-center p-8 bg-gray-800/30 rounded-xl backdrop-blur-sm border border-gray-700/50">
+      <div className="flex items-center justify-center p-8 bg-black/40 rounded-xl backdrop-blur-sm border border-white">
         <p className="text-red-400">Error rendering graph visualization</p>
       </div>
     );

@@ -144,22 +144,22 @@ const Compare = () => {
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-dark-500 to-dark-700 flex items-center justify-center text-dark-200 shadow-lg border border-dark-500/30">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-dark-700 flex items-center justify-center text-dark-200 shadow-lg border border-dark-500/30">
             <ScaleIcon />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-dark-50">Compare Algorithms</h1>
-            <p className="text-dark-400 text-sm">Side-by-side algorithm performance analysis</p>
+            <p className="text-white text-sm">Side-by-side algorithm performance analysis</p>
           </div>
         </motion.div>
 
         {/* Controls Panel */}
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-6 mb-6">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-6 mb-6">
           {/* Row 1: Algorithm Selection */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Algorithm 1</label>
-              <select value={algo1} onChange={(e) => setAlgo1(e.target.value)} className="w-full px-4 py-3 bg-dark-900 border border-blue-600/50 rounded-xl text-dark-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300">
+              <label className="block text-sm font-medium text-white mb-2">Algorithm 1</label>
+              <select value={algo1} onChange={(e) => setAlgo1(e.target.value)} className="w-full px-4 py-3 bg-dark-900 border border-white rounded-xl text-dark-100 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300">
                 <optgroup label="Simple Sorts (O(n²))">
                   <option value="bubble">Bubble Sort</option>
                   <option value="selection">Selection Sort</option>
@@ -178,8 +178,8 @@ const Compare = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Algorithm 2</label>
-              <select value={algo2} onChange={(e) => setAlgo2(e.target.value)} className="w-full px-4 py-3 bg-dark-900 border border-emerald-600/50 rounded-xl text-dark-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-300">
+              <label className="block text-sm font-medium text-white mb-2">Algorithm 2</label>
+              <select value={algo2} onChange={(e) => setAlgo2(e.target.value)} className="w-full px-4 py-3 bg-dark-900 border border-white rounded-xl text-dark-100 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300">
                 <optgroup label="Simple Sorts (O(n²))">
                   <option value="bubble">Bubble Sort</option>
                   <option value="selection">Selection Sort</option>
@@ -200,13 +200,13 @@ const Compare = () => {
 
           {/* Row 2: Array Input */}
           <div className="mb-5">
-            <label className="block text-sm font-medium text-dark-300 mb-2">Custom Array</label>
+            <label className="block text-sm font-medium text-white mb-2">Custom Array</label>
             <div className="flex gap-3">
               <input
                 type="text"
                 value={customInput}
                 onChange={(e) => setCustomInput(e.target.value)}
-                className="flex-1 px-4 py-3 bg-dark-900 border border-dark-600/50 rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-dark-500/50 transition-all duration-300"
+                className="flex-1 px-4 py-3 bg-dark-900 border border-white rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
                 placeholder="e.g., 64, 34, 25, 12, 22, 11, 90, 45"
               />
               <motion.button
@@ -231,14 +231,14 @@ const Compare = () => {
           {/* Row 3: Speed Control & Playback */}
           <div className="flex flex-wrap items-center gap-4">
             {/* Speed Control */}
-            <div className="flex items-center gap-3 p-3 bg-dark-900/60 rounded-xl border border-dark-700/40">
-              <span className="text-sm font-medium text-dark-400">Speed:</span>
+            <div className="flex items-center gap-3 p-3 bg-dark-900/60 rounded-xl border border-white">
+              <span className="text-sm font-medium text-white">Speed:</span>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={decreaseSpeed}
                 disabled={speedMultiplier === speedOptions[0]}
-                className="w-9 h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-dark-600/40 transition-all"
+                className="w-9 h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-white transition-all"
               >
                 <MinusIcon />
               </motion.button>
@@ -248,7 +248,7 @@ const Compare = () => {
                 whileTap={{ scale: 0.9 }}
                 onClick={increaseSpeed}
                 disabled={speedMultiplier === speedOptions[speedOptions.length - 1]}
-                className="w-9 h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-dark-600/40 transition-all"
+                className="w-9 h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-white transition-all"
               >
                 <PlusIcon />
               </motion.button>
@@ -259,8 +259,8 @@ const Compare = () => {
                     key={opt}
                     onClick={() => setSpeedMultiplier(opt)}
                     className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${speedMultiplier === opt
-                        ? 'bg-dark-500 text-dark-50 border border-dark-400/50'
-                        : 'bg-dark-800/60 text-dark-400 hover:bg-dark-700/60 border border-transparent'
+                      ? 'bg-dark-500 text-dark-50 border border-dark-400/50'
+                      : 'bg-dark-800/60 text-white hover:bg-dark-700/60 border border-transparent'
                       }`}
                   >
                     {opt}x
@@ -294,8 +294,8 @@ const Compare = () => {
         {/* Side-by-side Visualization */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Algorithm 1 Panel */}
-          <div className="bg-dark-800/40 backdrop-blur-xl border border-blue-600/40 rounded-2xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-dark-700/40 bg-gradient-to-r from-blue-700/40 to-dark-800/60">
+          <div className="bg-dark-800/40 backdrop-blur-xl border border-blue-500/30 rounded-2xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-white bg-gradient-to-r from-blue-800/60 to-dark-900/60">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-dark-100">{algorithms[algo1].name}</h2>
                 <div className="flex items-center gap-3">
@@ -310,15 +310,15 @@ const Compare = () => {
               )}
               {data1 && data1.description && (
                 <div className="mt-4 p-3 bg-dark-900/50 rounded-xl border border-dark-700/30">
-                  <p className="text-dark-300 text-sm">{data1.description}</p>
+                  <p className="text-white text-sm">{data1.description}</p>
                 </div>
               )}
             </div>
           </div>
 
           {/* Algorithm 2 Panel */}
-          <div className="bg-dark-800/40 backdrop-blur-xl border border-emerald-600/40 rounded-2xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-dark-700/40 bg-gradient-to-r from-emerald-700/40 to-dark-800/60">
+          <div className="bg-dark-800/40 backdrop-blur-xl border border-emerald-500/30 rounded-2xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-white bg-gradient-to-r from-emerald-800/60 to-dark-900/60">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-dark-100">{algorithms[algo2].name}</h2>
                 <div className="flex items-center gap-3">
@@ -333,7 +333,7 @@ const Compare = () => {
               )}
               {data2 && data2.description && (
                 <div className="mt-4 p-3 bg-dark-900/50 rounded-xl border border-dark-700/30">
-                  <p className="text-dark-300 text-sm">{data2.description}</p>
+                  <p className="text-white text-sm">{data2.description}</p>
                 </div>
               )}
             </div>
@@ -342,7 +342,7 @@ const Compare = () => {
 
         {/* Comparison Charts */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-6">
+          <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-6">
             <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
               <span className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400"><ChartBarIcon /></span>
               Performance Comparison
@@ -354,46 +354,46 @@ const Compare = () => {
                 <YAxis stroke="#71717d" fontSize={12} />
                 <Tooltip contentStyle={{ backgroundColor: '#141418', border: '1px solid #2a2a32', borderRadius: '12px', color: '#fafafa' }} labelStyle={{ color: '#a1a1ab' }} />
                 <Legend />
-                <Bar dataKey={algorithms[algo1].name} fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                <Bar dataKey={algorithms[algo2].name} fill="#10b981" radius={[4, 4, 0, 0]} />
+                <Bar dataKey={algorithms[algo1].name} fill="#7bcbe9ff" radius={[4, 4, 0, 0]} />
+                <Bar dataKey={algorithms[algo2].name} fill="#366346ff" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
           <div className="bg-dark-800/40 backdrop-blur-xl border border-dark-700/40 rounded-2xl p-6">
             <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-dark-700/50 flex items-center justify-center text-dark-300"><TrendingUpIcon /></span>
+              <span className="w-8 h-8 rounded-lg bg-green-700/50 flex items-center justify-center text-white"><TrendingUpIcon /></span>
               Step Progress
             </h3>
             <div className="space-y-6">
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-dark-300 text-sm font-medium">{algorithms[algo1].name}</span>
+                  <span className="text-white text-sm font-medium">{algorithms[algo1].name}</span>
                   <span className="text-dark-200 text-sm">{Math.round(((step1 + 1) / total1) * 100)}%</span>
                 </div>
-                <div className="h-3 bg-dark-900/60 rounded-full overflow-hidden">
-                  <motion.div initial={{ width: 0 }} animate={{ width: `${((step1 + 1) / total1) * 100}%` }} className="h-full rounded-full bg-blue-500" />
+                <div className="h-3 bg-[#7bcbe922] rounded-full overflow-hidden">
+                  <motion.div initial={{ width: 0 }} animate={{ width: `${((step1 + 1) / total1) * 100}%` }} className="h-full rounded-full bg-[#7bcbe9ff]" />
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-dark-300 text-sm font-medium">{algorithms[algo2].name}</span>
+                  <span className="text-white text-sm font-medium">{algorithms[algo2].name}</span>
                   <span className="text-dark-200 text-sm">{Math.round(((step2 + 1) / total2) * 100)}%</span>
                 </div>
-                <div className="h-3 bg-dark-900/60 rounded-full overflow-hidden">
-                  <motion.div initial={{ width: 0 }} animate={{ width: `${((step2 + 1) / total2) * 100}%` }} className="h-full rounded-full bg-emerald-500" />
+                <div className="h-3 bg-[#36634622] rounded-full overflow-hidden">
+                  <motion.div initial={{ width: 0 }} animate={{ width: `${((step2 + 1) / total2) * 100}%` }} className="h-full rounded-full bg-[#366346ff]" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4 pt-4 border-t border-dark-700/30">
                 <div className="p-4 bg-dark-900/40 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-blue-400">{total1}</p>
-                  <p className="text-dark-500 text-xs mt-1">{algorithms[algo1].name} Steps</p>
+                  <p className="text-2xl font-bold text-[#7bcbe9ff]">{total1}</p>
+                  <p className="text-white text-xs mt-1">{algorithms[algo1].name} Steps</p>
                 </div>
                 <div className="p-4 bg-dark-900/40 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-emerald-400">{total2}</p>
-                  <p className="text-dark-500 text-xs mt-1">{algorithms[algo2].name} Steps</p>
+                  <p className="text-2xl font-bold text-[#366346ff]">{total2}</p>
+                  <p className="text-white text-xs mt-1">{algorithms[algo2].name} Steps</p>
                 </div>
               </div>
             </div>

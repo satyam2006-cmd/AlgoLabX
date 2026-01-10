@@ -6,12 +6,12 @@ import DPVisualizer from './DPVisualizer';
 import GanttChartVisualizer from './GanttChartVisualizer';
 import ChartsVisualizer from './ChartsVisualizer';
 
-const SmartVisualizer = ({ 
-  algorithmType, 
-  stepData, 
+const SmartVisualizer = ({
+  algorithmType,
+  stepData,
   comparisonData = null,
   algorithmNames = [],
-  ...props 
+  ...props
 }) => {
   // Determine which visualizer to use based on algorithm type
   const getVisualizer = () => {
@@ -27,7 +27,7 @@ const SmartVisualizer = ({
             barGap={props.barGap || 4}
           />
         );
-        
+
       case 'searching':
         return (
           <SearchVisualizer
@@ -38,12 +38,12 @@ const SmartVisualizer = ({
             maxValue={props.maxValue || 100}
           />
         );
-        
+
       case 'graph':
         // Add error handling for graph algorithms
         if (!stepData || !stepData.nodes || stepData.nodes.length === 0) {
           return (
-            <div className="flex items-center justify-center p-8 bg-gray-800/30 rounded-xl backdrop-blur-sm border border-gray-700/50">
+            <div className="flex items-center justify-center p-8 bg-dark-900/40 rounded-xl backdrop-blur-sm border border-white/10">
               <p className="text-gray-400">No graph data available</p>
             </div>
           );
@@ -59,7 +59,7 @@ const SmartVisualizer = ({
             shortestPath={stepData?.shortestPath || []}
           />
         );
-        
+
       case 'dp':
         return (
           <DPVisualizer
@@ -70,7 +70,7 @@ const SmartVisualizer = ({
             itemValues={stepData?.itemValues || []}
           />
         );
-        
+
       case 'os':
         return (
           <GanttChartVisualizer
@@ -80,7 +80,7 @@ const SmartVisualizer = ({
             timeQuantum={stepData?.timeQuantum || 2}
           />
         );
-        
+
       case 'compare':
         return (
           <ChartsVisualizer
@@ -90,7 +90,7 @@ const SmartVisualizer = ({
             metrics={props.metrics || ['time', 'steps', 'comparisons']}
           />
         );
-        
+
       default:
         return (
           <div className="flex items-center justify-center p-8 bg-gray-800/30 rounded-xl backdrop-blur-sm border border-gray-700/50">
