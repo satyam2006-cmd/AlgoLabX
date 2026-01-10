@@ -5,9 +5,9 @@ A comprehensive web application for visualizing and learning algorithms through 
 ## 🚀 Features
 
 ### 📊 Algorithm Categories
-- **Sorting Algorithms**: Bubble, Selection, Insertion, Merge, Quick, Heap, Counting, Radix Sort
+- **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Counting Sort, Radix Sort
 - **Search Algorithms**: Binary Search, Linear Search, Jump Search, Interpolation Search, Exponential Search
-- **Graph Algorithms**: BFS Traversal, DFS Traversal, Dijkstra's Shortest Path
+- **Graph Algorithms**: BFS Traversal, DFS Traversal, Dijkstra's Algorithm
 - **Dynamic Programming**: 0/1 Knapsack Problem
 
 ### 🎨 Specialized Visualizers
@@ -203,7 +203,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **61 files** in the codebase
 - **13,416+ lines** of code
-- **15+ algorithms** implemented
+- **18+ algorithms** implemented
 - **4 specialized visualizers**
 - **Complete step-by-step animations** for all algorithms
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SmartVisualizer from '../components/SmartVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
-import { getBubbleSortSteps, getQuickSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getHeapSortSteps, getBinarySearchSteps, bfsSteps, dfsSteps, dijkstraSteps, knapsackSteps } from '../algorithms/comprehensiveAlgorithms';
+import { getBubbleSortSteps, getQuickSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getHeapSortSteps, getCountingSortSteps, getRadixSortSteps, getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps, bfsSteps, dfsSteps, dijkstraSteps, knapsackSteps } from '../algorithms/comprehensiveAlgorithms';
 
 const Learn = () => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('bubble');
@@ -88,14 +88,56 @@ const Learn = () => {
       type: 'dp',
       getSteps: knapsackSteps,
       description: 'Dynamic programming algorithm that solves optimization problem of selecting items with maximum value under weight constraints.'
+    },
+    counting: {
+      name: 'Counting Sort',
+      complexity: 'O(n + k)',
+      type: 'sorting',
+      getSteps: getCountingSortSteps,
+      description: 'Non-comparison sorting algorithm that sorts elements by counting occurrences of each distinct element.'
+    },
+    radix: {
+      name: 'Radix Sort',
+      complexity: 'O(d × (n + k))',
+      type: 'sorting',
+      getSteps: getRadixSortSteps,
+      description: 'Non-comparison sorting algorithm that sorts integers by processing individual digits.'
+    },
+    linear: {
+      name: 'Linear Search',
+      complexity: 'O(n)',
+      type: 'searching',
+      getSteps: getLinearSearchSteps,
+      description: 'Sequential search algorithm that checks each element in order until the target is found.'
+    },
+    jump: {
+      name: 'Jump Search',
+      complexity: 'O(√n)',
+      type: 'searching',
+      getSteps: getJumpSearchSteps,
+      description: 'Search algorithm that jumps ahead by fixed steps to find the range, then performs linear search.'
+    },
+    interpolation: {
+      name: 'Interpolation Search',
+      complexity: 'O(log log n)',
+      type: 'searching',
+      getSteps: getInterpolationSearchSteps,
+      description: 'Search algorithm that estimates the position based on the value distribution.'
+    },
+    exponential: {
+      name: 'Exponential Search',
+      complexity: 'O(log n)',
+      type: 'searching',
+      getSteps: getExponentialSearchSteps,
+      description: 'Search algorithm that finds the range by exponential steps, then performs binary search.'
     }
   };
 
   const currentAlgo = algorithms[selectedAlgorithm];
   
-  // Handle binary search with target
+  // Handle search algorithms with target
   let stepsInput = inputArray;
-  if (selectedAlgorithm === 'binary') {
+  if (['binary', 'linear', 'jump', 'interpolation', 'exponential'].includes(selectedAlgorithm)) {
     const target = parseInt(searchTarget);
     if (!isNaN(target)) {
       stepsInput = [...inputArray, target];
@@ -151,8 +193,16 @@ const Learn = () => {
                   <option value="quick">Quick Sort</option>
                   <option value="heap">Heap Sort</option>
                 </optgroup>
+                <optgroup label="Non-Comparison Sorts">
+                  <option value="counting">Counting Sort</option>
+                  <option value="radix">Radix Sort</option>
+                </optgroup>
                 <optgroup label="Search Algorithms">
                   <option value="binary">Binary Search</option>
+                  <option value="linear">Linear Search</option>
+                  <option value="jump">Jump Search</option>
+                  <option value="interpolation">Interpolation Search</option>
+                  <option value="exponential">Exponential Search</option>
                 </optgroup>
                 <optgroup label="Graph Algorithms">
                   <option value="bfs">BFS Traversal</option>
@@ -184,7 +234,7 @@ const Learn = () => {
               </div>
             </div>
             
-            {selectedAlgorithm === 'binary' && (
+            {['binary', 'linear', 'jump', 'interpolation', 'exponential'].includes(selectedAlgorithm) && (
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Search Target</label>
                 <input
