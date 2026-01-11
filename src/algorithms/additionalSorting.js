@@ -1,5 +1,5 @@
 // Additional Sorting Algorithms
-// Shell Sort, Bucket Sort, Tim Sort, Cocktail Shaker Sort, Comb Sort
+// Shell Sort, Bucket Sort, Cocktail Shaker Sort, Comb Sort, Gnome Sort, Odd-Even Sort
 
 // Shell Sort - Improved insertion sort with gap sequence
 export function getShellSortSteps(inputArr) {
