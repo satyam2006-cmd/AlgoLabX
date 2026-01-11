@@ -24,9 +24,12 @@ const GraphVisualizer = ({
       const positions = [];
       const cols = Math.ceil(Math.sqrt(nodeCount));
       const rows = Math.ceil(nodeCount / cols);
-      const spacing = 80;
-      const startX = 50;
-      const startY = 50;
+      
+      // Responsive spacing based on window size
+      const isMobile = window.innerWidth < 640;
+      const spacing = isMobile ? 50 : 80;
+      const startX = isMobile ? 30 : 50;
+      const startY = isMobile ? 30 : 50;
 
       let index = 0;
       for (let row = 0; row < rows && index < nodeCount; row++) {
@@ -84,68 +87,69 @@ const GraphVisualizer = ({
     };
 
     return (
-      <div className="flex flex-col items-center space-y-4 p-6 bg-black/40 rounded-xl backdrop-blur-sm border border-white overflow-x-auto">
-        {/* SVG Graph */}
-        <svg width="500" height="400" className="border border-white/20 rounded-lg bg-dark-950/50">
-          {/* Edges */}
-          {edges && edges.map((edge, index) => {
-            try {
-              const fromNode = nodePositions.find(n => n.id === edge.from);
-              const toNode = nodePositions.find(n => n.id === edge.to);
+      <div className="flex flex-col items-center space-y-4 p-3 sm:p-6 bg-black/40 rounded-xl backdrop-blur-sm border border-white overflow-x-auto w-full">
+        {/* SVG Graph - Responsive sizing */}
+        <div className="w-full overflow-x-auto flex justify-center">
+          <svg width={Math.max(300, Math.min(600, window.innerWidth - 100))} height="350" className="border border-white/20 rounded-lg bg-dark-950/50 flex-shrink-0">
+            {/* Edges */}
+            {edges && edges.map((edge, index) => {
+              try {
+                const fromNode = nodePositions.find(n => n.id === edge.from);
+                const toNode = nodePositions.find(n => n.id === edge.to);
 
-              if (!fromNode || !toNode) return null;
+                if (!fromNode || !toNode) return null;
 
-              const edgeColor = getEdgeColor(edge, visitedNodes, activeNodes);
-              const edgeWidth = getEdgeWidth(edge, visitedNodes, activeNodes);
+                const edgeColor = getEdgeColor(edge, visitedNodes, activeNodes);
+                const edgeWidth = getEdgeWidth(edge, visitedNodes, activeNodes);
 
-              return (
-                <g key={index}>
-                  <motion.line
-                    x1={fromNode.x}
-                    y1={fromNode.y}
-                    x2={toNode.x}
-                    y2={toNode.y}
-                    stroke={edgeColor}
-                    strokeWidth={edgeWidth}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  {/* Edge label for weight/distance */}
-                  <motion.text
-                    x={(fromNode.x + toNode.x) / 2}
-                    y={(fromNode.y + toNode.y) / 2 - 5}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fill="#9ca3af"
-                    fontSize="9"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                  >
-                    {edge.label || edge.weight || ''}
-                  </motion.text>
-                </g>
-              );
-            } catch (error) {
-              console.error('Error rendering edge:', error);
-              return null;
-            }
-          })}
+                return (
+                  <g key={index}>
+                    <motion.line
+                      x1={fromNode.x}
+                      y1={fromNode.y}
+                      x2={toNode.x}
+                      y2={toNode.y}
+                      stroke={edgeColor}
+                      strokeWidth={edgeWidth}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                    {/* Edge label for weight/distance */}
+                    <motion.text
+                      x={(fromNode.x + toNode.x) / 2}
+                      y={(fromNode.y + toNode.y) / 2 - 5}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill="#9ca3af"
+                      fontSize="9"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                    >
+                      {edge.label || edge.weight || ''}
+                    </motion.text>
+                  </g>
+                );
+              } catch (error) {
+                console.error('Error rendering edge:', error);
+                return null;
+              }
+            })}
 
-          {/* Nodes */}
-          {nodes.map((node, index) => {
-            try {
-              const position = nodePositions[index];
-              if (!position) return null;
+            {/* Nodes */}
+            {nodes.map((node, index) => {
+              try {
+                const position = nodePositions[index];
+                if (!position) return null;
 
-              return (
-                <g key={index}>
-                  <motion.circle
-                    cx={position.x}
-                    cy={position.y}
-                    r={getNodeSize(index)}
-                    fill={getNodeColor(index)}
+                return (
+                  <g key={index}>
+                    <motion.circle
+                      cx={position.x}
+                      cy={position.y}
+                      r={getNodeSize(index)}
+                      fill={getNodeColor(index)}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.3 }}
@@ -185,24 +189,25 @@ const GraphVisualizer = ({
             }
           })}
         </svg>
+        </div>
 
         {/* Message */}
         {message && (
-          <div className="text-center">
-            <p className="text-dark-200 text-sm mb-2">{message}</p>
+          <div className="w-full text-center mt-4">
+            <p className="text-dark-200 text-xs sm:text-sm mb-2">{message}</p>
             {/* Extract and display traversal order if present */}
             {message.includes('Traversal order:') && (
-              <div className="bg-gray-700/50 rounded-lg p-3 mt-2">
-                <p className="text-white font-semibold">Traversal Order:</p>
-                <p className="text-white text-lg font-mono">
+              <div className="bg-gray-700/50 rounded-lg p-2 sm:p-3 mt-2">
+                <p className="text-white font-semibold text-xs sm:text-sm">Traversal Order:</p>
+                <p className="text-white text-xs sm:text-lg font-mono break-words">
                   {message.match(/Traversal order: \[(.*?)\]/)?.[1] || ''}
                 </p>
               </div>
             )}
             {message.includes('Final distances:') && (
-              <div className="bg-gray-700/50 rounded-lg p-3 mt-2">
-                <p className="text-white font-semibold">Final Distances:</p>
-                <p className="text-dark-200 text-sm font-mono">
+              <div className="bg-gray-700/50 rounded-lg p-2 sm:p-3 mt-2">
+                <p className="text-white font-semibold text-xs sm:text-sm">Final Distances:</p>
+                <p className="text-dark-200 text-xs sm:text-sm font-mono break-words">
                   {message.match(/Final distances: \[(.*?)\]/)?.[1] || ''}
                 </p>
               </div>
@@ -214,8 +219,8 @@ const GraphVisualizer = ({
   } catch (error) {
     console.error('GraphVisualizer error:', error);
     return (
-      <div className="flex items-center justify-center p-8 bg-black/40 rounded-xl backdrop-blur-sm border border-white">
-        <p className="text-red-400">Error rendering graph visualization</p>
+      <div className="flex items-center justify-center p-4 sm:p-8 bg-black/40 rounded-xl backdrop-blur-sm border border-white">
+        <p className="text-red-400 text-xs sm:text-sm">Error rendering graph visualization</p>
       </div>
     );
   }

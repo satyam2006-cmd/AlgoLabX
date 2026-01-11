@@ -210,7 +210,7 @@ const Compare = () => {
           {/* Row 2: Array Input */}
           <div className="mb-5">
             <label className="block text-sm font-medium text-white mb-2">Custom Array</label>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <input
                 type="text"
                 value={customInput}
@@ -222,7 +222,7 @@ const Compare = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleCustomInput}
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-medium rounded-xl transition-all duration-300"
+                className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-medium rounded-xl transition-all duration-300"
               >
                 Set Array
               </motion.button>
@@ -230,7 +230,7 @@ const Compare = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleGenerateArray}
-                className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-medium rounded-xl flex items-center gap-2"
+                className="w-full sm:w-auto px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-medium rounded-xl flex items-center gap-2"
               >
                 <ShuffleIcon /> Random
               </motion.button>
@@ -256,29 +256,29 @@ const Compare = () => {
           {/* Row 3: Speed Control & Playback */}
           <div className="flex flex-wrap items-center gap-4">
             {/* Speed Control */}
-            <div className="flex items-center gap-3 p-3 bg-dark-900/60 rounded-xl border border-white">
+            <div className="flex items-center gap-3 p-3 bg-dark-900/60 rounded-xl border border-white flex-wrap">
               <span className="text-sm font-medium text-white">Speed:</span>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={decreaseSpeed}
                 disabled={speedMultiplier === speedOptions[0]}
-                className="w-9 h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-white transition-all"
+                className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-white transition-all"
               >
                 <MinusIcon />
               </motion.button>
-              <span className="w-14 text-center text-dark-100 font-bold text-lg">{speedMultiplier}x</span>
+              <span className="w-10 sm:w-14 text-center text-dark-100 font-bold text-base sm:text-lg">{speedMultiplier}x</span>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={increaseSpeed}
                 disabled={speedMultiplier === speedOptions[speedOptions.length - 1]}
-                className="w-9 h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-white transition-all"
+                className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-dark-700/60 hover:bg-dark-600/60 disabled:opacity-40 text-dark-200 flex items-center justify-center border border-white transition-all"
               >
                 <PlusIcon />
               </motion.button>
               <div className="h-6 w-px bg-dark-600/50 mx-2" />
-              <div className="flex gap-1">
+              <div className="hidden sm:flex gap-1 ml-auto">
                 {speedOptions.map((opt) => (
                   <button
                     key={opt}

@@ -110,15 +110,15 @@ const Home = ({ setActiveTab }) => {
   ];
 
   return (
-    <div className="flex-1 p-8">
+    <div className="flex-1 p-3 sm:p-6 md:p-8 overflow-y-auto">
       <div className="max-w-6xl mx-auto">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-10"
+          className="mb-8 sm:mb-10"
         >
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/80 to-dark-900/80 border border-white p-8 md:p-12">
+          <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-br from-dark-800/80 to-dark-900/80 border border-white p-4 sm:p-8 md:p-12">
             {/* Background Glow */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-dark-600/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4" />
             <div className="absolute bottom-0 left-0 w-60 h-60 bg-dark-500/10 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/4" />
@@ -128,30 +128,31 @@ const Home = ({ setActiveTab }) => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-700/40 border border-white text-white text-sm font-medium mb-6"
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-dark-700/40 border border-white text-white text-xs sm:text-sm font-medium mb-4 sm:mb-6"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Virtual Algorithm Laboratory
+                <span className="hidden sm:inline">Virtual Algorithm Laboratory</span>
+                <span className="sm:hidden">Algorithm Lab</span>
               </motion.div>
 
-              <h1 className="text-4xl md:text-5xl font-bold text-dark-50 mb-4 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-dark-50 mb-3 sm:mb-4 leading-tight">
                 Welcome to{' '}
                 <span className="bg-gradient-to-r from-dark-10 to-dark-50 bg-clip-text text-slate-50">
                   AlgoLabX
                 </span>
               </h1>
 
-              <p className="text-white text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
+              <p className="text-white text-sm sm:text-base md:text-xl max-w-2xl mb-6 sm:mb-8 leading-relaxed">
                 Your interactive playground for learning, comparing, and experimenting with algorithms.
                 Experience the power of visual learning.
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <motion.button
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveTab('learn')}
-                  className="px-6 py-3 bg-gradient-to-r from-dark-500 to-dark-600 rounded-xl font-semibold text-dark-50 shadow-lg border border-white transition-all duration-300 hover:shadow-xl flex items-center gap-2"
+                  className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-dark-500 to-dark-600 rounded-lg sm:rounded-xl font-semibold text-dark-50 shadow-lg border border-white transition-all duration-300 hover:shadow-xl flex items-center justify-center sm:justify-start gap-2 text-sm sm:text-base"
                 >
                   Get Started
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,7 +163,7 @@ const Home = ({ setActiveTab }) => {
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveTab('experiment')}
-                  className="px-6 py-3 bg-dark-800/50 border border-white rounded-xl font-medium text-dark-200 transition-all duration-300 hover:bg-dark-700/50 hover:border-white"
+                  className="px-4 sm:px-6 py-2.5 sm:py-3 bg-dark-800/50 border border-white rounded-lg sm:rounded-xl font-medium text-dark-200 transition-all duration-300 hover:bg-dark-700/50 hover:border-white text-sm sm:text-base"
                 >
                   Explore Algorithms
                 </motion.button>
@@ -176,7 +177,7 @@ const Home = ({ setActiveTab }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-8 sm:mb-10"
         >
           {quickStats.map((stat, index) => {
             const Icon = stat.icon;
@@ -187,17 +188,17 @@ const Home = ({ setActiveTab }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + index * 0.1 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="p-5 rounded-xl bg-dark-800/40 border border-white hover:border-white transition-all duration-300 hover:shadow-lg"
+                className="p-3 sm:p-5 rounded-lg sm:rounded-xl bg-dark-800/40 border border-white hover:border-white transition-all duration-300 hover:shadow-lg"
               >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="text-white">
+                <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                  <div className="text-white flex-shrink-0">
                     <Icon />
                   </div>
-                  <span className="text-2xl font-bold text-dark-100">
+                  <span className="text-lg sm:text-2xl font-bold text-dark-100 truncate">
                     {stat.value}
                   </span>
                 </div>
-                <p className="text-white text-sm">{stat.label}</p>
+                <p className="text-white text-xs sm:text-sm truncate">{stat.label}</p>
               </motion.div>
             );
           })}

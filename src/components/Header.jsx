@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
+const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpen }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -72,23 +72,33 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="h-16 bg-dark-900/80 border-b border-white flex items-center justify-between px-6 sticky top-0 z-50 backdrop-blur-xl"
+      className="h-14 sm:h-16 bg-dark-900/80 border-b border-white flex items-center justify-between px-3 sm:px-6 sticky top-0 z-50 backdrop-blur-xl gap-3"
     >
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="lg:hidden p-2 hover:bg-dark-800 rounded-lg transition-colors flex-shrink-0"
+      >
+        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
       {/* Left Section - Title */}
-      <div className="flex items-center gap-4">
-        <h1 className="text-xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent">
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+        <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent truncate">
           LabX
         </h1>
-        <span className="text-gray-600">–</span>
-        <span className="text-white text-sm font-medium">Dashboard</span>
+        <span className="text-gray-600 hidden sm:inline">–</span>
+        <span className="text-white text-xs sm:text-sm font-medium hidden sm:inline">Dashboard</span>
       </div>
 
-      {/* Center Section - Advanced Search */}
-      <div className="max-w-md w-full px-8 relative">
+      {/* Center Section - Advanced Search (Hidden on small mobile) */}
+      <div className="hidden sm:block max-w-xs flex-1 px-4 relative">
         <div className="w-full relative group">
           <input
             type="text"
-            placeholder="Search algorithms... (e.g., 'bubble', 'graph')"
+            placeholder="Search algorithms..."
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -98,7 +108,7 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
             onKeyDown={handleKeyDown}
-            className="w-full bg-dark-800/50 border border-white rounded-xl py-2.5 pl-10 pr-4 text-dark-200 text-sm placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300 group-hover:bg-dark-800/80"
+            className="w-full bg-dark-800/50 border border-white rounded-xl py-2 pl-10 pr-4 text-dark-200 text-xs sm:text-sm placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300 group-hover:bg-dark-800/80"
           />
           <svg
             className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white group-hover:text-white transition-colors"
@@ -117,32 +127,27 @@ const Header = ({ setActiveTab, setSelectedAlgorithm }) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="absolute top-full left-8 right-8 mt-2 bg-dark-900 border border-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-[100] backdrop-blur-2xl"
+              className="absolute top-full left-2 right-2 mt-2 bg-dark-900 border border-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-[100] backdrop-blur-2xl"
             >
               {filteredSuggestions.map((item, index) => (
                 <button
                   key={`${item.id}-${index}`}
                   onClick={() => handleSelect(item)}
                   onMouseEnter={() => setSelectedIndex(index)}
-                  className={`w-full flex items-center justify-between px-4 py-3 text-left transition-all ${selectedIndex === index
+                  className={`w-full flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 text-left transition-all text-xs sm:text-sm ${selectedIndex === index
                     ? 'bg-dark-800/80 text-dark-50'
                     : 'text-white hover:bg-dark-800/40'
                     }`}
                 >
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium">{item.label}</span>
-                    <span className="text-[10px] text-white uppercase tracking-wider">{item.category}</span>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-medium truncate">{item.label}</span>
+                    <span className="text-[9px] sm:text-[10px] text-white uppercase tracking-wider">{item.category}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0 ml-2">
                     {item.type === 'algo' ? (
-                      <span className="px-2 py-0.5 rounded-md bg-dark-800 text-[10px] text-white border border-dark-700/30">Algorithm</span>
+                      <span className="px-1.5 py-0.5 rounded-md bg-dark-800 text-[9px] sm:text-[10px] text-white border border-dark-700/30 whitespace-nowrap">Algo</span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-[10px] text-emerald-400 border border-emerald-500/20">Page</span>
-                    )}
-                    {selectedIndex === index && (
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                      </svg>
+                      <span className="px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-[9px] sm:text-[10px] text-emerald-400 border border-emerald-500/20 whitespace-nowrap">Page</span>
                     )}
                   </div>
                 </button>

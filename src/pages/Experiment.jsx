@@ -341,12 +341,12 @@ const Experiment = () => {
                 <span className="w-8 h-8 rounded-lg bg-dark-700/20 flex items-center justify-center text-white"><InboxIcon /></span>
                 Input Array
               </h3>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="e.g., 64, 34, 25, 12, 22, 11" className="flex-1 px-4 py-3 bg-dark-900/60 border border-white rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300" />
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleGenerateInput} className="px-5 py-3 bg-gradient-to-r from-dark-600 to-dark-700 text-white font-medium rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2">
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleGenerateInput} className="w-full sm:w-auto px-5 py-3 bg-gradient-to-r from-dark-600 to-dark-700 text-white font-medium rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2">
                   <ShuffleIcon /> Random
                 </motion.button>
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleRun} disabled={isRunning || !pyodideLoaded} className="px-6 py-3 bg-gradient-to-r from-dark-600 to-dark-700 disabled:opacity-50 text-dark-100 font-medium rounded-xl border border-white transition-all duration-300 flex items-center gap-2">
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={handleRun} disabled={isRunning || !pyodideLoaded} className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-dark-600 to-dark-700 disabled:opacity-50 text-dark-100 font-medium rounded-xl border border-white transition-all duration-300 flex items-center gap-2">
                   {isRunning ? <><div className="w-4 h-4 border-2 border-dark-200 border-t-transparent rounded-full animate-spin" /> Running...</> : <><PlayIcon /> Run Code</>}
                 </motion.button>
               </div>

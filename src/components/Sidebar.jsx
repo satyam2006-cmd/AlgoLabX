@@ -38,7 +38,7 @@ const BoltIcon = () => (
   </svg>
 );
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
   const menuItems = [
     { id: 'home', label: 'Dashboard', icon: HomeIcon },
     { id: 'learn', label: 'Learn', icon: BookIcon },
@@ -49,20 +49,30 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   return (
     <div className="w-72 h-screen bg-dark-900/95 backdrop-blur-xl border-r border-white flex flex-col">
       {/* Brand Section */}
-      <div className="p-6 border-b border-white">
+      <div className="p-4 sm:p-6 border-b border-white flex justify-between items-center">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3"
+          className="flex items-center gap-2 sm:gap-3"
         >
-          <div className="w-10 h-10 flex items-center justify-center">
+          <div className="w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center">
             <img src="/logo.png" alt="AlgoLabX Logo" className="w-full h-full object-contain" />
           </div>
-          <div>
-            <h2 className="text-lg font-bold text-dark-50">AlgoLabX</h2>
+          <div className="hidden sm:block">
+            <h2 className="text-base sm:text-lg font-bold text-dark-50">AlgoLabX</h2>
             <p className="text-white text-xs font-medium">Virtual Algorithm Lab</p>
           </div>
         </motion.div>
+        
+        {/* Close button for mobile */}
+        <button 
+          onClick={() => setSidebarOpen(false)}
+          className="lg:hidden p-2 hover:bg-dark-800 rounded-lg transition-colors"
+        >
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       {/* Navigation Section */}

@@ -9,6 +9,7 @@ import Experiment from './pages/Experiment';
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('bubble');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -41,11 +42,35 @@ function App() {
 
       {/* Main Layout */}
       <div className="flex h-screen relative z-10">
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/* Mobile Sidebar Overlay */}
+        {sidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black/50 lg:hidden z-40"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+        
+        {/* Sidebar - Hidden on mobile, visible on lg */}
+        <div className={`fixed lg:static inset-y-0 left-0 z-50 transform transition-transform duration-300 lg:transform-none ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        }`}>
+          <Sidebar 
+            activeTab={activeTab} 
+            setActiveTab={(tabId) => {
+              setActiveTab(tabId);
+              setSidebarOpen(false);
+            }}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+        </div>
+        
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header
             setActiveTab={setActiveTab}
             setSelectedAlgorithm={setSelectedAlgorithm}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
           />
           <main className="flex-1 overflow-y-auto">
             {renderContent()}

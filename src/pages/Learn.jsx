@@ -157,20 +157,20 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
   }, [selectedAlgorithm, inputArray, speedMultiplier]);
 
   return (
-    <div className="flex-1 p-8">
+    <div className="flex-1 p-3 sm:p-6 md:p-8 overflow-y-auto">
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-4 mb-8"
+          className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8"
         >
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-500 to-dark-700 flex items-center justify-center text-dark-200 shadow-lg border border-white">
+          <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-xl bg-gradient-to-br from-gray-500 to-dark-700 flex items-center justify-center text-dark-200 shadow-lg border border-white flex-shrink-0">
             <BookIcon />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-dark-50">Learn Algorithms</h1>
-            <p className="text-white text-sm">Interactive algorithm visualization and learning</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-dark-50">Learn Algorithms</h1>
+            <p className="text-white text-xs sm:text-sm">Interactive algorithm visualization and learning</p>
           </div>
         </motion.div>
 
@@ -179,15 +179,15 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-6 mb-6"
+          className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-xl sm:rounded-2xl p-3 sm:p-6 mb-4 sm:mb-6"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div>
-              <label className="block text-sm font-medium text-white mb-2">Algorithm</label>
-              <select
-                value={selectedAlgorithm}
-                onChange={(e) => setSelectedAlgorithm(e.target.value)}
-                className="w-full px-4 py-3 bg-dark-900/60 border border-white rounded-xl text-dark-100 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
+          {/* Algorithm Selection */}
+          <div className="mb-3 sm:mb-4">
+            <label className="block text-xs sm:text-sm font-medium text-white mb-2">Algorithm</label>
+            <select
+              value={selectedAlgorithm}
+              onChange={(e) => setSelectedAlgorithm(e.target.value)}
+              className="w-full px-2.5 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border border-white rounded-lg text-xs sm:text-sm text-dark-100 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
               >
                 <optgroup label="Simple Sorts (O(n²))">
                   <option value="bubble">Bubble Sort</option>
@@ -221,57 +221,58 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-white mb-2">Custom Array</label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={customInput}
-                  onChange={(e) => setCustomInput(e.target.value)}
-                  className="flex-1 px-4 py-3 bg-dark-900/60 border border-white rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
-                  placeholder="e.g., 5, 3, 8, 1, 9"
-                />
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleCustomInput}
-                  className="px-5 py-3 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-xl border border-white transition-all duration-300"
-                >
-                  Set
-                </motion.button>
-              </div>
-            </div>
+          {/* Custom Array Input */}
+          <div className="mb-3 sm:mb-4">
+            <label className="block text-xs sm:text-sm font-medium text-white mb-2">Custom Array</label>
+            <input
+              type="text"
+              value={customInput}
+              onChange={(e) => setCustomInput(e.target.value)}
+              className="w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border border-white rounded-lg text-xs sm:text-sm text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300 mb-2"
+              placeholder="e.g., 5,3,8"
+            />
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleCustomInput}
+              className="w-full px-2 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 text-xs sm:text-sm"
+            >
+              Set Array
+            </motion.button>
+          </div>
 
-            {['binary', 'linear', 'jump', 'interpolation', 'exponential'].includes(selectedAlgorithm) && (
-              <div>
-                <label className="block text-sm font-medium text-white mb-2">Search Target</label>
-                <input
-                  type="number"
-                  value={searchTarget}
-                  onChange={(e) => setSearchTarget(e.target.value)}
-                  className="w-full px-4 py-3 bg-dark-900/60 border border-dark-600/50 rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-dark-500/50 focus:border-dark-500/50 transition-all duration-300"
-                  placeholder="Enter target value"
-                />
-              </div>
-            )}
-
-            <div>
-              <label className="block text-sm font-medium text-white mb-2">Random Array</label>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleGenerateArray}
-                className="w-full px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-medium rounded-xl shadow-lg shadow-emerald-500/10 transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <ShuffleIcon />
-                Generate Random
-              </motion.button>
+          {/* Search Target Input - Conditional */}
+          {['binary', 'linear', 'jump', 'interpolation', 'exponential'].includes(selectedAlgorithm) && (
+            <div className="mb-3 sm:mb-4">
+              <label className="block text-xs sm:text-sm font-medium text-white mb-2">Search Target</label>
+              <input
+                type="number"
+                value={searchTarget}
+                onChange={(e) => setSearchTarget(e.target.value)}
+                className="w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border border-dark-600/50 rounded-lg text-xs sm:text-sm text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-dark-500/50 focus:border-dark-500/50 transition-all duration-300"
+                placeholder="Target value"
+              />
             </div>
+          )}
+
+          {/* Generate Random Array Button */}
+          <div className="mb-3 sm:mb-4">
+            <label className="block text-xs sm:text-sm font-medium text-white mb-2">Random Array</label>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleGenerateArray}
+              className="w-full px-2 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-medium rounded-lg shadow-lg shadow-emerald-500/10 transition-all duration-300 flex items-center justify-center gap-1 text-xs sm:text-sm"
+            >
+              <ShuffleIcon />
+              <span className="hidden sm:inline">Generate</span>
+              <span className="sm:hidden">Gen</span>
+            </motion.button>
           </div>
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Visualization Panel */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -279,22 +280,23 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             transition={{ delay: 0.2 }}
             className="lg:col-span-2"
           >
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl overflow-hidden">
+            <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-xl sm:rounded-2xl overflow-hidden">
               {/* Panel Header */}
-              <div className="px-6 py-4 border-b border-white bg-gradient-to-r from-dark-800/60 to-dark-900/60">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-lg font-semibold text-dark-100">{currentAlgo.name}</h2>
-                    <p className="text-white text-sm mt-1">{currentAlgo.description}</p>
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-white bg-gradient-to-r from-dark-800/60 to-dark-900/60">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
+                  <div className="min-w-0 flex-1">
+                    <h2 className="text-base sm:text-lg font-semibold text-dark-100 truncate">{currentAlgo.name}</h2>
+                    <p className="text-white text-xs sm:text-sm mt-1 line-clamp-2">{currentAlgo.description}</p>
                   </div>
-                  <span className="px-3 py-1.5 rounded-lg bg-dark-700/50 text-white text-sm font-medium border border-dark-600/30">
+                  <span className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-dark-700/50 text-white text-xs sm:text-sm font-medium border border-dark-600/30 whitespace-nowrap flex-shrink-0">
                     {currentAlgo.complexity}
                   </span>
                 </div>
               </div>
 
               {/* Visualization Area */}
-              <div className="p-6">
+              <div className="p-3 sm:p-6 overflow-x-auto">
+
                 {currentStepData ? (
                   <SmartVisualizer
                     algorithmType={currentAlgo.type}
@@ -324,14 +326,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
               </div>
 
               {/* Controls */}
-              <div className="px-6 pb-6 space-y-4">
+              <div className="px-3 sm:px-6 pb-3 sm:pb-4 space-y-2 sm:space-y-3">
                 {/* Playback Controls */}
-                <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={isPlaying ? controls.pause : controls.play}
-                    className="px-5 py-2.5 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-xl border border-white transition-all duration-300 flex items-center gap-2"
+                    className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 flex items-center gap-1 text-xs sm:text-sm"
                   >
                     {isPlaying ? <PauseIcon /> : <PlayIcon />}
                     {isPlaying ? 'Pause' : 'Play'}
@@ -341,43 +343,43 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.stepBackward}
                     disabled={currentStep <= 0}
-                    className="px-4 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-xl border border-white transition-all duration-300 flex items-center gap-1"
+                    className="px-2 sm:px-3 py-1.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-xs sm:text-sm"
                   >
-                    <ChevronLeftIcon /> Prev
+                    <ChevronLeftIcon /> <span className="hidden sm:inline">Prev</span>
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.stepForward}
                     disabled={currentStep >= totalSteps - 1}
-                    className="px-4 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-xl border border-white transition-all duration-300 flex items-center gap-1"
+                    className="px-2 sm:px-3 py-1.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-xs sm:text-sm"
                   >
-                    Next <ChevronRightIcon />
+                    <span className="hidden sm:inline">Next</span> <ChevronRightIcon />
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.reset}
-                    className="px-4 py-2.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-xl border border-red-500/30 transition-all duration-300 flex items-center gap-2"
+                    className="px-2 sm:px-3 py-1.5 sm:py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg border border-red-500/30 transition-all duration-300 flex items-center gap-0.5 text-xs sm:text-sm"
                   >
-                    <RefreshIcon /> Reset
+                    <RefreshIcon /> <span className="hidden sm:inline">Reset</span>
                   </motion.button>
                 </div>
 
                 {/* Speed Control with +/- buttons */}
-                <div className="flex items-center gap-4 p-4 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                  <span className="text-sm font-medium text-white">Speed:</span>
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 sm:gap-2 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30 flex-wrap">
+                  <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">Speed:</span>
+                  <div className="flex items-center gap-1">
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={decreaseSpeed}
                       disabled={speedMultiplier === speedOptions[0]}
-                      className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all"
+                      className="w-6 h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs"
                     >
                       <MinusIcon />
                     </motion.button>
-                    <span className="w-16 text-center text-dark-100 font-semibold text-lg">
+                    <span className="w-8 text-center text-dark-100 font-semibold text-xs sm:text-sm">
                       {speedMultiplier}x
                     </span>
                     <motion.button
@@ -385,17 +387,18 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       whileTap={{ scale: 0.9 }}
                       onClick={increaseSpeed}
                       disabled={speedMultiplier === speedOptions[speedOptions.length - 1]}
-                      className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all"
+                      className="w-6 h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs"
                     >
                       <PlusIcon />
                     </motion.button>
                   </div>
-                  <div className="flex gap-1 ml-4">
+                  {/* Speed options - hidden on mobile, shown on tablet and up */}
+                  <div className="hidden sm:flex gap-0.5 ml-auto">
                     {speedOptions.map((opt) => (
                       <button
                         key={opt}
                         onClick={() => setSpeedMultiplier(opt)}
-                        className={`px-2 py-1 text-xs rounded-md transition-all ${speedMultiplier === opt
+                        className={`px-1.5 py-0.5 text-xs rounded-md transition-all ${speedMultiplier === opt
                           ? 'bg-dark-500 text-dark-100'
                           : 'bg-dark-800/50 text-white hover:bg-dark-700/50'
                           }`}
@@ -407,15 +410,15 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                 </div>
 
                 {/* Step Progress */}
-                <div className="flex items-center gap-4 p-4 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                  <span className="text-sm font-medium text-white whitespace-nowrap">Progress:</span>
-                  <div className="flex-1 h-2 bg-dark-700/50 rounded-full overflow-hidden">
+                <div className="flex items-center gap-1 sm:gap-3 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30">
+                  <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">Progress:</span>
+                  <div className="flex-1 h-1 sm:h-1.5 bg-dark-700/50 rounded-full overflow-hidden">
                     <motion.div
                       className="h-full bg-gradient-to-r from-dark-400 to-dark-300 rounded-full"
                       animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                     />
                   </div>
-                  <span className="text-sm text-white w-16 text-right">{currentStep + 1}/{totalSteps}</span>
+                  <span className="text-xs sm:text-sm text-white w-10 sm:w-12 text-right">{currentStep + 1}/{totalSteps}</span>
                 </div>
               </div>
             </div>
@@ -426,7 +429,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="space-y-5"
+            className="space-y-3 sm:space-y-5"
           >
             {/* Algorithm Info Card */}
             <div className="bg-dark-800/40 backdrop-blur-xl border border-white-700/40 rounded-2xl p-5">
