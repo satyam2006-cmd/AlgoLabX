@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SmartVisualizer from '../components/SmartVisualizer';
+import MergeTree from '../components/MergeTree';
 import { useStepPlayer } from '../engine/stepPlayer';
 import { getBubbleSortSteps, getQuickSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getHeapSortSteps, getCountingSortSteps, getRadixSortSteps, getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps, bfsSteps, dfsSteps, dijkstraSteps, knapsackSteps } from '../algorithms/comprehensiveAlgorithms';
 
@@ -295,31 +296,45 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
               {/* Visualization Area */}
               <div className="p-6">
-                {currentStepData ? (
-                  <SmartVisualizer
-                    algorithmType={currentAlgo.type}
-                    stepData={currentStepData}
-                    array={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? currentStepData.array : undefined}
-                    activeIndices={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? currentStepData.active : undefined}
-                    swappedIndices={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? (currentStepData.swapped ? currentStepData.active : []) : undefined}
-                    maxValue={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? (Math.max(...inputArray) + 10) : undefined}
-                  />
+                {selectedAlgorithm === 'merge' ? (
+                  currentStepData ? (
+                    <MergeTree
+                      currentStep={currentStepData}
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
+                      <p className="text-white">Start playback to see visualization</p>
+                    </div>
+                  )
                 ) : (
-                  <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                    <p className="text-white">No step data available</p>
-                  </div>
-                )}
+                  <>
+                    {currentStepData ? (
+                      <SmartVisualizer
+                        algorithmType={currentAlgo.type}
+                        stepData={currentStepData}
+                        array={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? currentStepData.array : undefined}
+                        activeIndices={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? currentStepData.active : undefined}
+                        swappedIndices={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? (currentStepData.swapped ? currentStepData.active : []) : undefined}
+                        maxValue={currentAlgo.type === 'sorting' || currentAlgo.type === 'searching' ? (Math.max(...inputArray) + 10) : undefined}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
+                        <p className="text-white">No step data available</p>
+                      </div>
+                    )}
 
-                {/* Step Description */}
-                {currentStepData && (
-                  <motion.div
-                    key={currentStep}
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 p-4 bg-dark-900/50 rounded-xl border border-white"
-                  >
-                    <p className="text-white text-sm">{currentStepData.description}</p>
-                  </motion.div>
+                    {/* Step Description */}
+                    {currentStepData && (
+                      <motion.div
+                        key={currentStep}
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-4 p-4 bg-dark-900/50 rounded-xl border border-white"
+                      >
+                        <p className="text-white text-sm">{currentStepData.description}</p>
+                      </motion.div>
+                    )}
+                  </>
                 )}
               </div>
 
@@ -418,6 +433,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   <span className="text-sm text-white w-16 text-right">{currentStep + 1}/{totalSteps}</span>
                 </div>
               </div>
+
             </div>
           </motion.div>
 

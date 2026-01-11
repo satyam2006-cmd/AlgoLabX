@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Learn from './pages/Learn';
 import Compare from './pages/Compare';
 import Experiment from './pages/Experiment';
+import MergeSortPage from './pages/MergeSortPage';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -25,6 +26,8 @@ function App() {
         return <Compare />;
       case 'experiment':
         return <Experiment />;
+      case 'merge-sort':
+        return <MergeSortPage />;
       default:
         return <Home setActiveTab={setActiveTab} />;
     }

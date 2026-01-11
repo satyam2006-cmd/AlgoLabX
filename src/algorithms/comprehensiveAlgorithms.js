@@ -2,19 +2,20 @@
 // All sorting, searching, and specialized algorithms
 
 // Sorting Algorithms
-export { 
+export {
   getBubbleSortSteps,
   getSelectionSortSteps,
   getInsertionSortSteps,
-  getMergeSortSteps,
   getQuickSortSteps,
   getHeapSortSteps,
   getCountingSortSteps,
   getRadixSortSteps
 } from './comprehensiveSorting.js';
 
+export { getMergeSortTreeSteps as getMergeSortSteps } from './mergeSortTree.js';
+
 // Searching Algorithms
-export { 
+export {
   getBinarySearchSteps,
   getLinearSearchSteps,
   getJumpSearchSteps,
@@ -70,19 +71,19 @@ export const algorithmFunctions = {
   getHeapSortSteps: (arr) => getHeapSortSteps(arr),
   getCountingSortSteps: (arr) => getCountingSortSteps(arr),
   getRadixSortSteps: (arr) => getRadixSortSteps(arr),
-  
+
   // Searching
   getBinarySearchSteps: (arr) => getBinarySearchSteps(arr),
   getLinearSearchSteps: (arr) => getLinearSearchSteps(arr),
   getJumpSearchSteps: (arr) => getJumpSearchSteps(arr),
   getInterpolationSearchSteps: (arr) => getInterpolationSearchSteps(arr),
   getExponentialSearchSteps: (arr) => getExponentialSearchSteps(arr),
-  
+
   // Graph
   bfsSteps: (arr) => bfsSteps(arr),
   dfsSteps: (arr) => dfsSteps(arr),
   dijkstraSteps: (arr) => dijkstraSteps(arr),
-  
+
   // Dynamic Programming
   knapsackSteps: (arr) => knapsackSteps(arr)
 };
