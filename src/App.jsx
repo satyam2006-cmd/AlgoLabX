@@ -49,7 +49,13 @@ function App() {
         {sidebarOpen && (
           <div 
             className="fixed inset-0 bg-black/50 lg:hidden z-40"
+            tabIndex={-1}
             onClick={() => setSidebarOpen(false)}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                setSidebarOpen(false);
+              }
+            }}
           />
         )}
         
