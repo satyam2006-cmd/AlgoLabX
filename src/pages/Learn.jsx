@@ -230,7 +230,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value)}
               className="w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border border-white rounded-lg text-xs sm:text-sm text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300 mb-2"
-              placeholder="e.g., 5,3,8"
+              placeholder="e.g., 5, 3, 8"
             />
             <motion.button
               whileHover={{ scale: 1.02 }}
