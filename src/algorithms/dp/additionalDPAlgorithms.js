@@ -1,5 +1,5 @@
 // Additional Dynamic Programming Algorithms
-// LCS, Edit Distance, Coin Change, Matrix Chain Multiplication, Rod Cutting
+// LCS, Edit Distance, Coin Change, Matrix Chain Multiplication, Rod Cutting, LIS, Fibonacci DP
 
 // Longest Common Subsequence (LCS)
 export function getLCSSteps(input) {
