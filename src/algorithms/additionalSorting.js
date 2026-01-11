@@ -14,6 +14,16 @@ export function getShellSortSteps(inputArr) {
     message: "Starting Shell Sort - an optimized insertion sort using gap sequences"
   });
 
+  // Handle empty array explicitly for consistency with other sorting algorithms
+  if (n === 0) {
+    steps.push({
+      array: [...arr],
+      active: [],
+      swapped: false,
+      message: "Shell Sort completed! Array is now sorted."
+    });
+    return steps;
+  }
   // Start with a big gap, then reduce
   for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
     steps.push({
