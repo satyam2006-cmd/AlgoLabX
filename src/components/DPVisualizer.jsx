@@ -77,7 +77,7 @@ const DPVisualizer = ({
               <th className="border border-white/20 bg-gray-700 text-white p-1 sm:p-2" style={{ width: '50px', minWidth: '50px' }}>
                 C
               </th>
-              {Array.from({ length: Math.min(10, maxCapacity) }, (_, i) => (
+              {Array.from({ length: maxCapacity }, (_, i) => (
                 <th
                   key={i}
                   className={`border border-white/20 text-white p-2 text-sm font-mono ${currentCapacity === i ? 'bg-[#366346ff]' : 'bg-gray-700'
