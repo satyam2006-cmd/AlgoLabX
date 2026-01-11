@@ -1,5 +1,5 @@
 // Additional Graph Algorithms
-// Bellman-Ford, Floyd-Warshall, Prim's MST, Kruskal's MST, Topological Sort
+// Bellman-Ford, Floyd-Warshall, Prim's MST, Kruskal's MST, Topological Sort, Cycle Detection
 
 // Helper to create nodes and edges from default graph
 function createGraphData() {
