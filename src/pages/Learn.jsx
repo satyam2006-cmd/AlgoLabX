@@ -3,7 +3,21 @@ import { motion } from 'framer-motion';
 import SmartVisualizer from '../components/SmartVisualizer';
 import MergeTree from '../components/MergeTree';
 import { useStepPlayer } from '../engine/stepPlayer';
-import { getBubbleSortSteps, getQuickSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getMergeSortTreeSteps, getHeapSortSteps, getCountingSortSteps, getRadixSortSteps, getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps, bfsSteps, dfsSteps, dijkstraSteps, knapsackSteps } from '../algorithms/comprehensiveAlgorithms';
+import { 
+  // Sorting
+  getBubbleSortSteps, getQuickSortSteps, getSelectionSortSteps, getInsertionSortSteps, 
+  getMergeSortSteps, getMergeSortTreeSteps, getHeapSortSteps, getCountingSortSteps, getRadixSortSteps,
+  getShellSortSteps, getBucketSortSteps, getCocktailSortSteps, getCombSortSteps, getGnomeSortSteps, getOddEvenSortSteps,
+  // Searching
+  getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps,
+  getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps, getTwoPointerSearchSteps, getSublistSearchSteps,
+  // Graph
+  bfsSteps, dfsSteps, dijkstraSteps,
+  getBellmanFordSteps, getFloydWarshallSteps, getPrimMSTSteps, getKruskalMSTSteps, getTopologicalSortSteps, getCycleDetectionSteps,
+  // DP
+  knapsackSteps,
+  getLCSSteps, getEditDistanceSteps, getCoinChangeSteps, getMatrixChainSteps, getRodCuttingSteps, getLISSteps, getFibonacciDPSteps
+} from '../algorithms/comprehensiveAlgorithms';
 
 // Icon Components
 const BookIcon = () => (
@@ -90,29 +104,58 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
   const speed = baseSpeed / speedMultiplier;
 
   const algorithms = {
+    // Simple Sorts
     bubble: { name: 'Bubble Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getBubbleSortSteps, description: 'Simple sorting algorithm that repeatedly steps through list, compares adjacent elements and swaps them if they are in wrong order.' },
     selection: { name: 'Selection Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getSelectionSortSteps, description: 'Simple sorting algorithm that divides input into sorted and unsorted regions, repeatedly selecting smallest element.' },
     insertion: { name: 'Insertion Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getInsertionSortSteps, description: 'Simple sorting algorithm that builds final sorted array one item at a time by inserting each element into its proper position.' },
+    cocktail: { name: 'Cocktail Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getCocktailSortSteps, description: 'Bidirectional bubble sort that traverses the list in both directions alternately.' },
+    gnome: { name: 'Gnome Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getGnomeSortSteps, description: 'Simple sorting algorithm similar to insertion sort, but moving elements to proper position by swaps.' },
+    comb: { name: 'Comb Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getCombSortSteps, description: 'Improvement over bubble sort using gap sequence to eliminate small values near the end.' },
+    oddeven: { name: 'Odd-Even Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getOddEvenSortSteps, description: 'Parallel sorting algorithm that compares odd-even indexed pairs, then even-odd pairs alternately.' },
+    // Efficient Sorts
     merge: { name: 'Merge Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getMergeSortTreeSteps, description: 'Efficient divide-and-conquer sorting algorithm that divides array into halves, sorts them, and merges them back together.' },
     quick: { name: 'Quick Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getQuickSortSteps, description: 'Efficient sorting algorithm using divide-and-conquer strategy. Picks a pivot element and partitions array around it.' },
     heap: { name: 'Heap Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getHeapSortSteps, description: 'Efficient sorting algorithm that uses a binary heap data structure to sort elements in place.' },
-    binary: { name: 'Binary Search', complexity: 'O(log n)', type: 'searching', getSteps: getBinarySearchSteps, description: 'Efficient search algorithm that works on sorted arrays by repeatedly dividing the search interval in half.' },
-    bfs: { name: 'BFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: bfsSteps, description: 'Graph traversal algorithm that explores neighbors of nodes level by level, starting from a source node.' },
-    dfs: { name: 'DFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: dfsSteps, description: 'Graph traversal algorithm that explores as far as possible along each branch before backtracking.' },
-    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, description: 'Shortest path algorithm that finds the shortest paths from a source to all other nodes in a weighted graph.' },
-    knapsack: { name: '0/1 Knapsack', complexity: 'O(nW)', type: 'dp', getSteps: knapsackSteps, description: 'Dynamic programming algorithm that solves optimization problem of selecting items with maximum value under weight constraints.' },
+    shell: { name: 'Shell Sort', complexity: 'O(n log² n)', type: 'sorting', getSteps: getShellSortSteps, description: 'Generalization of insertion sort that allows exchange of far apart elements using gap sequences.' },
+    // Non-Comparison Sorts
     counting: { name: 'Counting Sort', complexity: 'O(n + k)', type: 'sorting', getSteps: getCountingSortSteps, description: 'Non-comparison sorting algorithm that sorts elements by counting occurrences of each distinct element.' },
     radix: { name: 'Radix Sort', complexity: 'O(d × (n + k))', type: 'sorting', getSteps: getRadixSortSteps, description: 'Non-comparison sorting algorithm that sorts integers by processing individual digits.' },
+    bucket: { name: 'Bucket Sort', complexity: 'O(n + k)', type: 'sorting', getSteps: getBucketSortSteps, description: 'Distribution sorting algorithm that distributes elements into buckets, sorts them, then concatenates.' },
+    // Searching
+    binary: { name: 'Binary Search', complexity: 'O(log n)', type: 'searching', getSteps: getBinarySearchSteps, description: 'Efficient search algorithm that works on sorted arrays by repeatedly dividing the search interval in half.' },
     linear: { name: 'Linear Search', complexity: 'O(n)', type: 'searching', getSteps: getLinearSearchSteps, description: 'Sequential search algorithm that checks each element in order until the target is found.' },
     jump: { name: 'Jump Search', complexity: 'O(√n)', type: 'searching', getSteps: getJumpSearchSteps, description: 'Search algorithm that jumps ahead by fixed steps to find the range, then performs linear search.' },
     interpolation: { name: 'Interpolation Search', complexity: 'O(log log n)', type: 'searching', getSteps: getInterpolationSearchSteps, description: 'Search algorithm that estimates the position based on the value distribution.' },
-    exponential: { name: 'Exponential Search', complexity: 'O(log n)', type: 'searching', getSteps: getExponentialSearchSteps, description: 'Search algorithm that finds the range by exponential steps, then performs binary search.' }
+    exponential: { name: 'Exponential Search', complexity: 'O(log n)', type: 'searching', getSteps: getExponentialSearchSteps, description: 'Search algorithm that finds the range by exponential steps, then performs binary search.' },
+    ternary: { name: 'Ternary Search', complexity: 'O(log₃ n)', type: 'searching', getSteps: getTernarySearchSteps, description: 'Divide-and-conquer search algorithm that divides array into three parts instead of two.' },
+    fibonacci: { name: 'Fibonacci Search', complexity: 'O(log n)', type: 'searching', getSteps: getFibonacciSearchSteps, description: 'Search algorithm that divides array using Fibonacci numbers instead of halving.' },
+    sentinel: { name: 'Sentinel Search', complexity: 'O(n)', type: 'searching', getSteps: getSentinelSearchSteps, description: 'Linear search variant that places target at end to reduce boundary checking.' },
+    twopointer: { name: 'Two Pointer Search', complexity: 'O(n)', type: 'searching', getSteps: getTwoPointerSearchSteps, description: 'Search technique using two pointers converging from both ends (finds pairs summing to target).' },
+    // Graph Algorithms
+    bfs: { name: 'BFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: bfsSteps, description: 'Graph traversal algorithm that explores neighbors of nodes level by level, starting from a source node.' },
+    dfs: { name: 'DFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: dfsSteps, description: 'Graph traversal algorithm that explores as far as possible along each branch before backtracking.' },
+    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, description: 'Shortest path algorithm that finds the shortest paths from a source to all other nodes in a weighted graph.' },
+    bellmanford: { name: 'Bellman-Ford', complexity: 'O(VE)', type: 'graph', getSteps: getBellmanFordSteps, description: 'Single-source shortest path algorithm that handles negative edge weights and detects negative cycles.' },
+    floydwarshall: { name: 'Floyd-Warshall', complexity: 'O(V³)', type: 'graph', getSteps: getFloydWarshallSteps, description: 'All-pairs shortest path algorithm using dynamic programming.' },
+    prim: { name: 'Prim\'s MST', complexity: 'O((V + E) log V)', type: 'graph', getSteps: getPrimMSTSteps, description: 'Greedy algorithm that finds minimum spanning tree by growing from a starting vertex.' },
+    kruskal: { name: 'Kruskal\'s MST', complexity: 'O(E log E)', type: 'graph', getSteps: getKruskalMSTSteps, description: 'Greedy algorithm that finds minimum spanning tree by sorting edges and using union-find.' },
+    topological: { name: 'Topological Sort', complexity: 'O(V + E)', type: 'graph', getSteps: getTopologicalSortSteps, description: 'Linear ordering of vertices in a DAG such that for every edge u→v, u comes before v.' },
+    cycledetect: { name: 'Cycle Detection', complexity: 'O(V + E)', type: 'graph', getSteps: getCycleDetectionSteps, description: 'DFS-based algorithm to detect cycles in a directed graph using three-color marking.' },
+    // Dynamic Programming
+    knapsack: { name: '0/1 Knapsack', complexity: 'O(nW)', type: 'dp', getSteps: knapsackSteps, description: 'Dynamic programming algorithm that solves optimization problem of selecting items with maximum value under weight constraints.' },
+    lcs: { name: 'Longest Common Subsequence', complexity: 'O(mn)', type: 'dp', getSteps: getLCSSteps, description: 'Find the longest subsequence common to two sequences.' },
+    editdistance: { name: 'Edit Distance', complexity: 'O(mn)', type: 'dp', getSteps: getEditDistanceSteps, description: 'Minimum number of operations (insert, delete, replace) to transform one string into another.' },
+    coinchange: { name: 'Coin Change', complexity: 'O(n×amount)', type: 'dp', getSteps: getCoinChangeSteps, description: 'Find minimum number of coins needed to make a given amount.' },
+    matrixchain: { name: 'Matrix Chain Multiplication', complexity: 'O(n³)', type: 'dp', getSteps: getMatrixChainSteps, description: 'Find optimal parenthesization for matrix chain multiplication.' },
+    rodcutting: { name: 'Rod Cutting', complexity: 'O(n²)', type: 'dp', getSteps: getRodCuttingSteps, description: 'Maximize profit by cutting rod into pieces with given prices.' },
+    lis: { name: 'Longest Increasing Subsequence', complexity: 'O(n²)', type: 'dp', getSteps: getLISSteps, description: 'Find the longest subsequence where elements are in increasing order.' },
+    fibonaccidp: { name: 'Fibonacci DP', complexity: 'O(n)', type: 'dp', getSteps: getFibonacciDPSteps, description: 'Computing Fibonacci numbers using dynamic programming (memoization/tabulation).' }
   };
 
   const currentAlgo = algorithms[selectedAlgorithm];
 
   let stepsInput = inputArray;
-  if (['binary', 'linear', 'jump', 'interpolation', 'exponential'].includes(selectedAlgorithm)) {
+  if (['binary', 'linear', 'jump', 'interpolation', 'exponential', 'ternary', 'fibonacci', 'sentinel', 'twopointer'].includes(selectedAlgorithm)) {
     const target = parseInt(searchTarget);
     if (!isNaN(target)) {
       stepsInput = [...inputArray, target];
@@ -194,15 +237,21 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   <option value="bubble">Bubble Sort</option>
                   <option value="selection">Selection Sort</option>
                   <option value="insertion">Insertion Sort</option>
+                  <option value="cocktail">Cocktail Sort</option>
+                  <option value="gnome">Gnome Sort</option>
+                  <option value="comb">Comb Sort</option>
+                  <option value="oddeven">Odd-Even Sort</option>
                 </optgroup>
                 <optgroup label="Efficient Sorts (O(n log n))">
                   <option value="merge">Merge Sort</option>
                   <option value="quick">Quick Sort</option>
                   <option value="heap">Heap Sort</option>
+                  <option value="shell">Shell Sort</option>
                 </optgroup>
                 <optgroup label="Non-Comparison Sorts">
                   <option value="counting">Counting Sort</option>
                   <option value="radix">Radix Sort</option>
+                  <option value="bucket">Bucket Sort</option>
                 </optgroup>
                 <optgroup label="Search Algorithms">
                   <option value="binary">Binary Search</option>
@@ -210,14 +259,31 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   <option value="jump">Jump Search</option>
                   <option value="interpolation">Interpolation Search</option>
                   <option value="exponential">Exponential Search</option>
+                  <option value="ternary">Ternary Search</option>
+                  <option value="fibonacci">Fibonacci Search</option>
+                  <option value="sentinel">Sentinel Search</option>
+                  <option value="twopointer">Two Pointer Search</option>
                 </optgroup>
                 <optgroup label="Graph Algorithms">
                   <option value="bfs">BFS Traversal</option>
                   <option value="dfs">DFS Traversal</option>
                   <option value="dijkstra">Dijkstra's Algorithm</option>
+                  <option value="bellmanford">Bellman-Ford</option>
+                  <option value="floydwarshall">Floyd-Warshall</option>
+                  <option value="prim">Prim's MST</option>
+                  <option value="kruskal">Kruskal's MST</option>
+                  <option value="topological">Topological Sort</option>
+                  <option value="cycledetect">Cycle Detection</option>
                 </optgroup>
                 <optgroup label="Dynamic Programming">
                   <option value="knapsack">0/1 Knapsack</option>
+                  <option value="lcs">Longest Common Subsequence</option>
+                  <option value="editdistance">Edit Distance</option>
+                  <option value="coinchange">Coin Change</option>
+                  <option value="matrixchain">Matrix Chain Multiplication</option>
+                  <option value="rodcutting">Rod Cutting</option>
+                  <option value="lis">Longest Increasing Subsequence</option>
+                  <option value="fibonaccidp">Fibonacci DP</option>
                 </optgroup>
               </select>
             </div>
@@ -243,7 +309,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
           </div>
 
           {/* Search Target Input - Conditional */}
-          {['binary', 'linear', 'jump', 'interpolation', 'exponential'].includes(selectedAlgorithm) && (
+          {['binary', 'linear', 'jump', 'interpolation', 'exponential', 'ternary', 'fibonacci', 'sentinel', 'twopointer'].includes(selectedAlgorithm) && (
             <div className="mb-3 sm:mb-4">
               <label className="block text-xs sm:text-sm font-medium text-white mb-2">Search Target</label>
               <input
@@ -325,14 +391,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     )}
 
                     {/* Step Description */}
-                    {currentStepData && (
+                    {currentStepData && (currentStepData.description || currentStepData.message) && (
                       <motion.div
                         key={currentStep}
                         initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mt-4 p-4 bg-dark-900/50 rounded-xl border border-white"
+                        className="mt-4 p-3 sm:p-4 bg-dark-900/50 rounded-xl border border-white"
                       >
-                        <p className="text-white text-sm">{currentStepData.description}</p>
+                        <p className="text-white text-xs sm:text-sm break-words">{currentStepData.description || currentStepData.message}</p>
                       </motion.div>
                     )}
                   </>

@@ -5,10 +5,10 @@ A comprehensive web application for visualizing and learning algorithms through 
 ## 🚀 Features
 
 ### 📊 Algorithm Categories
-- **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Counting Sort, Radix Sort
-- **Search Algorithms**: Binary Search, Linear Search, Jump Search, Interpolation Search, Exponential Search
-- **Graph Algorithms**: BFS Traversal, DFS Traversal, Dijkstra's Algorithm
-- **Dynamic Programming**: 0/1 Knapsack Problem
+- **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Shell Sort, Counting Sort, Radix Sort, Bucket Sort, Cocktail Sort, Comb Sort, Gnome Sort, Odd-Even Sort
+- **Search Algorithms**: Binary Search, Linear Search, Jump Search, Interpolation Search, Exponential Search, Ternary Search, Fibonacci Search, Sentinel Search, Two-Pointer Search
+- **Graph Algorithms**: BFS Traversal, DFS Traversal, Dijkstra's Algorithm, Bellman-Ford, Floyd-Warshall, Prim's MST, Kruskal's MST, Topological Sort, Cycle Detection
+- **Dynamic Programming**: 0/1 Knapsack, Longest Common Subsequence, Edit Distance, Coin Change, Matrix Chain Multiplication, Rod Cutting, Longest Increasing Subsequence, Fibonacci DP
 
 ### 🎨 Specialized Visualizers
 - **ArrayVisualizer**: Bar chart visualizations for sorting and searching algorithms
@@ -45,14 +45,18 @@ A comprehensive web application for visualizing and learning algorithms through 
 src/
 ├── algorithms/           # Algorithm implementations
 │   ├── comprehensiveAlgorithms.js  # Central algorithm registry
-│   ├── comprehensiveSorting.js     # All sorting algorithms
-│   ├── comprehensiveSearching.js   # All searching algorithms
+│   ├── comprehensiveSorting.js     # Core sorting algorithms
+│   ├── comprehensiveSearching.js   # Core searching algorithms
+│   ├── additionalSorting.js        # Extended sorting algorithms
+│   ├── additionalSearching.js      # Extended searching algorithms
 │   ├── graph/                      # Graph algorithms
 │   │   ├── bfsSteps.js
 │   │   ├── dfsSteps.js
-│   │   └── dijkstraSteps.js
+│   │   ├── dijkstraSteps.js
+│   │   └── additionalGraphAlgorithms.js  # Bellman-Ford, Floyd-Warshall, MST, etc.
 │   └── dp/                         # Dynamic programming
-│       └── knapsackSteps.js
+│       ├── knapsackSteps.js
+│       └── additionalDPAlgorithms.js     # LCS, Edit Distance, Coin Change, etc.
 ├── components/          # React components
 │   ├── SmartVisualizer.jsx         # Main visualizer router
 │   ├── GraphVisualizer.jsx         # Graph visualization
@@ -128,8 +132,14 @@ npm run build
 - **Merge Sort**: O(n log n) - Divide and conquer approach
 - **Quick Sort**: O(n log n) - Partition-based sorting
 - **Heap Sort**: O(n log n) - Uses heap data structure
+- **Shell Sort**: O(n log² n) - Improved insertion sort with gap sequences
 - **Counting Sort**: O(n+k) - Non-comparison based
 - **Radix Sort**: O(d×(n+k)) - Digit by digit sorting
+- **Bucket Sort**: O(n+k) - Distribution-based sorting
+- **Cocktail Sort**: O(n²) - Bidirectional bubble sort
+- **Comb Sort**: O(n²) - Improved bubble sort with shrinking gap
+- **Gnome Sort**: O(n²) - Simple sorting similar to insertion sort
+- **Odd-Even Sort**: O(n²) - Parallel-friendly sorting
 
 #### Search Algorithms
 - **Binary Search**: O(log n) - Requires sorted array
@@ -137,14 +147,31 @@ npm run build
 - **Jump Search**: O(√n) - Block-based search
 - **Interpolation Search**: O(log log n) - Position-based search
 - **Exponential Search**: O(log n) - Range-based search
+- **Ternary Search**: O(log₃ n) - Divides array into three parts
+- **Fibonacci Search**: O(log n) - Uses Fibonacci numbers to divide array
+- **Sentinel Search**: O(n) - Optimized linear search
+- **Two-Pointer Search**: O(n) - Finds pairs with given sum
 
 #### Graph Algorithms
 - **BFS**: O(V+E) - Level-order traversal
 - **DFS**: O(V+E) - Depth-order traversal
-- **Dijkstra**: O((V+E) log V) - Shortest path finding
+- **Dijkstra**: O((V+E) log V) - Single-source shortest path
+- **Bellman-Ford**: O(VE) - Handles negative edge weights
+- **Floyd-Warshall**: O(V³) - All-pairs shortest path
+- **Prim's MST**: O((V+E) log V) - Minimum spanning tree (greedy)
+- **Kruskal's MST**: O(E log E) - Minimum spanning tree (union-find)
+- **Topological Sort**: O(V+E) - Linear ordering of DAG vertices
+- **Cycle Detection**: O(V+E) - Detects cycles in directed graphs
 
 #### Dynamic Programming
 - **0/1 Knapsack**: O(nW) - Optimization problem solving
+- **Longest Common Subsequence**: O(mn) - Find longest common subsequence
+- **Edit Distance**: O(mn) - Minimum string transformations
+- **Coin Change**: O(n×amount) - Minimum coins for amount
+- **Matrix Chain Multiplication**: O(n³) - Optimal parenthesization
+- **Rod Cutting**: O(n²) - Maximize profit by cutting rod
+- **Longest Increasing Subsequence**: O(n²) - Find longest increasing sequence
+- **Fibonacci DP**: O(n) - Computing Fibonacci using DP
 
 ## 🎨 Design Features
 
@@ -201,9 +228,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Statistics
 
-- **61 files** in the codebase
-- **13,416+ lines** of code
-- **18+ algorithms** implemented
+- **70+ files** in the codebase
+- **18,000+ lines** of code
+- **40+ algorithms** implemented
 - **4 specialized visualizers**
 - **Complete step-by-step animations** for all algorithms
 
