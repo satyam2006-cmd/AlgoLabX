@@ -10,7 +10,7 @@ import {
   getShellSortSteps, getBucketSortSteps, getCocktailSortSteps, getCombSortSteps, getGnomeSortSteps, getOddEvenSortSteps,
   // Searching
   getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps,
-  getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps, getTwoPointerSearchSteps,
+  getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps, getTwoPointerSearchSteps, getSublistSearchSteps,
   // Graph
   bfsSteps, dfsSteps, dijkstraSteps,
   getBellmanFordSteps, getFloydWarshallSteps, getPrimMSTSteps, getKruskalMSTSteps, getTopologicalSortSteps, getCycleDetectionSteps,
