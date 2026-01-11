@@ -6,13 +6,14 @@ export {
   getBubbleSortSteps,
   getSelectionSortSteps,
   getInsertionSortSteps,
+  getMergeSortSteps,
   getQuickSortSteps,
   getHeapSortSteps,
   getCountingSortSteps,
   getRadixSortSteps
 } from './comprehensiveSorting.js';
 
-export { getMergeSortTreeSteps as getMergeSortSteps } from './mergeSortTree.js';
+export { getMergeSortTreeSteps } from './mergeSortTree.js';
 
 // Searching Algorithms
 export {
