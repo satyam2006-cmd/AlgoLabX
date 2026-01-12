@@ -43,7 +43,7 @@ const PivotLabel = () => (
     </motion.div>
 );
 
-const QuickSort3D = ({ currentStep, isDone }) => {
+const QuickSort3D = ({ currentStep, isDone, isCompact = false }) => {
     if (!currentStep) return null;
 
     const {
@@ -66,7 +66,7 @@ const QuickSort3D = ({ currentStep, isDone }) => {
     };
 
     return (
-        <div className="w-full bg-[#050505] rounded-[2.5rem] border border-white overflow-hidden shadow-2xl p-8 md:p-12 relative flex flex-col items-center justify-center min-h-[400px]">
+        <div className={`w-full bg-[#050505] rounded-[2.5rem] border border-white overflow-hidden shadow-2xl ${isCompact ? 'p-6 min-h-[300px]' : 'p-8 md:p-12 min-h-[400px]'} relative flex flex-col items-center justify-center`}>
             {/* Cinematic Overlay */}
             <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]" />
 

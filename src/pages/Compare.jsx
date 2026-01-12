@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SmartVisualizer from '../components/SmartVisualizer';
+import HeapSortVisualizer from '../components/HeapSortVisualizer';
+import QuickSortVisualizer from '../components/QuickSort3D'; // 2D Tile Implementation
 import { useStepPlayer } from '../engine/stepPlayer';
 import {
   getBubbleSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getMergeSortTreeSteps,
-  getQuickSortSteps, getHeapSortSteps, getCountingSortSteps, getRadixSortSteps,
+  getCountingSortSteps, getRadixSortSteps,
   getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps
 } from '../algorithms/comprehensiveAlgorithms';
+import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
+import { getQuickSort3DSteps as getQuickSortDetailedSteps } from '../algorithms/quickSort3D';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 // Icon Components
@@ -82,8 +86,8 @@ const Compare = () => {
     selection: { name: 'Selection Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getSelectionSortSteps, color: '#f59e0b' },
     insertion: { name: 'Insertion Sort', complexity: 'O(n²)', type: 'sorting', getSteps: getInsertionSortSteps, color: '#8b5cf6' },
     merge: { name: 'Merge Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getMergeSortTreeSteps, color: '#10b981' },
-    quick: { name: 'Quick Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getQuickSortSteps, color: '#a1a1ab' },
-    heap: { name: 'Heap Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getHeapSortSteps, color: '#ec4899' },
+    quick: { name: 'Quick Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getQuickSortDetailedSteps, color: '#a1a1ab' },
+    heap: { name: 'Heap Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getHeapSortDetailedSteps, color: '#ec4899' },
     counting: { name: 'Counting Sort', complexity: 'O(n + k)', type: 'sorting', getSteps: getCountingSortSteps, color: '#f97316' },
     radix: { name: 'Radix Sort', complexity: 'O(d × (n + k))', type: 'sorting', getSteps: getRadixSortSteps, color: '#a855f7' },
     binary: { name: 'Binary Search', complexity: 'O(log n)', type: 'searching', getSteps: getBinarySearchSteps, color: '#3f3f48' },
@@ -331,11 +335,17 @@ const Compare = () => {
             </div>
             <div className="p-6">
               {data1 && (
-                <SmartVisualizer algorithmType={algorithms[algo1].type} stepData={data1} array={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? data1.array : undefined} activeIndices={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? data1.active : undefined} swappedIndices={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? (data1.swapped ? data1.active : []) : undefined} maxValue={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? (Math.max(...inputArray) + 10) : undefined} />
+                algo1 === 'heap' ? (
+                  <HeapSortVisualizer currentStep={data1} isCompact={true} />
+                ) : algo1 === 'quick' ? (
+                  <QuickSortVisualizer currentStep={data1} isCompact={true} />
+                ) : (
+                  <SmartVisualizer algorithmType={algorithms[algo1].type} stepData={data1} array={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? data1.array : undefined} activeIndices={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? data1.active : undefined} swappedIndices={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? (data1.swapped ? data1.active : []) : undefined} maxValue={algorithms[algo1].type === 'sorting' || algorithms[algo1].type === 'searching' ? (Math.max(...inputArray) + 10) : undefined} />
+                )
               )}
-              {data1 && data1.description && (
+              {data1 && (data1.message || data1.description) && (
                 <div className="mt-4 p-3 bg-dark-900/50 rounded-xl border border-dark-700/30">
-                  <p className="text-white text-sm">{data1.description}</p>
+                  <p className="text-white text-sm">{data1.message || data1.description}</p>
                 </div>
               )}
             </div>
@@ -354,11 +364,17 @@ const Compare = () => {
             </div>
             <div className="p-6">
               {data2 && (
-                <SmartVisualizer algorithmType={algorithms[algo2].type} stepData={data2} array={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? data2.array : undefined} activeIndices={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? data2.active : undefined} swappedIndices={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? (data2.swapped ? data2.active : []) : undefined} maxValue={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? (Math.max(...inputArray) + 10) : undefined} />
+                algo2 === 'heap' ? (
+                  <HeapSortVisualizer currentStep={data2} isCompact={true} />
+                ) : algo2 === 'quick' ? (
+                  <QuickSortVisualizer currentStep={data2} isCompact={true} />
+                ) : (
+                  <SmartVisualizer algorithmType={algorithms[algo2].type} stepData={data2} array={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? data2.array : undefined} activeIndices={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? data2.active : undefined} swappedIndices={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? (data2.swapped ? data2.active : []) : undefined} maxValue={algorithms[algo2].type === 'sorting' || algorithms[algo2].type === 'searching' ? (Math.max(...inputArray) + 10) : undefined} />
+                )
               )}
-              {data2 && data2.description && (
+              {data2 && (data2.message || data2.description) && (
                 <div className="mt-4 p-3 bg-dark-900/50 rounded-xl border border-dark-700/30">
-                  <p className="text-white text-sm">{data2.description}</p>
+                  <p className="text-white text-sm">{data2.message || data2.description}</p>
                 </div>
               )}
             </div>

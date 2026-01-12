@@ -4,7 +4,9 @@ import SmartVisualizer from '../components/SmartVisualizer';
 import QuickSort2D from '../components/QuickSort2D';
 import MergeTree from '../components/MergeTree';
 import QuickSort3D from '../components/QuickSort3D';
+import HeapSortVisualizer from '../components/HeapSortVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
+import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
 import {
   // Sorting
   getBubbleSortSteps, getQuickSortSteps, getSelectionSortSteps, getInsertionSortSteps,
@@ -118,7 +120,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
     // Efficient Sorts
     merge: { name: 'Merge Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getMergeSortTreeSteps, description: 'Efficient divide-and-conquer sorting algorithm that divides array into halves, sorts them, and merges them back together.' },
     quick: { name: 'Quick Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getQuickSort3DSteps, description: 'High-quality 3D visualized divide-and-conquer sorting algorithm. Picks a pivot element and partitions array around it.' },
-    heap: { name: 'Heap Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getHeapSortSteps, description: 'Efficient sorting algorithm that uses a binary heap data structure to sort elements in place.' },
+    heap: { name: 'Heap Sort', complexity: 'O(n log n)', type: 'sorting', getSteps: getHeapSortDetailedSteps, description: 'Efficient sorting algorithm that uses a binary heap data structure to sort elements in place.' },
     shell: { name: 'Shell Sort', complexity: 'O(n log² n)', type: 'sorting', getSteps: getShellSortSteps, description: 'Generalization of insertion sort that allows exchange of far apart elements using gap sequences.' },
     // Non-Comparison Sorts
     counting: { name: 'Counting Sort', complexity: 'O(n + k)', type: 'sorting', getSteps: getCountingSortSteps, description: 'Non-comparison sorting algorithm that sorts elements by counting occurrences of each distinct element.' },
@@ -391,6 +393,16 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     <QuickSort3D
                       currentStep={currentStepData}
                       isDone={currentStepData.phase === 'done'}
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
+                      <p className="text-white">Start playback to see visualization</p>
+                    </div>
+                  )
+                ) : selectedAlgorithm === 'heap' ? (
+                  currentStepData ? (
+                    <HeapSortVisualizer
+                      currentStep={currentStepData}
                     />
                   ) : (
                     <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
