@@ -104,11 +104,6 @@ const SmartVisualizer = ({
               activeIndices={stepData?.active || []}
               pointerIndex={stepData?.pointerIndex || -1}
               targetIndex={stepData?.targetIndex || -1}
-              foundIndex={stepData?.foundIndex}
-              found={stepData?.found}
-              target={stepData?.target}
-              left={stepData?.left}
-              right={stepData?.right}
               maxValue={props.maxValue || 100}
             />
           </div>
