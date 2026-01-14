@@ -48,7 +48,7 @@ const SmartVisualizer = ({
                   </motion.div>
                 </AnimatePresence>
               )}
-              
+
               <ArrayBlockVisualizer
                 array={props.array || stepData?.array || []}
                 activeIndices={props.activeIndices || stepData?.active || []}
@@ -60,12 +60,12 @@ const SmartVisualizer = ({
                   check: stepData?.checkIdx
                 }}
               />
-              
+
               {/* Array Indices - Like HeapSort */}
-              <div className="flex justify-center gap-1 sm:gap-2 px-2 flex-wrap">
+              <div className="flex justify-center gap-1 sm:gap-2 px-2 flex-nowrap overflow-x-hidden">
                 {(props.array || stepData?.array || []).map((_, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="text-white/50 text-[10px] sm:text-xs font-mono min-w-[2rem] sm:min-w-[3rem] text-center"
                   >
                     {idx}
@@ -113,7 +113,7 @@ const SmartVisualizer = ({
                 </motion.div>
               </AnimatePresence>
             )}
-            
+
             <SearchVisualizer
               array={stepData?.array || []}
               activeIndices={stepData?.active || []}
@@ -155,7 +155,7 @@ const SmartVisualizer = ({
                 </motion.div>
               </AnimatePresence>
             )}
-            
+
             <GraphVisualizer
               currentStep={stepData}
             />
@@ -179,7 +179,7 @@ const SmartVisualizer = ({
                 </motion.div>
               </AnimatePresence>
             )}
-            
+
             <DPVisualizer
               currentStep={stepData}
             />

@@ -56,7 +56,7 @@ const NodeRenderer = memo(({ node, nodes }) => {
                                 {item.value}
                             </motion.div>
                         ) : (
-                            <div key={`empty-${idx}`} className="w-10 h-10 border border-white/5 rounded-xl bg-transparent opacity-5" />
+                            <div key={`empty-${idx}`} className="w-10 h-10 border border-white/5 rounded-xl bg-rgba(0, 0, 0, 0) opacity-5" />
                         )
                     ))}
                 </AnimatePresence>
@@ -165,9 +165,9 @@ const QuickSortTree = ({ currentStep }) => {
                     w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 border
                     ${item ? (
                                             isRevealed
-                                                ? 'bg-transparent border-emerald-400 text-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.3)]'
+                                                ? 'bg-rgba(0, 0, 0, 0) border-emerald-400 text-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.3)]'
                                                 : 'bg-blue-600 border-blue-400 text-white shadow-md'
-                                        ) : 'bg-transparent border-white/5 opacity-10'}
+                                        ) : 'bg-rgba(0, 0, 0, 0) border-white/5 opacity-10'}
                   `}
                                 >
                                     {item && (

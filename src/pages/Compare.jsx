@@ -5,11 +5,14 @@ import HeapSortVisualizer from '../components/HeapSortVisualizer';
 import QuickSortVisualizer from '../components/QuickSort3D'; // 2D Tile Implementation
 import GraphVisualizer from '../components/GraphVisualizer';
 import DPVisualizer from '../components/DPVisualizer';
+import BinarySearchVisualizer from '../components/BinarySearchVisualizer';
+import LinearSearchVisualizer from '../components/LinearSearchVisualizer';
+import TwoPointerVisualizer from '../components/TwoPointerVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
 import {
   getBubbleSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getMergeSortTreeSteps,
   getCountingSortSteps, getRadixSortSteps,
-getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps,
+  getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps,
   getTwoPointerSearchSteps,
   getShellSortSteps, getBucketSortSteps, getCocktailSortSteps, getCombSortSteps, getGnomeSortSteps, getOddEvenSortSteps,
   getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps
@@ -239,7 +242,6 @@ const Compare = () => {
                   <option value="ternary">Ternary Search</option>
                   <option value="fibonacci">Fibonacci Search</option>
                   <option value="sentinel">Sentinel Search</option>
-                  <option value="twopointer">Two Pointer Search</option>
                 </optgroup>
                 <optgroup label="Graph Algorithms">
                   <option value="bfs">Breadth-First Search</option>
@@ -298,7 +300,6 @@ const Compare = () => {
                   <option value="ternary">Ternary Search</option>
                   <option value="fibonacci">Fibonacci Search</option>
                   <option value="sentinel">Sentinel Search</option>
-                  <option value="twopointer">Two Pointer Search</option>
                 </optgroup>
                 <optgroup label="Graph Algorithms">
                   <option value="bfs">Breadth-First Search</option>
@@ -403,7 +404,7 @@ const Compare = () => {
                     onClick={() => setSpeedMultiplier(opt)}
                     className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${speedMultiplier === opt
                       ? 'bg-dark-500 text-dark-50 border border-dark-400/50'
-                      : 'bg-dark-800/60 text-white hover:bg-dark-700/60 border border-transparent'
+                      : 'bg-dark-800/60 text-white hover:bg-dark-700/60 border border-white/0'
                       }`}
                   >
                     {opt}x
@@ -453,6 +454,12 @@ const Compare = () => {
                   <HeapSortVisualizer currentStep={data1} isCompact={true} />
                 ) : algo1 === 'quick' ? (
                   <QuickSortVisualizer currentStep={data1} isCompact={true} />
+                ) : algo1 === 'binary' ? (
+                  <BinarySearchVisualizer stepData={data1} isCompact={true} />
+                ) : algo1 === 'linear' ? (
+                  <LinearSearchVisualizer stepData={data1} isCompact={true} />
+                ) : algo1 === 'twopointer' ? (
+                  <TwoPointerVisualizer stepData={data1} isCompact={true} />
                 ) : algorithms[algo1].type === 'graph' ? (
                   <GraphVisualizer currentStep={data1} isCompact={true} />
                 ) : algorithms[algo1].type === 'dp' ? (
@@ -492,6 +499,12 @@ const Compare = () => {
                   <HeapSortVisualizer currentStep={data2} isCompact={true} />
                 ) : algo2 === 'quick' ? (
                   <QuickSortVisualizer currentStep={data2} isCompact={true} />
+                ) : algo2 === 'binary' ? (
+                  <BinarySearchVisualizer stepData={data2} isCompact={true} />
+                ) : algo2 === 'linear' ? (
+                  <LinearSearchVisualizer stepData={data2} isCompact={true} />
+                ) : algo2 === 'twopointer' ? (
+                  <TwoPointerVisualizer stepData={data2} isCompact={true} />
                 ) : algorithms[algo2].type === 'graph' ? (
                   <GraphVisualizer currentStep={data2} isCompact={true} />
                 ) : algorithms[algo2].type === 'dp' ? (

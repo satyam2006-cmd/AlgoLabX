@@ -8,7 +8,7 @@ const COLORS = {
     swap: { bg: 'bg-[#00ff88]/20', border: 'border-[#00ff88]', text: 'text-[#00ff88]', shadow: 'shadow-[#00ff88]/50' },
     sorted: { bg: 'bg-[#00ffff]/20', border: 'border-[#00ffff]', text: 'text-[#00ffff]', shadow: 'shadow-[#00ffff]/50' },
     default: { bg: 'bg-white/5', border: 'border-white/10', text: 'text-slate-300', shadow: 'shadow-none' },
-    dimmed: { bg: 'bg-transparent', border: 'border-white/5', text: 'text-white/20', shadow: 'shadow-none' }
+    dimmed: { bg: 'bg-rgba(0, 0, 0, 0)', border: 'border-white/5', text: 'text-white/20', shadow: 'shadow-none' }
 };
 
 const Pointer = ({ label, color }) => (

@@ -72,11 +72,11 @@ const ArrayBlockVisualizer = ({
 
         return {
             ...base,
-            backgroundColor: 'transparent',
+            backgroundColor: 'rgba(0, 0, 0, 0)',
             color: 'rgba(255, 255, 255, 0.7)',
             scale: 1,
             zIndex: 1,
-            borderColor: 'transparent'
+            borderColor: 'rgba(0, 0, 0, 0)'
         };
     };
 

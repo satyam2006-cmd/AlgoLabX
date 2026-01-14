@@ -258,7 +258,7 @@ body {
 }
 
 .saas-btn-outline {
-  background: transparent;
+  background: rgba(0, 0, 0, 0);
   color: var(--text-secondary);
   border: 1px solid var(--border-primary);
   border-radius: 10px;

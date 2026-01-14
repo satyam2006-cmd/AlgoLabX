@@ -94,7 +94,7 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${activeTab === item.id
                   ? 'bg-gradient-to-r from-dark-600/50 to-dark-700/50 text-dark-100 border border-white shadow-lg'
-                  : 'text-white hover:bg-dark-800/50 hover:text-dark-100 border border-transparent'
+                  : 'text-white hover:bg-dark-800/50 hover:text-dark-100 border border-white/0'
                   }`}
               >
                 <Icon />
