@@ -36,13 +36,13 @@ export {
   getExponentialSearchSteps
 } from './comprehensiveSearching.js';
 
-// export {
-//   getTernarySearchSteps,
-//   getFibonacciSearchSteps,
-//   getSentinelSearchSteps,
-//   getTwoPointerSearchSteps,
-//   getSublistSearchSteps
-// } from './additionalSearching.js';
+export {
+  getTernarySearchSteps,
+  getFibonacciSearchSteps,
+  getSentinelSearchSteps,
+  getTwoPointerSearchSteps,
+  getSublistSearchSteps
+} from './additionalSearching.js';
 
 // Graph Algorithms (from existing files)
 export { bfsSteps } from './graph/bfsSteps.js';
@@ -69,12 +69,6 @@ export const getMatrixChainSteps = () => [];
 export const getRodCuttingSteps = () => [];
 export const getLISSteps = () => [];
 export const getFibonacciDPSteps = () => [];
-
-export const getTernarySearchSteps = () => [];
-export const getFibonacciSearchSteps = () => [];
-export const getSentinelSearchSteps = () => [];
-export const getTwoPointerSearchSteps = () => [];
-export const getSublistSearchSteps = () => [];
 
 export const getBellmanFordSteps = () => [];
 export const getFloydWarshallSteps = () => [];

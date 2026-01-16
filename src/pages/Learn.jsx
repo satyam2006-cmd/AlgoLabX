@@ -7,6 +7,7 @@ import QuickSort3D from '../components/QuickSort3D';
 import HeapSortVisualizer from '../components/HeapSortVisualizer';
 import BucketSortVisualizer from '../components/BucketSortVisualizer';
 import RadixSortVisualizer from '../components/RadixSortVisualizer';
+import TwoPointerVisualizer from '../components/TwoPointerVisualizer';
 import GraphVisualizer from '../components/GraphVisualizer';
 import DPVisualizer from './DPVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
