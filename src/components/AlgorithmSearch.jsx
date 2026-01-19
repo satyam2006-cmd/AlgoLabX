@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState, useMemo, useCallback } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 const AlgorithmSearch = ({ onSelect, algorithms, placeholder = "Search algorithms...", showComplexity = true, showHint = true, hintText = "" }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  // Comprehensive algorithm data with complexity and descriptions
-  const defaultAlgorithms = [
+  // Memoized comprehensive algorithm data with complexity and descriptions
+  const defaultAlgorithms = useMemo(() => [
     // Sorting - Simple O(n²)
     { id: 'bubble', label: 'Bubble Sort', category: 'Sorting', type: 'algo', complexity: 'O(n²)', description: 'Compare adjacent elements and swap if out of order' },
     { id: 'selection', label: 'Selection Sort', category: 'Sorting', type: 'algo', complexity: 'O(n²)', description: 'Find minimum element and place at beginning' },
@@ -54,33 +54,33 @@ const AlgorithmSearch = ({ onSelect, algorithms, placeholder = "Search algorithm
     { id: 'rodcutting', label: 'Rod Cutting', category: 'DP', type: 'algo', complexity: 'O(n²)', description: 'Maximize profit from cutting rod' },
     { id: 'lis', label: 'Longest Increasing Subsequence', category: 'DP', type: 'algo', complexity: 'O(n²)', description: 'Find longest increasing subsequence' },
     { id: 'fibonaccidp', label: 'Fibonacci DP', category: 'DP', type: 'algo', complexity: 'O(n)', description: 'Fibonacci using memoization/tabulation' },
-  ];
+  ], []);
 
   const searchData = algorithms || defaultAlgorithms;
 
-  // Smart filtering - search in label, category, complexity, and description
-  const filteredSuggestions = searchQuery.trim() === ''
-    ? []
-    : searchData.filter(item => {
-      const query = searchQuery.toLowerCase();
-      return (
-        item.label.toLowerCase().includes(query) ||
-        item.category.toLowerCase().includes(query) ||
-        (item.complexity && item.complexity.toLowerCase().includes(query)) ||
-        (item.description && item.description.toLowerCase().includes(query))
-      );
-    }).slice(0, 8);
+  // Memoized smart filtering - search in label, category, complexity, and description
+  const filteredSuggestions = useMemo(() => {
+    if (searchQuery.trim() === '') return [];
+    const query = searchQuery.toLowerCase();
+    return searchData.filter(item => (
+      item.label.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query) ||
+      (item.complexity && item.complexity.toLowerCase().includes(query)) ||
+      (item.description && item.description.toLowerCase().includes(query))
+    )).slice(0, 8);
+  }, [searchQuery, searchData]);
 
-  const handleSelect = (item) => {
+  // Memoized handlers to prevent unnecessary re-renders
+  const handleSelect = useCallback((item) => {
     if (onSelect) {
       onSelect(item);
     }
     setSearchQuery('');
     setShowSuggestions(false);
     setSelectedIndex(-1);
-  };
+  }, [onSelect]);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = useCallback((e) => {
     if (e.key === 'Enter') {
       if (selectedIndex >= 0 && selectedIndex < filteredSuggestions.length) {
         handleSelect(filteredSuggestions[selectedIndex]);
@@ -97,9 +97,9 @@ const AlgorithmSearch = ({ onSelect, algorithms, placeholder = "Search algorithm
     } else if (e.key === 'Escape') {
       setShowSuggestions(false);
     }
-  };
+  }, [selectedIndex, filteredSuggestions, handleSelect]);
 
-  const getCategoryColor = (category) => {
+  const getCategoryColor = useCallback((category) => {
     switch (category.toLowerCase()) {
       case 'sorting': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'searching': return 'bg-green-500/20 text-green-400 border-green-500/30';
@@ -107,7 +107,7 @@ const AlgorithmSearch = ({ onSelect, algorithms, placeholder = "Search algorithm
       case 'dp': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
-  };
+  }, []);
 
   return (
     <div className="relative w-full">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import AlgorithmSearch from '../components/AlgorithmSearch';
 import SmartVisualizer from '../components/SmartVisualizer';
@@ -101,6 +101,18 @@ const PlusIcon = () => (
   </svg>
 );
 
+// Loading placeholder component for better UX
+const LoadingPlaceholder = () => (
+  <div className="flex flex-col items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30 min-h-[200px]">
+    <div className="relative mb-4">
+      <div className="w-12 h-12 rounded-full border-4 border-dark-600"></div>
+      <div className="w-12 h-12 rounded-full border-4 border-transparent border-t-emerald-500 animate-spin absolute top-0 left-0"></div>
+    </div>
+    <p className="text-white text-sm font-medium">Ready to visualize</p>
+    <p className="text-white/50 text-xs mt-1">Press <kbd className="px-1.5 py-0.5 rounded bg-dark-700 text-white/90 font-mono text-[10px] mx-1">Space</kbd> or click Play to start</p>
+  </div>
+);
+
 const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
   const handleSearchSelect = (item) => {
@@ -175,19 +187,70 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
     }
   };
 
-  const decreaseSpeed = () => {
+  const decreaseSpeed = useCallback(() => {
     const currentIndex = speedOptions.indexOf(speedMultiplier);
     if (currentIndex > 0) {
       setSpeedMultiplier(speedOptions[currentIndex - 1]);
     }
-  };
+  }, [speedMultiplier]);
 
-  const increaseSpeed = () => {
+  const increaseSpeed = useCallback(() => {
     const currentIndex = speedOptions.indexOf(speedMultiplier);
     if (currentIndex < speedOptions.length - 1) {
       setSpeedMultiplier(speedOptions[currentIndex + 1]);
     }
-  };
+  }, [speedMultiplier]);
+
+  // Keyboard shortcuts for better accessibility and UX
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      // Don't trigger shortcuts when typing in input fields
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+        return;
+      }
+
+      switch (e.key.toLowerCase()) {
+        case ' ': // Space - Play/Pause
+          e.preventDefault();
+          if (isPlaying) {
+            controls.pause();
+          } else {
+            controls.play();
+          }
+          break;
+        case 'arrowleft': // Left Arrow - Previous step
+          e.preventDefault();
+          controls.stepBackward();
+          break;
+        case 'arrowright': // Right Arrow - Next step
+          e.preventDefault();
+          controls.stepForward();
+          break;
+        case 'r': // R - Reset
+          e.preventDefault();
+          controls.reset();
+          break;
+        case '+':
+        case '=': // Plus - Increase speed
+          e.preventDefault();
+          increaseSpeed();
+          break;
+        case '-': // Minus - Decrease speed
+          e.preventDefault();
+          decreaseSpeed();
+          break;
+        case 'g': // G - Generate random array
+          e.preventDefault();
+          handleGenerateArray();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [isPlaying, controls, increaseSpeed, decreaseSpeed]);
 
   useEffect(() => {
     controls.reset();
@@ -196,6 +259,29 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
   return (
     <div className="flex-1 p-3 sm:p-6 md:p-8 overflow-y-auto">
       <div className="max-w-7xl mx-auto">
+        {/* Keyboard Shortcuts Tooltip */}
+        <div className="hidden lg:block fixed bottom-4 right-4 z-40">
+          <div className="group relative">
+            <button className="w-10 h-10 rounded-full bg-dark-800/80 border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-dark-700/80 transition-all">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </button>
+            <div className="absolute bottom-12 right-0 w-64 p-4 bg-dark-800/95 backdrop-blur-xl rounded-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 shadow-xl">
+              <p className="text-white text-xs font-semibold mb-3 uppercase tracking-wider">Keyboard Shortcuts</p>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between"><span className="text-white/70">Play/Pause</span><kbd className="px-2 py-0.5 rounded bg-dark-700 text-white/90 font-mono">Space</kbd></div>
+                <div className="flex justify-between"><span className="text-white/70">Previous Step</span><kbd className="px-2 py-0.5 rounded bg-dark-700 text-white/90 font-mono">←</kbd></div>
+                <div className="flex justify-between"><span className="text-white/70">Next Step</span><kbd className="px-2 py-0.5 rounded bg-dark-700 text-white/90 font-mono">→</kbd></div>
+                <div className="flex justify-between"><span className="text-white/70">Reset</span><kbd className="px-2 py-0.5 rounded bg-dark-700 text-white/90 font-mono">R</kbd></div>
+                <div className="flex justify-between"><span className="text-white/70">Speed Up</span><kbd className="px-2 py-0.5 rounded bg-dark-700 text-white/90 font-mono">+</kbd></div>
+                <div className="flex justify-between"><span className="text-white/70">Slow Down</span><kbd className="px-2 py-0.5 rounded bg-dark-700 text-white/90 font-mono">-</kbd></div>
+                <div className="flex justify-between"><span className="text-white/70">Random Array</span><kbd className="px-2 py-0.5 rounded bg-dark-700 text-white/90 font-mono">G</kbd></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -361,9 +447,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       currentStep={currentStepData}
                     />
                   ) : (
-                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                      <p className="text-white">Start playback to see visualization</p>
-                    </div>
+                    <LoadingPlaceholder />
                   )
                 ) : selectedAlgorithm === 'quick' ? (
                   currentStepData ? (
@@ -372,9 +456,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       isDone={currentStepData.phase === 'done'}
                     />
                   ) : (
-                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                      <p className="text-white">Start playback to see visualization</p>
-                    </div>
+                    <LoadingPlaceholder />
                   )
                 ) : selectedAlgorithm === 'heap' ? (
                   currentStepData ? (
@@ -382,9 +464,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       currentStep={currentStepData}
                     />
                   ) : (
-                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                      <p className="text-white">Start playback to see visualization</p>
-                    </div>
+                    <LoadingPlaceholder />
                   )
                 ) : selectedAlgorithm === 'bucket' ? (
                   currentStepData ? (
@@ -392,9 +472,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       currentStep={currentStepData}
                     />
                   ) : (
-                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                      <p className="text-white">Start playback to see visualization</p>
-                    </div>
+                    <LoadingPlaceholder />
                   )
                 ) : selectedAlgorithm === 'radix' ? (
                   currentStepData ? (
@@ -402,9 +480,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       currentStep={currentStepData}
                     />
                   ) : (
-                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                      <p className="text-white">Start playback to see visualization</p>
-                    </div>
+                    <LoadingPlaceholder />
                   )
                 ) : currentAlgo.type === 'graph' ? (
                   currentStepData ? (
@@ -422,9 +498,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       )}
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                      <p className="text-white">Start playback to see visualization</p>
-                    </div>
+                    <LoadingPlaceholder />
                   )
                 ) : currentAlgo.type === 'dp' ? (
                   currentStepData ? (
@@ -442,9 +516,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       )}
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                      <p className="text-white">Start playback to see visualization</p>
-                    </div>
+                    <LoadingPlaceholder />
                   )
                 ) : (
                   <div className="w-full bg-[#050505] rounded-[2.5rem] border border-white overflow-hidden shadow-2xl p-6 sm:p-8 relative flex flex-col items-center justify-center min-h-[350px]">
@@ -460,9 +532,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                         useBlockVisualizer={['bubble', 'selection', 'insertion', 'cocktail', 'gnome', 'comb', 'oddeven', 'shell', 'counting', 'merge', 'quick', 'heap'].includes(selectedAlgorithm)}
                       />
                     ) : (
-                      <div className="flex items-center justify-center p-12 bg-dark-900/40 rounded-xl border border-dark-700/30">
-                        <p className="text-white">No step data available</p>
-                      </div>
+                      <LoadingPlaceholder />
                     )}
                   </div>
                 )}
@@ -470,13 +540,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
               {/* Controls */}
               <div className="px-3 sm:px-6 pb-3 sm:pb-4 space-y-2 sm:space-y-3">
-                {/* Playback Controls */}
+                {/* Playback Controls - Touch-friendly with larger tap targets on mobile */}
                 <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={isPlaying ? controls.pause : controls.play}
-                    className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 flex items-center gap-1 text-xs sm:text-sm"
+                    aria-label={isPlaying ? 'Pause' : 'Play'}
+                    className="px-4 sm:px-4 py-2.5 sm:py-2 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 flex items-center gap-1.5 text-sm sm:text-sm min-w-[80px] justify-center touch-manipulation"
                   >
                     {isPlaying ? <PauseIcon /> : <PlayIcon />}
                     {isPlaying ? 'Pause' : 'Play'}
@@ -486,7 +557,8 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.stepBackward}
                     disabled={currentStep <= 0}
-                    className="px-2 sm:px-3 py-1.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-xs sm:text-sm"
+                    aria-label="Previous step"
+                    className="px-3 sm:px-3 py-2.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-sm sm:text-sm touch-manipulation active:scale-95"
                   >
                     <ChevronLeftIcon /> <span className="hidden sm:inline">Prev</span>
                   </motion.button>
@@ -495,7 +567,8 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.stepForward}
                     disabled={currentStep >= totalSteps - 1}
-                    className="px-2 sm:px-3 py-1.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-xs sm:text-sm"
+                    aria-label="Next step"
+                    className="px-3 sm:px-3 py-2.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-sm sm:text-sm touch-manipulation active:scale-95"
                   >
                     <span className="hidden sm:inline">Next</span> <ChevronRightIcon />
                   </motion.button>
@@ -503,13 +576,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={controls.reset}
-                    className="px-2 sm:px-3 py-1.5 sm:py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg border border-red-500/30 transition-all duration-300 flex items-center gap-0.5 text-xs sm:text-sm"
+                    aria-label="Reset animation"
+                    className="px-3 sm:px-3 py-2.5 sm:py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg border border-red-500/30 transition-all duration-300 flex items-center gap-0.5 text-sm sm:text-sm touch-manipulation active:scale-95"
                   >
                     <RefreshIcon /> <span className="hidden sm:inline">Reset</span>
                   </motion.button>
                 </div>
 
-                {/* Speed Control with +/- buttons */}
+                {/* Speed Control with +/- buttons - Improved touch targets */}
                 <div className="flex items-center gap-1 sm:gap-2 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30 flex-wrap">
                   <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">Speed:</span>
                   <div className="flex items-center gap-1">
@@ -518,11 +592,12 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       whileTap={{ scale: 0.9 }}
                       onClick={decreaseSpeed}
                       disabled={speedMultiplier === speedOptions[0]}
-                      className="w-6 h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs"
+                      aria-label="Decrease speed"
+                      className="w-8 h-8 sm:w-6 sm:h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs touch-manipulation"
                     >
                       <MinusIcon />
                     </motion.button>
-                    <span className="w-8 text-center text-dark-100 font-semibold text-xs sm:text-sm">
+                    <span className="w-10 sm:w-8 text-center text-dark-100 font-semibold text-sm sm:text-sm">
                       {speedMultiplier}x
                     </span>
                     <motion.button
@@ -530,7 +605,8 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       whileTap={{ scale: 0.9 }}
                       onClick={increaseSpeed}
                       disabled={speedMultiplier === speedOptions[speedOptions.length - 1]}
-                      className="w-6 h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs"
+                      aria-label="Increase speed"
+                      className="w-8 h-8 sm:w-6 sm:h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs touch-manipulation"
                     >
                       <PlusIcon />
                     </motion.button>
@@ -541,7 +617,8 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                       <button
                         key={opt}
                         onClick={() => setSpeedMultiplier(opt)}
-                        className={`px-1.5 py-0.5 text-xs rounded-md transition-all ${speedMultiplier === opt
+                        aria-label={`Set speed to ${opt}x`}
+                        className={`px-2 py-1 text-xs rounded-md transition-all touch-manipulation ${speedMultiplier === opt
                           ? 'bg-dark-500 text-dark-100'
                           : 'bg-dark-800/50 text-white hover:bg-dark-700/50'
                           }`}
@@ -552,7 +629,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   </div>
                 </div>
 
-                {/* Step Progress */}
+                {/* Step Progress - Enhanced with better visual feedback */}
                 <div className="flex items-center gap-1 sm:gap-3 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30">
                   <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">Progress:</span>
                   <div className="flex-1 h-1 sm:h-1.5 bg-dark-700/50 rounded-full overflow-hidden">

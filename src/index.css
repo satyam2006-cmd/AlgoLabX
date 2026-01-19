@@ -181,22 +181,22 @@ body {
 /* Glassmorphism utility classes */
 .glass {
   background: var(--bg-glass);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--border-primary);
 }
 
 .glass-light {
   background: var(--bg-glass-light);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid var(--border-secondary);
 }
 
 .glass-card {
   background: var(--gradient-card);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--border-primary);
   box-shadow: var(--shadow-md);
 }
@@ -224,8 +224,8 @@ body {
 /* SaaS Card Styles */
 .saas-card {
   background: var(--gradient-card);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--border-primary);
   border-radius: 16px;
   box-shadow: var(--shadow-md);
@@ -413,6 +413,7 @@ body {
   padding: 1px;
   background: linear-gradient(135deg, white, white, white);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
@@ -581,6 +582,14 @@ body {
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  overflow: -moz-scrollbars-none; /* Older Firefox */
+}
+
+/* Support for Safari/Chrome that don't support scrollbar-width */
+@supports not (scrollbar-width: none) {
+  .scrollbar-hide {
+    overflow: auto;
+  }
 }

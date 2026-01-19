@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const ArrayBlockVisualizer = ({
+const ArrayBlockVisualizer = memo(({
     array,
     activeIndices = [],
     swappedIndices = [],
@@ -9,8 +9,8 @@ const ArrayBlockVisualizer = ({
     specialIndices = {}, // { min, key, check }
     className = ""
 }) => {
-    // Determine block color based on state
-    const getBlockStyles = (index, isActive, isSwapped, isSorted, special = {}) => {
+    // Memoize block color determination to avoid recalculating on every render
+    const getBlockStyles = useMemo(() => (index, isActive, isSwapped, isSorted, special = {}) => {
         // Importance order: Swapped > Min/Key > Check/Active > Sorted
         const base = { opacity: 1 };
 
@@ -78,7 +78,7 @@ const ArrayBlockVisualizer = ({
             zIndex: 1,
             borderColor: 'rgba(0, 0, 0, 0)'
         };
-    };
+    }, []);
 
     // Generate stable keys for animations by tracking occurrences of each value
     // This allows {value: 10} and {value: 10} to have distinct keys like "10-0" and "10-1"
@@ -95,6 +95,13 @@ const ArrayBlockVisualizer = ({
         });
     }, [array]);
 
+    // Memoize block size calculation
+    const blockSize = useMemo(() => {
+        if (array.length > 20) return 'h-6 sm:h-8 text-[8px]';
+        if (array.length > 15) return 'h-8 sm:h-10 text-[10px]';
+        return 'h-10 sm:h-14 text-sm sm:text-lg';
+    }, [array.length]);
+
     return (
         <div className={`w-full flex flex-col items-center gap-6 ${className}`}>
             {/* Array Track Container */}
@@ -106,13 +113,6 @@ const ArrayBlockVisualizer = ({
                             const isActive = activeIndices.includes(index);
                             const isSorted = sortedIndices.includes(index);
                             const styles = getBlockStyles(index, isActive, isSwapped, isSorted, specialIndices);
-
-                            // Responsive sizing logic to fit in one row
-                            const blockSize = array.length > 20
-                                ? 'h-6 sm:h-8 text-[8px]'
-                                : array.length > 15
-                                    ? 'h-8 sm:h-10 text-[10px]'
-                                    : 'h-10 sm:h-14 text-sm sm:text-lg';
 
                             return (
                                 <motion.div
@@ -163,7 +163,7 @@ const ArrayBlockVisualizer = ({
             </div>
         </div>
     );
-};
+});
 
 const LegendItem = ({ color, label }) => (
     <div className="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-full border border-white/5 backdrop-blur-sm">
