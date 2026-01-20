@@ -124,10 +124,10 @@ const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpe
       animate={{ opacity: 1, y: 0 }}
       className="h-14 sm:h-16 bg-dark-900/80 border-b border-white flex items-center justify-between px-3 sm:px-6 sticky top-0 z-50 backdrop-blur-xl gap-3"
     >
-      {/* Menu Button - Always visible */}
+      {/* Menu Button - Visible only on mobile/tablet */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="p-2 hover:bg-dark-800 rounded-lg transition-colors flex-shrink-0"
+        className="p-2 hover:bg-dark-800 rounded-lg transition-colors flex-shrink-0 lg:hidden"
       >
         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -158,7 +158,7 @@ const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpe
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
             onKeyDown={handleKeyDown}
-            className="w-full bg-dark-800/60 border border-white/20 rounded-xl py-2 pl-9 sm:pl-10 pr-8 text-dark-200 text-xs sm:text-sm placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 transition-all duration-300"
+            className="w-full bg-dark-800/60 border border-white rounded-xl py-2 pl-9 sm:pl-10 pr-8 text-dark-200 text-xs sm:text-sm placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 transition-all duration-300"
           />
           <svg
             className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dark-500 group-focus-within:text-white transition-colors"
@@ -199,11 +199,10 @@ const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpe
                     key={`${item.id}-${index}`}
                     onClick={() => handleSelect(item)}
                     onMouseEnter={() => setSelectedIndex(index)}
-                    className={`w-full flex flex-col px-3 sm:px-4 py-2.5 text-left transition-all border-b border-white/5 last:border-b-0 ${
-                      selectedIndex === index
-                        ? 'bg-dark-700/80'
-                        : 'hover:bg-dark-800/60'
-                    }`}
+                    className={`w-full flex flex-col px-3 sm:px-4 py-2.5 text-left transition-all border-b border-white/5 last:border-b-0 ${selectedIndex === index
+                      ? 'bg-dark-700/80'
+                      : 'hover:bg-dark-800/60'
+                      }`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-0.5">
                       <span className={`font-medium text-xs sm:text-sm truncate ${selectedIndex === index ? 'text-dark-50' : 'text-dark-300'}`}>

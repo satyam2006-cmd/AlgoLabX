@@ -58,21 +58,11 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
           <div className="w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center">
             <img src="/logo.png" alt="AlgoLabX Logo" className="w-full h-full object-contain" />
           </div>
-          <div className="hidden sm:block">
+          <div>
             <h2 className="text-base sm:text-lg font-bold text-dark-50">AlgoLabX</h2>
             <p className="text-white text-xs font-medium">Virtual Algorithm Lab</p>
           </div>
         </motion.div>
-        
-        {/* Close button - Always visible */}
-        <button 
-          onClick={() => setSidebarOpen(false)}
-          className="p-2 hover:bg-dark-800 rounded-lg transition-colors"
-        >
-          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       </div>
 
       {/* Navigation Section */}

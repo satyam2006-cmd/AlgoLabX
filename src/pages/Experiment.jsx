@@ -140,11 +140,11 @@ const Experiment = () => {
   useEffect(() => {
     const initPyodide = async () => {
       try {
-        console.log('Loading Pyodide...');
-        console.log('Pyodide loading disabled temporarily');
+        await loadPyodide();
         setPyodideLoaded(true);
       } catch (error) {
         console.error('Failed to load Pyodide:', error);
+        setError('Failed to load Python environment. Please refresh the page.');
       }
     };
     initPyodide();

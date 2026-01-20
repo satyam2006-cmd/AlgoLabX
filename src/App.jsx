@@ -48,10 +48,10 @@ function App() {
 
       {/* Main Layout */}
       <div className="flex h-screen relative z-10">
-        {/* Sidebar Overlay - Always active when sidebar is open */}
+        {/* Sidebar Overlay - Active only on mobile/tablet when sidebar is open */}
         {sidebarOpen && (
-          <div 
-            className="fixed inset-0 bg-black/50 z-40"
+          <div
+            className="fixed inset-0 bg-black/50 z-[60] lg:hidden"
             tabIndex={-1}
             onClick={() => setSidebarOpen(false)}
             onKeyDown={(event) => {
@@ -61,22 +61,23 @@ function App() {
             }}
           />
         )}
-        
-        {/* Sidebar - Always hidden by default, opens on button click */}
-        <div className={`fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}>
-          <Sidebar 
-            activeTab={activeTab} 
+
+        {/* Sidebar - Permanent on desktop, toggleable on mobile */}
+        <div className={`fixed lg:static inset-y-0 left-0 z-[70] transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          }`}>
+          <Sidebar
+            activeTab={activeTab}
             setActiveTab={(tabId) => {
               setActiveTab(tabId);
-              setSidebarOpen(false);
+              if (window.innerWidth < 1024) {
+                setSidebarOpen(false);
+              }
             }}
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />
         </div>
-        
+
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header
             setActiveTab={setActiveTab}
