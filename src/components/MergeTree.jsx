@@ -81,12 +81,15 @@ const NodeRenderer = memo(({ node, nodes }) => {
 NodeRenderer.displayName = 'NodeRenderer';
 
 const MergeTree = ({ currentStep }) => {
-  if (!currentStep) return null;
-
-  const { nodes, rootId } = currentStep;
+  const nodes = currentStep?.nodes || {};
+  const rootId = currentStep?.rootId;
 
   // Calculate current max level, scale factor and completion state
   const { maxLevel, scaleFactor, isDone } = useMemo(() => {
+    if (!rootId || Object.keys(nodes).length === 0) {
+      return { maxLevel: 0, scaleFactor: 1, isDone: false };
+    }
+
     let currentMaxLevel = 0;
     let anyActive = false;
 
@@ -99,13 +102,15 @@ const MergeTree = ({ currentStep }) => {
 
     const rootNode = nodes[rootId];
     // Algorithm is done when the root is sorted and no other nodes are active split/merge
-    const finished = rootNode.status === 'sorted' && !anyActive;
+    const finished = rootNode?.status === 'sorted' && !anyActive;
 
     // Scale factor adjustment
     const factor = Math.max(0.6, 1.1 - currentMaxLevel * 0.12);
 
     return { maxLevel: currentMaxLevel, scaleFactor: factor, isDone: finished };
   }, [nodes, rootId]);
+
+  if (!currentStep) return null;
 
   return (
     <div className="w-full bg-dark-900/40 rounded-2xl border border-white overflow-hidden transition-all duration-500">

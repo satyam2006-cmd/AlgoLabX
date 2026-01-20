@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { useStepPlayer } from '../engine/stepPlayer';
 import { bfsSteps, dfsSteps, dijkstraSteps } from '../algorithms/comprehensiveAlgorithms';
 

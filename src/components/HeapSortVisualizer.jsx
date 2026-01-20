@@ -39,10 +39,12 @@ const calculateTreePositions = (totalNodes) => {
 };
 
 const HeapSortVisualizer = ({ currentStep, isCompact = false }) => {
+    const array = currentStep?.array || [];
+    const positions = useMemo(() => calculateTreePositions(array.length), [array.length]);
+
     if (!currentStep) return null;
 
     const {
-        array,
         activeIndices,
         swappedIndices,
         heapSize,
@@ -51,8 +53,6 @@ const HeapSortVisualizer = ({ currentStep, isCompact = false }) => {
         message,
         visibleCount = array.length // Default to all visible if undefined
     } = currentStep;
-
-    const positions = useMemo(() => calculateTreePositions(array.length), [array.length]);
 
     // Helper to get status style
     const getStatus = (idx) => {

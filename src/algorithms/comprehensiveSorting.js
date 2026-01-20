@@ -88,7 +88,7 @@ export function* selectionSortSteps(arr) {
 }
 
 // Insertion Sort
-export function* insertionSortSteps(arr) {
+export function insertionSortSteps(arr) {
   const steps = [];
   const n = arr.length;
   
@@ -149,7 +149,7 @@ export function* insertionSortSteps(arr) {
 }
 
 // Merge Sort
-export function* mergeSortSteps(arr) {
+export function mergeSortSteps(arr) {
   const steps = [];
   
   function merge(left, right, startIdx) {
@@ -265,7 +265,7 @@ export function* mergeSortSteps(arr) {
 }
 
 // Quick Sort
-export function* quickSortSteps(arr) {
+export function quickSortSteps(arr) {
   const steps = [];
   
   function partition(low, high) {
@@ -345,7 +345,7 @@ export function* quickSortSteps(arr) {
 }
 
 // Heap Sort
-export function* heapSortSteps(arr) {
+export function heapSortSteps(arr) {
   const steps = [];
   const n = arr.length;
   
@@ -449,7 +449,7 @@ export function* heapSortSteps(arr) {
 }
 
 // Counting Sort
-export function* countingSortSteps(arr) {
+export function countingSortSteps(arr) {
   const steps = [];
   const n = arr.length;
   const max = Math.max(...arr);
@@ -517,7 +517,7 @@ export function* countingSortSteps(arr) {
 }
 
 // Radix Sort
-export function* radixSortSteps(arr) {
+export function radixSortSteps(arr) {
   const steps = [];
   const n = arr.length;
   const max = Math.max(...arr);

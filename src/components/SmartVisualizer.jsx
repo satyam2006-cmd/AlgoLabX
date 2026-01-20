@@ -14,6 +14,7 @@ import MergeTree from './MergeTree';
 import DijkstraVisualizer from './DijkstraVisualizer';
 import BFSVisualizer from './BFSVisualizer';
 import BucketSortVisualizer from './BucketSortVisualizer';
+import RadixSortVisualizer from './RadixSortVisualizer';
 
 const SmartVisualizer = ({
   algorithmType,

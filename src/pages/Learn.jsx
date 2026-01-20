@@ -144,6 +144,13 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
     binary: { name: 'Binary Search', complexity: 'O(log n)', type: 'searching', getSteps: getBinarySearchSteps, description: 'Efficient search algorithm that works on sorted arrays by repeatedly dividing the search interval in half.' },
     linear: { name: 'Linear Search', complexity: 'O(n)', type: 'searching', getSteps: getLinearSearchSteps, description: 'Sequential search algorithm that checks each element in order until the target is found.' },
     twopointer: { name: 'Two Pointer Search', complexity: 'O(n)', type: 'searching', getSteps: getTwoPointerSearchSteps, description: 'Search technique using two pointers converging from both ends (finds pairs summing to target).' },
+    jump: { name: 'Jump Search', complexity: 'O(√n)', type: 'searching', getSteps: getJumpSearchSteps, description: 'Search algorithm that works on sorted arrays by jumping ahead by fixed steps then doing linear search.' },
+    interpolation: { name: 'Interpolation Search', complexity: 'O(log log n)', type: 'searching', getSteps: getInterpolationSearchSteps, description: 'Improved binary search that estimates position based on value distribution in sorted arrays.' },
+    exponential: { name: 'Exponential Search', complexity: 'O(log n)', type: 'searching', getSteps: getExponentialSearchSteps, description: 'Search algorithm that finds range where element exists, then uses binary search within that range.' },
+    ternary: { name: 'Ternary Search', complexity: 'O(log₃ n)', type: 'searching', getSteps: getTernarySearchSteps, description: 'Divide and conquer search that splits array into three parts instead of two.' },
+    fibonacci: { name: 'Fibonacci Search', complexity: 'O(log n)', type: 'searching', getSteps: getFibonacciSearchSteps, description: 'Search algorithm that uses Fibonacci numbers to divide the array for searching.' },
+    sentinel: { name: 'Sentinel Search', complexity: 'O(n)', type: 'searching', getSteps: getSentinelSearchSteps, description: 'Optimized linear search that uses a sentinel value to eliminate bounds checking.' },
+    sublist: { name: 'Sublist Search', complexity: 'O(m × n)', type: 'searching', getSteps: getSublistSearchSteps, description: 'Algorithm to find if one list exists as a contiguous subsequence in another list.' },
     // Graph Algorithms
     bfs: { name: 'BFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: bfsSteps, description: 'Graph traversal algorithm that explores neighbors of nodes level by level, starting from a source node.' },
     dfs: { name: 'DFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: dfsSteps, description: 'Graph traversal algorithm that explores as far as possible along each branch before backtracking.' },
@@ -152,8 +159,10 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
   const currentAlgo = algorithms[selectedAlgorithm];
 
+  const searchAlgorithms = ['binary', 'linear', 'twopointer', 'jump', 'interpolation', 'exponential', 'ternary', 'fibonacci', 'sentinel', 'sublist'];
+
   let stepsInput = inputArray;
-  if (['binary', 'linear', 'twopointer'].includes(selectedAlgorithm)) {
+  if (searchAlgorithms.includes(selectedAlgorithm)) {
     const target = parseInt(searchTarget);
     if (!isNaN(target)) {
       stepsInput = [...inputArray, target];
@@ -167,16 +176,33 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
     const newArray = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100) + 1);
     setInputArray(newArray);
     setCustomInput(newArray.join(', '));
+    setInputError('');
   };
+
+  const [inputError, setInputError] = useState('');
 
   const handleCustomInput = () => {
     try {
       const arr = customInput.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
-      if (arr.length > 0) {
-        setInputArray(arr);
+      
+      // Validation
+      if (arr.length === 0) {
+        setInputError('Please enter at least one valid number');
+        return;
       }
+      if (arr.length > 20) {
+        setInputError('Maximum 20 elements allowed for optimal visualization');
+        return;
+      }
+      if (arr.some(n => n < 0 || n > 999)) {
+        setInputError('Numbers must be between 0 and 999');
+        return;
+      }
+      
+      setInputError('');
+      setInputArray(arr);
     } catch (error) {
-      console.error('Invalid input');
+      setInputError('Invalid input format. Use comma-separated numbers.');
     }
   };
 
@@ -331,6 +357,13 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   <option value="binary">Binary Search</option>
                   <option value="linear">Linear Search</option>
                   <option value="twopointer">Two Pointer Search</option>
+                  <option value="jump">Jump Search</option>
+                  <option value="interpolation">Interpolation Search</option>
+                  <option value="exponential">Exponential Search</option>
+                  <option value="ternary">Ternary Search</option>
+                  <option value="fibonacci">Fibonacci Search</option>
+                  <option value="sentinel">Sentinel Search</option>
+                  <option value="sublist">Sublist Search</option>
                 </optgroup>
                 <optgroup label="Graph Algorithms">
                   <option value="bfs">BFS Traversal</option>
@@ -348,10 +381,11 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   <input
                     type="text"
                     value={customInput}
-                    onChange={(e) => setCustomInput(e.target.value)}
-                    className="w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border border-white rounded-lg text-xs sm:text-sm text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
-                    placeholder="e.g., 5, 3, 8"
+                    onChange={(e) => { setCustomInput(e.target.value); setInputError(''); }}
+                    className={`w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border ${inputError ? 'border-red-500' : 'border-white'} rounded-lg text-xs sm:text-sm text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300`}
+                    placeholder="e.g., 5, 3, 8 (max 20 elements, 0-999)"
                   />
+                  {inputError && <p className="text-red-400 text-xs mt-1">{inputError}</p>}
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -380,7 +414,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
           </div>
 
           {/* Search Target Input - Conditional (Single line below on desktop if needed, or row) */}
-          {['binary', 'linear', 'twopointer'].includes(selectedAlgorithm) && (
+          {searchAlgorithms.includes(selectedAlgorithm) && (
             <div className="mt-4 pt-4 border-t border-white/10">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="w-full sm:w-64">

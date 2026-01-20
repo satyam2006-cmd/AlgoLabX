@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MaxHeap } from '../algorithms/heap';
 import HeapVisualizer from '../components/HeapVisualizer';
-import { motion } from 'framer-motion';
 
 const HeapPage = () => {
     const [heapObj] = useState(new MaxHeap());

@@ -76,12 +76,17 @@ const NodeRenderer = memo(({ node, nodes }) => {
 NodeRenderer.displayName = 'NodeRenderer';
 
 const QuickSortTree = ({ currentStep }) => {
-    if (!currentStep) return null;
-
-    const { nodes, rootId, sortedBottomArray, revealedIndices = [], isDone } = currentStep;
+    const nodes = currentStep?.nodes || {};
+    const rootId = currentStep?.rootId;
+    const sortedBottomArray = currentStep?.sortedBottomArray || [];
+    const revealedIndices = currentStep?.revealedIndices || [];
+    const isDone = currentStep?.isDone || false;
 
     // Scaling logic based on depth
     const { scaleFactor } = useMemo(() => {
+        if (Object.keys(nodes).length === 0) {
+            return { scaleFactor: 1 };
+        }
         let currentMaxLevel = 0;
         Object.values(nodes).forEach(node => {
             if (node.status !== 'hidden' && node.level > currentMaxLevel) {
@@ -91,6 +96,8 @@ const QuickSortTree = ({ currentStep }) => {
         const factor = Math.max(0.4, 1.0 - currentMaxLevel * 0.1);
         return { scaleFactor: factor };
     }, [nodes]);
+
+    if (!currentStep) return null;
 
     const anyVisibleNodes = Object.values(nodes).some(n => n.status !== 'hidden');
     const isFinalRevealPhase = !anyVisibleNodes;

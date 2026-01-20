@@ -15,8 +15,9 @@ import {
   getBubbleSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getMergeSortTreeSteps,
   getCountingSortSteps, getRadixSortSteps,
   getBinarySearchSteps, getLinearSearchSteps, getTwoPointerSearchSteps,
+  getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps,
+  getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps, getSublistSearchSteps,
   getBucketSortSteps, getCocktailSortSteps, getCombSortSteps, getGnomeSortSteps, getOddEvenSortSteps,
-  getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps,
   bfsSteps, dfsSteps, dijkstraSteps
 } from '../algorithms/comprehensiveAlgorithms';
 import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
@@ -111,14 +112,23 @@ const Compare = () => {
     binary: { name: 'Binary Search', complexity: 'O(log n)', type: 'searching', getSteps: getBinarySearchSteps, color: '#3f3f48' },
     linear: { name: 'Linear Search', complexity: 'O(n)', type: 'searching', getSteps: getLinearSearchSteps, color: '#84cc16' },
     twopointer: { name: 'Two Pointer Search', complexity: 'O(n)', type: 'searching', getSteps: getTwoPointerSearchSteps, color: '#10b981' },
+    jump: { name: 'Jump Search', complexity: 'O(√n)', type: 'searching', getSteps: getJumpSearchSteps, color: '#f472b6' },
+    interpolation: { name: 'Interpolation Search', complexity: 'O(log log n)', type: 'searching', getSteps: getInterpolationSearchSteps, color: '#fbbf24' },
+    exponential: { name: 'Exponential Search', complexity: 'O(log n)', type: 'searching', getSteps: getExponentialSearchSteps, color: '#34d399' },
+    ternary: { name: 'Ternary Search', complexity: 'O(log₃ n)', type: 'searching', getSteps: getTernarySearchSteps, color: '#c084fc' },
+    fibonacci: { name: 'Fibonacci Search', complexity: 'O(log n)', type: 'searching', getSteps: getFibonacciSearchSteps, color: '#fb923c' },
+    sentinel: { name: 'Sentinel Search', complexity: 'O(n)', type: 'searching', getSteps: getSentinelSearchSteps, color: '#2dd4bf' },
+    sublist: { name: 'Sublist Search', complexity: 'O(m × n)', type: 'searching', getSteps: getSublistSearchSteps, color: '#818cf8' },
     // Graph Algorithms
     bfs: { name: 'Breadth-First Search', complexity: 'O(V + E)', type: 'graph', getSteps: bfsSteps, color: '#06b6d4' },
     dfs: { name: 'Depth-First Search', complexity: 'O(V + E)', type: 'graph', getSteps: dfsSteps, color: '#3b82f6' },
     dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O(V²)', type: 'graph', getSteps: dijkstraSteps, color: '#8b5cf6' },
   };
 
+  const searchAlgorithms = ['binary', 'linear', 'twopointer', 'jump', 'interpolation', 'exponential', 'ternary', 'fibonacci', 'sentinel', 'sublist'];
+
   const getStepsWithTarget = (algo, array) => {
-    if (['binary', 'linear', 'twopointer'].includes(algo)) {
+    if (searchAlgorithms.includes(algo)) {
       const target = parseInt(searchTarget);
       if (!isNaN(target)) return [...array, target];
     }
@@ -145,13 +155,34 @@ const Compare = () => {
     const newArray = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100) + 1);
     setInputArray(newArray);
     setCustomInput(newArray.join(', '));
+    setInputError('');
   };
+
+  const [inputError, setInputError] = useState('');
 
   const handleCustomInput = () => {
     try {
       const arr = customInput.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
-      if (arr.length > 0) setInputArray(arr);
-    } catch (error) { }
+      
+      // Validation
+      if (arr.length === 0) {
+        setInputError('Please enter at least one valid number');
+        return;
+      }
+      if (arr.length > 20) {
+        setInputError('Maximum 20 elements allowed for optimal visualization');
+        return;
+      }
+      if (arr.some(n => n < 0 || n > 999)) {
+        setInputError('Numbers must be between 0 and 999');
+        return;
+      }
+      
+      setInputError('');
+      setInputArray(arr);
+    } catch (error) {
+      setInputError('Invalid input format. Use comma-separated numbers.');
+    }
   };
 
   const decreaseSpeed = () => {
@@ -212,6 +243,13 @@ const Compare = () => {
                   <option value="binary">Binary Search</option>
                   <option value="linear">Linear Search</option>
                   <option value="twopointer">Two Pointer Search</option>
+                  <option value="jump">Jump Search</option>
+                  <option value="interpolation">Interpolation Search</option>
+                  <option value="exponential">Exponential Search</option>
+                  <option value="ternary">Ternary Search</option>
+                  <option value="fibonacci">Fibonacci Search</option>
+                  <option value="sentinel">Sentinel Search</option>
+                  <option value="sublist">Sublist Search</option>
                 </optgroup>
                 <optgroup label="Graph Algorithms">
                   <option value="bfs">Breadth-First Search</option>
@@ -247,6 +285,13 @@ const Compare = () => {
                   <option value="binary">Binary Search</option>
                   <option value="linear">Linear Search</option>
                   <option value="twopointer">Two Pointer Search</option>
+                  <option value="jump">Jump Search</option>
+                  <option value="interpolation">Interpolation Search</option>
+                  <option value="exponential">Exponential Search</option>
+                  <option value="ternary">Ternary Search</option>
+                  <option value="fibonacci">Fibonacci Search</option>
+                  <option value="sentinel">Sentinel Search</option>
+                  <option value="sublist">Sublist Search</option>
                 </optgroup>
                 <optgroup label="Graph Algorithms">
                   <option value="bfs">Breadth-First Search</option>
@@ -261,13 +306,16 @@ const Compare = () => {
           <div className="mb-5">
             <label className="block text-sm font-medium text-white mb-2">Custom Array</label>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <input
-                type="text"
-                value={customInput}
-                onChange={(e) => setCustomInput(e.target.value)}
-                className="flex-1 px-4 py-3 bg-dark-900 border border-white rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
-                placeholder="e.g., 64, 34, 25, 12, 22, 11, 90, 45"
-              />
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={customInput}
+                  onChange={(e) => { setCustomInput(e.target.value); setInputError(''); }}
+                  className={`w-full px-4 py-3 bg-dark-900 border ${inputError ? 'border-red-500' : 'border-white'} rounded-xl text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300`}
+                  placeholder="e.g., 64, 34, 25 (max 20 elements, 0-999)"
+                />
+                {inputError && <p className="text-red-400 text-xs mt-1">{inputError}</p>}
+              </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
