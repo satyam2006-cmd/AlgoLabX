@@ -137,10 +137,10 @@ const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpe
       {/* Left Section - Title (hidden on mobile for more search space) */}
       <div className="hidden sm:flex items-center gap-2 sm:gap-4 min-w-0 flex-shrink-0">
         <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent truncate">
-          LabX
+          Hiii
         </h1>
         <span className="text-gray-600 hidden sm:inline">–</span>
-        <span className="text-white text-xs sm:text-sm font-medium hidden sm:inline">Dashboard</span>
+        <span className="text-white text-xs sm:text-sm font-medium hidden sm:inline">There !!</span>
       </div>
 
       {/* Center Section - Search Bar */}
