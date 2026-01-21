@@ -442,16 +442,17 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
                 </div>
                 <div className="p-4 overflow-x-auto custom-scrollbar bg-black/20">
                     {ganttTicks.length > 0 ? (
-                        <div className="inline-block relative min-w-full px-6 pb-2">
-                            <div className="flex h-12 border border-white/10 rounded overflow-hidden shadow-inner">
+                        <div className="inline-block relative px-6 pb-2">
+                            <div className="flex h-12 items-end">
                                 {ganttTicks.map((tick, i) => (
                                     <div
                                         key={i}
-                                        className={`h-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${tick.pid ? 'border-r border-white/10 last:border-r-0' : ''}`}
+                                        className={`h-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${tick.pid ? 'border border-white/20 rounded-sm' : ''}`}
                                         style={{
                                             width: '30px',
                                             backgroundColor: tick.pid ? getProcessColor(tick.pid, 0.45) : 'transparent',
-                                            boxShadow: tick.pid ? `inset 0 0 10px ${getProcessColor(tick.pid, 0.1)}` : 'none'
+                                            boxShadow: tick.pid ? `0 0 15px ${getProcessColor(tick.pid, 0.1)}` : 'none',
+                                            marginLeft: i > 0 && ganttTicks[i - 1].pid && tick.pid ? '-1px' : '0'
                                         }}
                                     >
                                         <span className="text-[10px] font-black text-white/90 drop-shadow-sm">{tick.pid ? `P${tick.pid}` : ''}</span>
