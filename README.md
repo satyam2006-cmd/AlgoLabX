@@ -14,13 +14,13 @@ A comprehensive web application for visualizing and learning algorithms through 
 - **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Shell Sort, Counting Sort, Radix Sort, Bucket Sort, Cocktail Sort, Comb Sort, Gnome Sort, Odd-Even Sort
 - **Search Algorithms**: Binary Search, Linear Search, Jump Search, Interpolation Search, Exponential Search, Ternary Search, Fibonacci Search, Sentinel Search, Two-Pointer Search
 - **Graph Algorithms**: BFS Traversal, DFS Traversal, Dijkstra's Algorithm, Bellman-Ford, Floyd-Warshall, Prim's MST, Kruskal's MST, Topological Sort, Cycle Detection
-- **Dynamic Programming**: 0/1 Knapsack, Longest Common Subsequence, Edit Distance, Coin Change, Matrix Chain Multiplication, Rod Cutting, Longest Increasing Subsequence, Fibonacci DP
+
 
 ### 🎨 Specialized Visualizers
 - **RecursiveTreeVisualizer**: **(New)** 3D tree structure for visualizing recursive decomposition steps.
 - **SortingVisualizer3D**: **(New)** High-fidelity 3D bars for generic sorting algorithms.
 - **GraphVisualizer**: Grid-based graph renderer with neon path highlighting.
-- **DPVisualizer**: Interactive table for DP algorithms.
+
 - **SearchVisualizer**: Dedicated view for linear and binary search operations.
 - **SmartVisualizer**: Intelligent routing engine that selects the best visualization mode.
 
@@ -164,15 +164,7 @@ npm run build
 - **Topological Sort**: O(V+E) - Linear ordering of DAG vertices
 - **Cycle Detection**: O(V+E) - Detects cycles in directed graphs
 
-#### Dynamic Programming
-- **0/1 Knapsack**: O(nW) - Optimization problem solving
-- **Longest Common Subsequence**: O(mn) - Find longest common subsequence
-- **Edit Distance**: O(mn) - Minimum string transformations
-- **Coin Change**: O(n×amount) - Minimum coins for amount
-- **Matrix Chain Multiplication**: O(n³) - Optimal parenthesization
-- **Rod Cutting**: O(n²) - Maximize profit by cutting rod
-- **Longest Increasing Subsequence**: O(n²) - Find longest increasing sequence
-- **Fibonacci DP**: O(n) - Computing Fibonacci using DP
+
 
 ## 🎨 Design Features
 
@@ -181,7 +173,7 @@ The `SmartVisualizer` component automatically routes to the appropriate visualiz
 - `sorting` → `ArrayVisualizer`
 - `searching` → `SearchVisualizer`
 - `graph` → `GraphVisualizer`
-- `dp` → `DPVisualizer`
+
 
 ### Step-Based Animation
 All algorithms generate a series of steps containing:

@@ -4,7 +4,7 @@ import SmartVisualizer from '../components/SmartVisualizer';
 import HeapSortVisualizer from '../components/HeapSortVisualizer';
 import QuickSortVisualizer from '../components/QuickSort3D'; // 2D Tile Implementation
 import GraphVisualizer from "../components/GraphVisualizer";
-import DPVisualizer from "./DPVisualizer";
+
 import BinarySearchVisualizer from '../components/BinarySearchVisualizer';
 import LinearSearchVisualizer from '../components/LinearSearchVisualizer';
 import TwoPointerVisualizer from '../components/TwoPointerVisualizer';
@@ -163,7 +163,7 @@ const Compare = () => {
   const handleCustomInput = () => {
     try {
       const arr = customInput.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
-      
+
       // Validation
       if (arr.length === 0) {
         setInputError('Please enter at least one valid number');
@@ -177,7 +177,7 @@ const Compare = () => {
         setInputError('Numbers must be between 0 and 999');
         return;
       }
-      
+
       setInputError('');
       setInputArray(arr);
     } catch (error) {
@@ -494,8 +494,7 @@ const Compare = () => {
                   <RadixSortVisualizer currentStep={data2} isCompact={true} />
                 ) : algorithms[algo2].type === 'graph' ? (
                   <GraphVisualizer currentStep={data2} isCompact={true} />
-                ) : algorithms[algo2].type === 'dp' ? (
-                  <DPVisualizer currentStep={data2} isCompact={true} />
+
                 ) : (
                   <div className="w-full bg-[#050505] rounded-[2rem] border border-white overflow-hidden shadow-2xl p-4 sm:p-6 relative flex flex-col items-center justify-center min-h-[250px]">
                     <SmartVisualizer

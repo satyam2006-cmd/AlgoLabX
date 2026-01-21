@@ -9,7 +9,7 @@ import BucketSortVisualizer from '../components/BucketSortVisualizer';
 import RadixSortVisualizer from '../components/RadixSortVisualizer';
 import TwoPointerVisualizer from '../components/TwoPointerVisualizer';
 import GraphVisualizer from '../components/GraphVisualizer';
-import DPVisualizer from './DPVisualizer';
+
 import { useStepPlayer } from '../engine/stepPlayer';
 import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
 import {
@@ -24,7 +24,7 @@ import {
   // Graph
   bfsSteps, dfsSteps, dijkstraSteps,
   // DP
-  knapsackSteps,
+
 } from '../algorithms/comprehensiveAlgorithms';
 
 // Icon Components
@@ -157,7 +157,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
     dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, description: 'Shortest path algorithm that finds the shortest paths from a source to all other nodes in a weighted graph.' }
   };
 
-  const currentAlgo = algorithms[selectedAlgorithm];
+  const currentAlgo = algorithms[selectedAlgorithm] || algorithms['bubble'];
 
   const searchAlgorithms = ['binary', 'linear', 'twopointer', 'jump', 'interpolation', 'exponential', 'ternary', 'fibonacci', 'sentinel', 'sublist'];
 
@@ -511,14 +511,6 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                         algorithmName={selectedAlgorithm}
                         stepData={currentStepData}
                       />
-                    </div>
-                  ) : (
-                    <LoadingPlaceholder />
-                  )
-                ) : currentAlgo.type === 'dp' ? (
-                  currentStepData ? (
-                    <div className="w-full bg-[#050505] rounded-[2.5rem] border border-white overflow-hidden shadow-2xl p-6 sm:p-8 relative flex flex-col items-center justify-center min-h-[350px]">
-                      <DPVisualizer currentStep={currentStepData} />
                     </div>
                   ) : (
                     <LoadingPlaceholder />

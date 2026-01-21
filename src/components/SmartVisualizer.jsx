@@ -7,7 +7,7 @@ import BinarySearchVisualizer from './BinarySearchVisualizer';
 import TwoPointerVisualizer from './TwoPointerVisualizer';
 import SearchVisualizer from './SearchVisualizer';
 import GraphVisualizer from './GraphVisualizer';
-import DPVisualizer from './DPVisualizer';
+
 import GanttChartVisualizer from './GanttChartVisualizer';
 import ChartsVisualizer from './ChartsVisualizer';
 import MergeTree from './MergeTree';
@@ -143,14 +143,7 @@ const SmartVisualizer = ({
           </div>
         );
 
-      case 'dp':
-        return (
-          <div className="w-full flex flex-col items-center gap-4">
-            <DPVisualizer
-              currentStep={stepData}
-            />
-          </div>
-        );
+
 
       case 'os':
         return (

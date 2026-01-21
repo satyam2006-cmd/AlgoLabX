@@ -13,7 +13,7 @@ import {
   bfsSteps,
   dfsSteps,
   dijkstraSteps,
-  knapsackSteps,
+
   algorithmCategories
 } from '../algorithms/newIndex.js';
 
@@ -32,7 +32,7 @@ const AlgorithmDemo = () => {
     bfs: bfsSteps,
     dfs: dfsSteps,
     dijkstra: dijkstraSteps,
-    knapsack: knapsackSteps
+
   };
 
   // Get steps for selected algorithm
@@ -59,7 +59,7 @@ const AlgorithmDemo = () => {
     <div className="flex-1 p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-6">Algorithm Step-Based Visualization Demo</h1>
-        
+
         {/* Algorithm Selection */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -84,12 +84,10 @@ const AlgorithmDemo = () => {
                   <option value="dfs">DFS Traversal (O(V + E))</option>
                   <option value="dijkstra">Dijkstra's Algorithm (O((V + E) log V))</option>
                 </optgroup>
-                <optgroup label="Dynamic Programming">
-                  <option value="knapsack">0/1 Knapsack (O(nW))</option>
-                </optgroup>
+
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Speed (ms)</label>
               <input
@@ -104,7 +102,7 @@ const AlgorithmDemo = () => {
               <span className="text-white text-sm">{speed}ms</span>
             </div>
           </div>
-          
+
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Input Array</label>
@@ -116,7 +114,7 @@ const AlgorithmDemo = () => {
                 placeholder="Enter comma-separated numbers"
               />
             </div>
-            
+
             <div className="flex items-end gap-2">
               <button
                 onClick={handleGenerateArray}
@@ -137,7 +135,7 @@ const AlgorithmDemo = () => {
         {/* Visualization */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <h2 className="text-xl font-semibold text-white mb-4">Visualization</h2>
-          
+
           {currentStepData && (
             <div className="space-y-4">
               <ArrayVisualizer
@@ -146,7 +144,7 @@ const AlgorithmDemo = () => {
                 swappedIndices={currentStepData.swapped ? currentStepData.active : []}
                 maxValue={Math.max(...inputArray) + 10}
               />
-              
+
               <div className="bg-gray-700/50 rounded-lg p-4">
                 <p className="text-white font-medium">{currentStepData.message}</p>
               </div>
@@ -157,7 +155,7 @@ const AlgorithmDemo = () => {
         {/* Controls */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50">
           <h3 className="text-lg font-semibold text-white mb-4">Controls</h3>
-          
+
           <div className="flex items-center gap-4 mb-4">
             <button
               onClick={isPlaying ? controls.pause : controls.play}
@@ -165,7 +163,7 @@ const AlgorithmDemo = () => {
             >
               {isPlaying ? 'Pause' : 'Play'}
             </button>
-            
+
             <button
               onClick={controls.stepForward}
               disabled={currentStep >= totalSteps - 1}
@@ -173,7 +171,7 @@ const AlgorithmDemo = () => {
             >
               Step Forward
             </button>
-            
+
             <button
               onClick={controls.stepBackward}
               disabled={currentStep <= 0}
@@ -182,7 +180,7 @@ const AlgorithmDemo = () => {
               Step Backward
             </button>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <span className="text-gray-400 text-sm">Current Step:</span>

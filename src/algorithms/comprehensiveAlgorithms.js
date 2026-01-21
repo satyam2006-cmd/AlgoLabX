@@ -59,34 +59,7 @@ export { dijkstraSteps } from './graph/dijkstraSteps.js';
 //   getCycleDetectionSteps
 // } from './graph/additionalGraphAlgorithms.js';
 
-// Dynamic Programming Algorithms
-// Dummy exports for missing algorithm files to prevent SyntaxErrors
-export const knapsackSteps = () => [];
-export const getLCSSteps = () => [];
-export const getEditDistanceSteps = () => [];
-export const getCoinChangeSteps = () => [];
-export const getMatrixChainSteps = () => [];
-export const getRodCuttingSteps = () => [];
-export const getLISSteps = () => [];
-export const getFibonacciDPSteps = () => [];
 
-export const getBellmanFordSteps = () => [];
-export const getFloydWarshallSteps = () => [];
-export const getPrimMSTSteps = () => [];
-export const getKruskalMSTSteps = () => [];
-export const getTopologicalSortSteps = () => [];
-export const getCycleDetectionSteps = () => [];
-
-// Additional DP Algorithms
-// export {
-//   getLCSSteps,
-//   getEditDistanceSteps,
-//   getCoinChangeSteps,
-//   getMatrixChainSteps,
-//   getRodCuttingSteps,
-//   getLISSteps,
-//   getFibonacciDPSteps
-// } from './dp/additionalDPAlgorithms.js';
 
 // Algorithm Categories and Metadata
 export const algorithmCategories = {
@@ -115,9 +88,6 @@ export const algorithmCategories = {
     { name: 'BFS Traversal', function: 'bfsSteps', complexity: 'O(V + E)', category: 'Traversal' },
     { name: 'DFS Traversal', function: 'dfsSteps', complexity: 'O(V + E)', category: 'Traversal' },
     { name: 'Dijkstra\'s Algorithm', function: 'dijkstraSteps', complexity: 'O((V + E) log V)', category: 'Shortest Path' }
-  ],
-  dynamicProgramming: [
-    // Dynamic programming algorithms removed from UI metadata
   ]
 };
 
@@ -153,23 +123,7 @@ export const algorithmFunctions = {
   // Graph
   bfsSteps: (arr) => bfsSteps(arr),
   dfsSteps: (arr) => dfsSteps(arr),
-  dijkstraSteps: (arr) => dijkstraSteps(arr),
-  getBellmanFordSteps: (input) => null,
-  getFloydWarshallSteps: (input) => null,
-  getPrimMSTSteps: (input) => null,
-  getKruskalMSTSteps: (input) => null,
-  getTopologicalSortSteps: (input) => null,
-  getCycleDetectionSteps: (input) => null,
-
-  // Dynamic Programming
-  knapsackSteps: (arr) => null,
-  getLCSSteps: (input) => null,
-  getEditDistanceSteps: (input) => null,
-  getCoinChangeSteps: (input) => null,
-  getMatrixChainSteps: (input) => null,
-  getRodCuttingSteps: (input) => null,
-  getLISSteps: (input) => null,
-  getFibonacciDPSteps: (input) => null
+  dijkstraSteps: (arr) => dijkstraSteps(arr)
 };
 
 // Performance Metrics
