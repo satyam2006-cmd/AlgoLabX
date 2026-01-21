@@ -441,52 +441,46 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
                     <span className="text-[10px] font-mono text-emerald-500 font-bold tabular-nums">TIME: {currentStep}S</span>
                 </div>
                 <div className="p-4 overflow-x-auto custom-scrollbar bg-black/20">
-                    <div className="inline-block relative px-6 pb-2 select-none">
-                        {/* Process Blocks */}
-                        <div className="flex h-12 items-center">
-                            {ganttTicks.map((tick, i) => (
-                                <div
-                                    key={i}
-                                    className={`h-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${tick.pid ? 'border-l border-y border-white/20 first:rounded-l-md last:rounded-r-md last:border-r' : ''}`}
-                                    style={{
-                                        width: '30px',
-                                        backgroundColor: tick.pid ? getProcessColor(tick.pid, 0.45) : 'transparent',
-                                        boxShadow: tick.pid ? `inset 0 0 10px ${getProcessColor(tick.pid, 0.1)}` : 'none'
-                                    }}
-                                >
-                                    <span className="text-[10px] font-black text-white/90 drop-shadow-sm">{tick.pid ? `P${tick.pid}` : ''}</span>
-                                </div>
-                            ))}
-                        </div>
+                    {ganttTicks.length > 0 ? (
+                        <div className="inline-block relative px-6 pb-6 select-none">
+                            {/* Process Blocks with Embedded Indices */}
+                            <div className="flex h-12 items-center">
+                                {ganttTicks.map((tick, i) => (
+                                    <div
+                                        key={i}
+                                        className={`h-full flex items-center justify-center flex-shrink-0 transition-all duration-300 relative ${tick.pid ? 'border-l border-y border-white/20 first:rounded-l-md last:rounded-r-md last:border-r' : ''}`}
+                                        style={{
+                                            width: '30px',
+                                            backgroundColor: tick.pid ? getProcessColor(tick.pid, 0.45) : 'transparent',
+                                            boxShadow: tick.pid ? `inset 0 0 10px ${getProcessColor(tick.pid, 0.1)}` : 'none'
+                                        }}
+                                    >
+                                        <span className="text-[10px] font-black text-white/90 drop-shadow-sm">{tick.pid ? `P${tick.pid}` : ''}</span>
 
-                        {/* Ruler Indexing - Exactly Below Boundaries */}
-                        <div className="flex h-5 items-start mt-1 relative overflow-visible">
-                            {/* Start Index 0 */}
-                            <div className="absolute left-0 -top-1 w-[1px] h-2 bg-white/20">
-                                <span className="absolute left-1/2 -bottom-4 -translate-x-1/2 text-[9px] font-black font-mono text-white/30">0</span>
-                            </div>
-                            {ganttTicks.map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="relative flex-shrink-0"
-                                    style={{ width: '30px' }}
-                                >
-                                    <div className="absolute right-0 -top-1 w-[1px] h-2 bg-white/20">
-                                        <span className="absolute left-1/2 -bottom-4 -translate-x-1/2 text-[8px] font-black font-mono text-white/30">
-                                            {i + 1}
-                                        </span>
+                                        {/* Index 0: Only on first block */}
+                                        {i === 0 && (
+                                            <div className="absolute -bottom-6 left-0 flex flex-col items-center -translate-x-1/2">
+                                                <div className="w-px h-1.5 bg-white/20 mb-1" />
+                                                <span className="text-[9px] font-black font-mono text-white/30 leading-none">0</span>
+                                            </div>
+                                        )}
+
+                                        {/* End Index: On every block */}
+                                        <div className="absolute -bottom-6 right-0 flex flex-col items-center translate-x-1/2">
+                                            <div className="w-px h-1.5 bg-white/20 mb-1" />
+                                            <span className="text-[9px] font-black font-mono text-white/30 leading-none">{i + 1}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
                     ) : (
-                    <div className="py-10 flex flex-col items-center justify-center opacity-10">
-                        <div className="flex gap-1 mb-3">
-                            {[1, 2, 3].map(i => <div key={i} className="w-4 h-1 bg-white/40 rounded-full" />)}
+                        <div className="py-10 flex flex-col items-center justify-center opacity-10">
+                            <div className="flex gap-1 mb-3">
+                                {[1, 2, 3].map(i => <div key={i} className="w-4 h-1 bg-white/40 rounded-full" />)}
+                            </div>
+                            <span className="text-[9px] uppercase font-black tracking-[0.5em]">System Idle - Ready to Execute</span>
                         </div>
-                        <span className="text-[9px] uppercase font-black tracking-[0.5em]">System Idle - Ready to Execute</span>
-                    </div>
                     )}
                 </div>
             </div>
