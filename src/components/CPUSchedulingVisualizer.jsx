@@ -443,14 +443,14 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
                 <div className="p-4 overflow-x-auto custom-scrollbar bg-black/20">
                     {ganttTicks.length > 0 ? (
                         <div className="inline-block relative min-w-full px-6 pb-2">
-                            <div className="flex h-12 border border-white/10 rounded overflow-hidden shadow-inner bg-white/5">
+                            <div className="flex h-12 border border-white/10 rounded overflow-hidden shadow-inner">
                                 {ganttTicks.map((tick, i) => (
                                     <div
                                         key={i}
-                                        className="h-full border-r border-white/10 last:border-r-0 flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                                        className={`h-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${tick.pid ? 'border-r border-white/10 last:border-r-0' : ''}`}
                                         style={{
                                             width: '30px',
-                                            backgroundColor: tick.pid ? getProcessColor(tick.pid, 0.45) : 'rgba(255,255,255,0.06)',
+                                            backgroundColor: tick.pid ? getProcessColor(tick.pid, 0.45) : 'transparent',
                                             boxShadow: tick.pid ? `inset 0 0 10px ${getProcessColor(tick.pid, 0.1)}` : 'none'
                                         }}
                                     >
