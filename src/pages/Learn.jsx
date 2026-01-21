@@ -10,6 +10,7 @@ import RadixSortVisualizer from '../components/RadixSortVisualizer';
 import TwoPointerVisualizer from '../components/TwoPointerVisualizer';
 import GraphVisualizer from '../components/GraphVisualizer';
 import DPVisualizer from './DPVisualizer';
+import CPUSchedulingVisualizer from '../components/CPUSchedulingVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
 import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
 import {
@@ -147,7 +148,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
     // Graph Algorithms
     bfs: { name: 'BFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: bfsSteps, description: 'Graph traversal algorithm that explores neighbors of nodes level by level, starting from a source node.' },
     dfs: { name: 'DFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: dfsSteps, description: 'Graph traversal algorithm that explores as far as possible along each branch before backtracking.' },
-    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, description: 'Shortest path algorithm that finds the shortest paths from a source to all other nodes in a weighted graph.' }
+    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, description: 'Shortest path algorithm that finds the shortest paths from a source to all other nodes in a weighted graph.' },
+    // CPU Scheduling
+    fcfs: { name: 'FCFS Scheduling', complexity: 'O(n)', type: 'cpu', getSteps: () => [], description: 'First-Come, First-Served: The simplest scheduling algorithm that executes processes in order of arrival.' },
+    sjf: { name: 'SJF (Non-preemptive)', complexity: 'O(n²)', type: 'cpu', getSteps: () => [], description: 'Shortest Job First: Executes the process with the smallest burst time next.' },
+    srtf: { name: 'SRTF (Preemptive SJF)', complexity: 'O(n²)', type: 'cpu', getSteps: () => [], description: 'Shortest Remaining Time First: Preemptive version of SJF.' },
+    priority_np: { name: 'Priority (Non-preemptive)', complexity: 'O(n²)', type: 'cpu', getSteps: () => [], description: 'Executes processes based on priority; lower number often means higher priority.' },
+    priority_p: { name: 'Priority (Preemptive)', complexity: 'O(n²)', type: 'cpu', getSteps: () => [], description: 'Preemptive version of priority scheduling.' },
+    round_robin: { name: 'Round Robin', complexity: 'O(n)', type: 'cpu', getSteps: () => [], description: 'Executes each process for a small time quantum in a circular queue.' }
   };
 
   const currentAlgo = algorithms[selectedAlgorithm];
@@ -337,49 +345,62 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   <option value="dfs">DFS Traversal</option>
                   <option value="dijkstra">Dijkstra's Algorithm</option>
                 </optgroup>
+                <optgroup label="CPU Scheduling">
+                  <option value="fcfs">FCFS</option>
+                  <option value="sjf">SJF (NP)</option>
+                  <option value="srtf">SRTF (P)</option>
+                  <option value="priority_np">Priority (NP)</option>
+                  <option value="priority_p">Priority (P)</option>
+                  <option value="round_robin">Round Robin</option>
+                </optgroup>
               </select>
             </div>
 
-            {/* Custom Array Input */}
-            <div className="flex-[2] min-w-[300px]">
-              <div className="flex flex-col sm:flex-row items-start sm:items-end gap-3">
-                <div className="flex-1 w-full">
-                  <label className="block text-xs sm:text-sm font-medium text-white mb-2">Custom Array</label>
-                  <input
-                    type="text"
-                    value={customInput}
-                    onChange={(e) => setCustomInput(e.target.value)}
-                    className="w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border border-white rounded-lg text-xs sm:text-sm text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
-                    placeholder="e.g., 5, 3, 8"
-                  />
+            {/* Simple Array Inputs - Hidden for CPU and Graph algorithms */}
+            {currentAlgo.type !== 'cpu' && currentAlgo.type !== 'graph' && (
+              <>
+                {/* Custom Array Input */}
+                <div className="flex-[2] min-w-[300px]">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-end gap-3">
+                    <div className="flex-1 w-full">
+                      <label className="block text-xs sm:text-sm font-medium text-white mb-2">Custom Array</label>
+                      <input
+                        type="text"
+                        value={customInput}
+                        onChange={(e) => setCustomInput(e.target.value)}
+                        className="w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-dark-900/60 border border-white rounded-lg text-xs sm:text-sm text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300"
+                        placeholder="e.g., 5, 3, 8"
+                      />
+                    </div>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={handleCustomInput}
+                      className="px-4 sm:px-6 py-2 sm:py-2.5 bg-dark-700/50 hover:bg-dark-600/50 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 text-xs sm:text-sm whitespace-nowrap"
+                    >
+                      Set
+                    </motion.button>
+                  </div>
                 </div>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleCustomInput}
-                  className="px-4 sm:px-6 py-2 sm:py-2.5 bg-dark-700/50 hover:bg-dark-600/50 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 text-xs sm:text-sm whitespace-nowrap"
-                >
-                  Set
-                </motion.button>
-              </div>
-            </div>
 
-            {/* Generate Random Array Button */}
-            <div className="flex-1">
-              <label className="block text-xs sm:text-sm font-medium text-white mb-2">Random Array</label>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleGenerateArray}
-                className="w-full px-4 py-2 sm:py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-medium rounded-lg shadow-lg shadow-emerald-500/10 transition-all duration-300 flex items-center justify-center gap-2 text-xs sm:text-sm"
-              >
-                <ShuffleIcon />
-                <span>Generate Random</span>
-              </motion.button>
-            </div>
+                {/* Generate Random Array Button */}
+                <div className="flex-1">
+                  <label className="block text-xs sm:text-sm font-medium text-white mb-2">Random Array</label>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleGenerateArray}
+                    className="w-full px-4 py-2 sm:py-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-medium rounded-lg shadow-lg shadow-emerald-500/10 transition-all duration-300 flex items-center justify-center gap-2 text-xs sm:text-sm"
+                  >
+                    <ShuffleIcon />
+                    <span>Generate Random</span>
+                  </motion.button>
+                </div>
+              </>
+            )}
           </div>
 
-          {/* Search Target Input - Conditional (Single line below on desktop if needed, or row) */}
+          {/* Search Target Input - Conditional */}
           {['binary', 'linear', 'twopointer'].includes(selectedAlgorithm) && (
             <div className="mt-4 pt-4 border-t border-white/10">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -406,7 +427,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="lg:col-span-2"
+            className={currentAlgo.type === 'cpu' ? 'lg:col-span-3' : 'lg:col-span-2'}
           >
             <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-xl sm:rounded-2xl overflow-hidden">
               {/* Panel Header */}
@@ -424,11 +445,14 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
               {/* Visualization Area */}
               <div className="p-3 sm:p-6 overflow-x-auto">
-                {selectedAlgorithm === 'merge' ? (
+                {currentAlgo.type === 'cpu' ? (
+                  <CPUSchedulingVisualizer
+                    algorithm={selectedAlgorithm}
+                    speed={speedMultiplier}
+                  />
+                ) : selectedAlgorithm === 'merge' ? (
                   currentStepData ? (
-                    <MergeTree
-                      currentStep={currentStepData}
-                    />
+                    <MergeTree currentStep={currentStepData} />
                   ) : (
                     <LoadingPlaceholder />
                   )
@@ -443,25 +467,19 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   )
                 ) : selectedAlgorithm === 'heap' ? (
                   currentStepData ? (
-                    <HeapSortVisualizer
-                      currentStep={currentStepData}
-                    />
+                    <HeapSortVisualizer currentStep={currentStepData} />
                   ) : (
                     <LoadingPlaceholder />
                   )
                 ) : selectedAlgorithm === 'bucket' ? (
                   currentStepData ? (
-                    <BucketSortVisualizer
-                      currentStep={currentStepData}
-                    />
+                    <BucketSortVisualizer currentStep={currentStepData} />
                   ) : (
                     <LoadingPlaceholder />
                   )
                 ) : selectedAlgorithm === 'radix' ? (
                   currentStepData ? (
-                    <RadixSortVisualizer
-                      currentStep={currentStepData}
-                    />
+                    <RadixSortVisualizer currentStep={currentStepData} />
                   ) : (
                     <LoadingPlaceholder />
                   )
@@ -522,188 +540,147 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
               </div>
 
               {/* Controls */}
-              <div className="px-3 sm:px-6 pb-3 sm:pb-4 space-y-2 sm:space-y-3">
-                {/* Playback Controls - Touch-friendly with larger tap targets on mobile */}
-                <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={isPlaying ? controls.pause : controls.play}
-                    aria-label={isPlaying ? 'Pause' : 'Play'}
-                    className="px-4 sm:px-4 py-2.5 sm:py-2 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 flex items-center gap-1.5 text-sm sm:text-sm min-w-[80px] justify-center touch-manipulation"
-                  >
-                    {isPlaying ? <PauseIcon /> : <PlayIcon />}
-                    {isPlaying ? 'Pause' : 'Play'}
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={controls.stepBackward}
-                    disabled={currentStep <= 0}
-                    aria-label="Previous step"
-                    className="px-3 sm:px-3 py-2.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-sm sm:text-sm touch-manipulation active:scale-95"
-                  >
-                    <ChevronLeftIcon /> <span className="hidden sm:inline">Prev</span>
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={controls.stepForward}
-                    disabled={currentStep >= totalSteps - 1}
-                    aria-label="Next step"
-                    className="px-3 sm:px-3 py-2.5 sm:py-2 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-sm sm:text-sm touch-manipulation active:scale-95"
-                  >
-                    <span className="hidden sm:inline">Next</span> <ChevronRightIcon />
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={controls.reset}
-                    aria-label="Reset animation"
-                    className="px-3 sm:px-3 py-2.5 sm:py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg border border-red-500/30 transition-all duration-300 flex items-center gap-0.5 text-sm sm:text-sm touch-manipulation active:scale-95"
-                  >
-                    <RefreshIcon /> <span className="hidden sm:inline">Reset</span>
-                  </motion.button>
-                </div>
-
-                {/* Speed Control with +/- buttons - Improved touch targets */}
-                <div className="flex items-center gap-1 sm:gap-2 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30 flex-wrap">
-                  <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">Speed:</span>
-                  <div className="flex items-center gap-1">
+              {currentAlgo.type !== 'cpu' && (
+                <div className="px-3 sm:px-6 pb-3 sm:pb-4 space-y-2 sm:space-y-3">
+                  <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
                     <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={decreaseSpeed}
-                      disabled={speedMultiplier === speedOptions[0]}
-                      aria-label="Decrease speed"
-                      className="w-8 h-8 sm:w-6 sm:h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs touch-manipulation"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={isPlaying ? controls.pause : controls.play}
+                      className="px-4 py-2.5 bg-gradient-to-r from-dark-600 to-dark-700 text-dark-100 font-medium rounded-lg border border-white transition-all duration-300 flex items-center gap-1.5 text-sm min-w-[80px] justify-center"
                     >
-                      <MinusIcon />
+                      {isPlaying ? <PauseIcon /> : <PlayIcon />}
+                      {isPlaying ? 'Pause' : 'Play'}
                     </motion.button>
-                    <span className="w-10 sm:w-8 text-center text-dark-100 font-semibold text-sm sm:text-sm">
-                      {speedMultiplier}x
-                    </span>
                     <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={increaseSpeed}
-                      disabled={speedMultiplier === speedOptions[speedOptions.length - 1]}
-                      aria-label="Increase speed"
-                      className="w-8 h-8 sm:w-6 sm:h-6 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 disabled:opacity-50 disabled:cursor-not-allowed text-dark-200 flex items-center justify-center border border-white transition-all text-xs touch-manipulation"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={controls.stepBackward}
+                      disabled={currentStep <= 0}
+                      className="px-3 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-sm"
                     >
-                      <PlusIcon />
+                      <ChevronLeftIcon /> <span className="hidden sm:inline">Prev</span>
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={controls.stepForward}
+                      disabled={currentStep >= totalSteps - 1}
+                      className="px-3 py-2.5 bg-dark-700/50 hover:bg-dark-600/50 disabled:bg-dark-800/50 disabled:opacity-50 text-dark-200 rounded-lg border border-white transition-all duration-300 flex items-center gap-0.5 text-sm"
+                    >
+                      <span className="hidden sm:inline">Next</span> <ChevronRightIcon />
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={controls.reset}
+                      className="px-3 py-2.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg border border-red-500/30 transition-all duration-300 flex items-center gap-0.5 text-sm"
+                    >
+                      <RefreshIcon /> <span className="hidden sm:inline">Reset</span>
                     </motion.button>
                   </div>
-                  {/* Speed options - hidden on mobile, shown on tablet and up */}
-                  <div className="hidden sm:flex gap-0.5 ml-auto">
-                    {speedOptions.map((opt) => (
-                      <button
-                        key={opt}
-                        onClick={() => setSpeedMultiplier(opt)}
-                        aria-label={`Set speed to ${opt}x`}
-                        className={`px-2 py-1 text-xs rounded-md transition-all touch-manipulation ${speedMultiplier === opt
-                          ? 'bg-dark-500 text-dark-100'
-                          : 'bg-dark-800/50 text-white hover:bg-dark-700/50'
-                          }`}
+
+                  <div className="flex items-center gap-1 sm:gap-2 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30 flex-wrap">
+                    <span className="text-xs sm:text-sm font-medium text-white">Speed:</span>
+                    <div className="flex items-center gap-1">
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={decreaseSpeed}
+                        disabled={speedMultiplier === speedOptions[0]}
+                        className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 flex items-center justify-center border border-white"
                       >
-                        {opt}x
-                      </button>
-                    ))}
+                        <MinusIcon />
+                      </motion.button>
+                      <span className="w-10 text-center text-dark-100 font-semibold text-sm">
+                        {speedMultiplier}x
+                      </span>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={increaseSpeed}
+                        disabled={speedMultiplier === speedOptions[speedOptions.length - 1]}
+                        className="w-8 h-8 rounded-lg bg-dark-700/50 hover:bg-dark-600/50 flex items-center justify-center border border-white"
+                      >
+                        <PlusIcon />
+                      </motion.button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1 sm:gap-3 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30">
+                    <span className="text-xs sm:text-sm font-medium text-white">Progress:</span>
+                    <div className="flex-1 h-1 sm:h-1.5 bg-dark-700/50 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-dark-400 to-dark-300 rounded-full"
+                        animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
+                      />
+                    </div>
+                    <span className="text-xs sm:text-sm text-white w-10 sm:w-12 text-right">{currentStep + 1}/{totalSteps}</span>
                   </div>
                 </div>
-
-                {/* Step Progress - Enhanced with better visual feedback */}
-                <div className="flex items-center gap-1 sm:gap-3 p-2 sm:p-3 bg-dark-900/40 rounded-lg border border-dark-700/30">
-                  <span className="text-xs sm:text-sm font-medium text-white whitespace-nowrap">Progress:</span>
-                  <div className="flex-1 h-1 sm:h-1.5 bg-dark-700/50 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-dark-400 to-dark-300 rounded-full"
-                      animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
-                    />
-                  </div>
-                  <span className="text-xs sm:text-sm text-white w-10 sm:w-12 text-right">{currentStep + 1}/{totalSteps}</span>
-                </div>
-              </div>
-
+              )}
             </div>
           </motion.div>
 
           {/* Info Sidebar */}
-          <motion.div
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="space-y-3 sm:space-y-5 md:space-y-0 md:grid md:grid-cols-2 lg:flex lg:flex-col gap-4 lg:gap-5"
-          >
-            {/* Algorithm Info Card */}
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-white-700/40 rounded-2xl p-5">
-              <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-blue-700/50 flex items-center justify-center text-white">
-                  <ChartBarIcon />
-                </span>
-                Algorithm Info
-              </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-white text-sm">Time Complexity</span>
-                  <span className="text-dark-200 font-semibold">{currentAlgo.complexity}</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-white text-sm">Space Complexity</span>
-                  <span className="text-dark-200 font-semibold">O(1)</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-white text-sm">Current Step</span>
-                  <span className="text-dark-200 font-semibold">{currentStep + 1} / {totalSteps}</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
-                  <span className="text-white text-sm">Array Size</span>
-                  <span className="text-dark-200 font-semibold">{inputArray.length}</span>
+          {currentAlgo.type !== 'cpu' && (
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="space-y-3 sm:space-y-5 md:space-y-0 md:grid md:grid-cols-2 lg:flex lg:flex-col gap-4 lg:gap-5"
+            >
+              <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-5">
+                <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-blue-700/50 flex items-center justify-center text-white">
+                    <ChartBarIcon />
+                  </span>
+                  Algorithm Info
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
+                    <span className="text-white text-sm">Time Complexity</span>
+                    <span className="text-dark-200 font-semibold">{currentAlgo.complexity}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-dark-900/40 rounded-xl">
+                    <span className="text-white text-sm">Space Complexity</span>
+                    <span className="text-dark-200 font-semibold">O(1)</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Statistics Card */}
-            <div className="bg-dark-800/40 backdrop-blur-xl border border-white-700/40 rounded-2xl p-5">
-              <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                  <TrendingUpIcon />
-                </span>
-                Statistics
-              </h3>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 bg-dark-900/40 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-dark-200">{totalSteps}</p>
-                  <p className="text-white text-xs mt-1">Total Steps</p>
-                </div>
-                <div className="p-3 bg-dark-900/40 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-dark-200">{Math.floor(totalSteps * 0.7)}</p>
-                  <p className="text-white text-xs mt-1">Comparisons</p>
-                </div>
-                <div className="p-3 bg-dark-900/40 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-dark-200">{Math.floor(totalSteps * 0.3)}</p>
-                  <p className="text-white text-xs mt-1">Swaps</p>
-                </div>
-                <div className="p-3 bg-dark-900/40 rounded-xl text-center">
-                  <p className="text-2xl font-bold text-emerald-400">{isPlaying ? 'Running' : 'Paused'}</p>
-                  <p className="text-white text-xs mt-1">Status</p>
+              <div className="bg-dark-800/40 backdrop-blur-xl border border-white rounded-2xl p-5">
+                <h3 className="text-lg font-semibold text-dark-100 mb-4 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                    <TrendingUpIcon />
+                  </span>
+                  Statistics
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-3 bg-dark-900/40 rounded-xl text-center">
+                    <p className="text-2xl font-bold text-dark-200">{totalSteps}</p>
+                    <p className="text-white text-xs mt-1">Total Steps</p>
+                  </div>
+                  <div className="p-3 bg-dark-900/40 rounded-xl text-center">
+                    <p className="text-2xl font-bold text-emerald-400">{isPlaying ? 'Running' : 'Paused'}</p>
+                    <p className="text-white text-xs mt-1">Status</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Pro Tip Card */}
-            <div className="bg-gradient-to-br from-dark-750/60 to-dark-800/60 border border-white-600/30 rounded-2xl p-5">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
-                  <LightBulbIcon />
-                </span>
-                <span className="text-dark-200 font-medium">Pro Tip</span>
+              <div className="bg-gradient-to-br from-dark-750/60 to-dark-800/60 border border-white rounded-2xl p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
+                    <LightBulbIcon />
+                  </span>
+                  <span className="text-dark-200 font-medium">Pro Tip</span>
+                </div>
+                <p className="text-white text-sm leading-relaxed">
+                  Use the speed buttons to slow down and observe each step in detail. Step through manually for deeper understanding!
+                </p>
               </div>
-              <p className="text-white text-sm leading-relaxed">
-                Use the speed buttons to slow down and observe each step in detail. Step through manually for deeper understanding!
-              </p>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
         </div>
       </div>
     </div>
