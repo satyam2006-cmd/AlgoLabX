@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 // Icon Components
 const BookOpenIcon = () => (
@@ -56,7 +57,8 @@ const CubeIcon = () => (
   </svg>
 );
 
-const Home = ({ setActiveTab, onAlgorithmSelect }) => {
+const Home = ({ onAlgorithmSelect }) => {
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -152,7 +154,7 @@ const Home = ({ setActiveTab, onAlgorithmSelect }) => {
                 <motion.button
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setActiveTab('learn')}
+                  onClick={() => navigate('/learn')}
                   className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-dark-500 to-dark-600 rounded-lg sm:rounded-xl font-semibold text-dark-50 shadow-lg border border-white transition-all duration-300 hover:shadow-xl flex items-center justify-center sm:justify-start gap-2 text-sm sm:text-base"
                 >
                   Get Started
@@ -163,7 +165,7 @@ const Home = ({ setActiveTab, onAlgorithmSelect }) => {
                 <motion.button
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setActiveTab('experiment')}
+                  onClick={() => navigate('/experiment')}
                   className="px-4 sm:px-6 py-2.5 sm:py-3 bg-dark-800/50 border border-white rounded-lg sm:rounded-xl font-medium text-dark-200 transition-all duration-300 hover:bg-dark-700/50 hover:border-white text-sm sm:text-base"
                 >
                   Explore Algorithms

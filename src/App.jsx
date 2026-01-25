@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -9,33 +10,14 @@ import MergeSortPage from './pages/MergeSortPage';
 import HeapPage from './pages/HeapPage';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('home');
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('bubble');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'home':
-        return <Home setActiveTab={setActiveTab} onAlgorithmSelect={setSelectedAlgorithm} />;
-      case 'learn':
-        return (
-          <Learn
-            selectedAlgorithm={selectedAlgorithm}
-            setSelectedAlgorithm={setSelectedAlgorithm}
-          />
-        );
-      case 'compare':
-        return <Compare />;
-      case 'experiment':
-        return <Experiment />;
-      case 'merge-sort':
-        return <MergeSortPage />;
-      case 'heap':
-        return <HeapPage />;
-      default:
-        return <Home setActiveTab={setActiveTab} />;
-    }
-  };
+  // Helper to determine active tab for passing to Sidebar if we want to keep props there, 
+  // but better to let Sidebar handle it. 
+  // However, the original structure passed activeTab to Sidebar. 
+  // I will refactor Sidebar to use useLocation internally, so I don't need to pass it.
 
   return (
     <div className="min-h-screen bg-dark-950 text-dark-50">
@@ -66,13 +48,6 @@ function App() {
         <div className={`fixed lg:static inset-y-0 left-0 z-[70] transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
           }`}>
           <Sidebar
-            activeTab={activeTab}
-            setActiveTab={(tabId) => {
-              setActiveTab(tabId);
-              if (window.innerWidth < 1024) {
-                setSidebarOpen(false);
-              }
-            }}
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />
@@ -80,13 +55,28 @@ function App() {
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header
-            setActiveTab={setActiveTab}
             setSelectedAlgorithm={setSelectedAlgorithm}
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />
           <main className="flex-1 overflow-y-auto">
-            {renderContent()}
+            <Routes>
+              <Route path="/" element={<Home onAlgorithmSelect={setSelectedAlgorithm} />} />
+              <Route
+                path="/learn"
+                element={
+                  <Learn
+                    selectedAlgorithm={selectedAlgorithm}
+                    setSelectedAlgorithm={setSelectedAlgorithm}
+                  />
+                }
+              />
+              <Route path="/compare" element={<Compare />} />
+              <Route path="/experiment" element={<Experiment />} />
+              <Route path="/merge-sort" element={<MergeSortPage />} />
+              <Route path="/heap" element={<HeapPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
           </main>
         </div>
       </div>

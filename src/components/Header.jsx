@@ -1,18 +1,20 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpen }) => {
+const Header = ({ setSelectedAlgorithm, sidebarOpen, setSidebarOpen }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const navigate = useNavigate();
 
   // Comprehensive algorithm data with complexity and descriptions
   const searchData = useMemo(() => [
     // Navigation Tabs
-    { id: 'home', label: 'Home / Dashboard', category: 'Navigation', type: 'tab', complexity: '', description: 'Go to the main dashboard' },
-    { id: 'learn', label: 'Learn Algorithms', category: 'Navigation', type: 'tab', complexity: '', description: 'Interactive algorithm visualization' },
-    { id: 'compare', label: 'Compare Algorithms', category: 'Navigation', type: 'tab', complexity: '', description: 'Compare algorithms side-by-side' },
-    { id: 'experiment', label: 'Experiment / Sandbox', category: 'Navigation', type: 'tab', complexity: '', description: 'Write and test your own algorithms' },
+    { id: 'home', label: 'Home / Dashboard', category: 'Navigation', type: 'tab', path: '/', complexity: '', description: 'Go to the main dashboard' },
+    { id: 'learn', label: 'Learn Algorithms', category: 'Navigation', type: 'tab', path: '/learn', complexity: '', description: 'Interactive algorithm visualization' },
+    { id: 'compare', label: 'Compare Algorithms', category: 'Navigation', type: 'tab', path: '/compare', complexity: '', description: 'Compare algorithms side-by-side' },
+    { id: 'experiment', label: 'Experiment / Sandbox', category: 'Navigation', type: 'tab', path: '/experiment', complexity: '', description: 'Write and test your own algorithms' },
 
     // Sorting - Simple O(n²)
     { id: 'bubble', label: 'Bubble Sort', category: 'Sorting', type: 'algo', complexity: 'O(n²)', description: 'Compare adjacent elements and swap if out of order' },
@@ -76,9 +78,9 @@ const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpe
 
   const handleSelect = useCallback((item) => {
     if (item.type === 'tab') {
-      setActiveTab(item.id);
+      navigate(item.path);
     } else if (item.type === 'algo') {
-      setActiveTab('learn');
+      navigate('/learn');
       setTimeout(() => {
         setSelectedAlgorithm(item.id);
       }, 0);
@@ -86,7 +88,7 @@ const Header = ({ setActiveTab, setSelectedAlgorithm, sidebarOpen, setSidebarOpe
     setSearchQuery('');
     setShowSuggestions(false);
     setSelectedIndex(-1);
-  }, [setActiveTab, setSelectedAlgorithm]);
+  }, [navigate, setSelectedAlgorithm]);
 
   const handleKeyDown = useCallback((e) => {
     if (e.key === 'Enter') {

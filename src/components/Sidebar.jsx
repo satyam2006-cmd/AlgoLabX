@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLocation, Link } from 'react-router-dom';
 
 // Icon Components
 const HomeIcon = () => (
@@ -32,18 +33,25 @@ const LightBulbIcon = () => (
   </svg>
 );
 
-const BoltIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-  </svg>
-);
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const location = useLocation();
 
-const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
+  // Map paths to active tab IDs for styling
+  const getActiveTab = (pathname) => {
+    if (pathname === '/') return 'home';
+    if (pathname.startsWith('/learn')) return 'learn';
+    if (pathname.startsWith('/compare')) return 'compare';
+    if (pathname.startsWith('/experiment')) return 'experiment';
+    return '';
+  };
+
+  const activeTab = getActiveTab(location.pathname);
+
   const menuItems = [
-    { id: 'home', label: 'Dashboard', icon: HomeIcon },
-    { id: 'learn', label: 'Learn', icon: BookIcon },
-    { id: 'compare', label: 'Compare', icon: ScaleIcon },
-    { id: 'experiment', label: 'Experiment', icon: BeakerIcon },
+    { id: 'home', label: 'Dashboard', icon: HomeIcon, path: '/' },
+    { id: 'learn', label: 'Learn', icon: BookIcon, path: '/learn' },
+    { id: 'compare', label: 'Compare', icon: ScaleIcon, path: '/compare' },
+    { id: 'experiment', label: 'Experiment', icon: BeakerIcon, path: '/experiment' },
   ];
 
   return (
@@ -74,28 +82,36 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) => {
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             return (
-              <motion.button
+              <Link
                 key={item.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ x: 4 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${activeTab === item.id
-                  ? 'bg-gradient-to-r from-dark-600/50 to-dark-700/50 text-dark-100 border border-white shadow-lg'
-                  : 'text-white hover:bg-dark-800/50 hover:text-dark-100 border border-white/0'
-                  }`}
+                to={item.path}
+                onClick={() => {
+                  if (window.innerWidth < 1024) {
+                    setSidebarOpen(false);
+                  }
+                }}
               >
-                <Icon />
-                <span className="font-medium">{item.label}</span>
-                {activeTab === item.id && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="ml-auto w-1.5 h-1.5 rounded-full bg-white"
-                  />
-                )}
-              </motion.button>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ x: 4 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${activeTab === item.id
+                    ? 'bg-gradient-to-r from-dark-600/50 to-dark-700/50 text-dark-100 border border-white shadow-lg'
+                    : 'text-white hover:bg-dark-800/50 hover:text-dark-100 border border-white/0'
+                    }`}
+                >
+                  <Icon />
+                  <span className="font-medium">{item.label}</span>
+                  {activeTab === item.id && (
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="ml-auto w-1.5 h-1.5 rounded-full bg-white"
+                    />
+                  )}
+                </motion.div>
+              </Link>
             );
           })}
         </nav>
