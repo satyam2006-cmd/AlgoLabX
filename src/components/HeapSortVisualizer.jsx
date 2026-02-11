@@ -20,7 +20,6 @@ const THEME = {
 
 // --- Tree Layout Logic ---
 const calculateTreePositions = (totalNodes) => {
-    const levels = Math.floor(Math.log2(totalNodes)) + 1;
     const positions = {};
     const width = 600; // Compact width
 
@@ -39,6 +38,8 @@ const calculateTreePositions = (totalNodes) => {
 };
 
 const HeapSortVisualizer = ({ currentStep, isCompact = false }) => {
+    const positions = useMemo(() => currentStep ? calculateTreePositions(currentStep.array.length) : {}, [currentStep]);
+
     if (!currentStep) return null;
 
     const {
@@ -47,12 +48,9 @@ const HeapSortVisualizer = ({ currentStep, isCompact = false }) => {
         swappedIndices,
         heapSize,
         sortedIndices,
-        pointers,
         message,
         visibleCount = array.length // Default to all visible if undefined
     } = currentStep;
-
-    const positions = useMemo(() => calculateTreePositions(array.length), [array.length]);
 
     // Helper to get status style
     const getStatus = (idx) => {
@@ -141,12 +139,6 @@ const HeapSortVisualizer = ({ currentStep, isCompact = false }) => {
 
                             const pos = positions[i];
                             const parentPos = positions[parentIdx];
-
-                            // Center of container offset roughly
-                            const cx = "50%"; // We rely on flex center
-                            // Actually pure absolute calculation is better.
-                            // Let's assume wrapper is centered at 0,0 for calc, but we render in a centered div.
-                            // We will supply x as offset from center.
 
                             const isSorted = sortedIndices.includes(i) && sortedIndices.includes(parentIdx);
                             const active = activeIndices.includes(i) && activeIndices.includes(parentIdx);

@@ -2,7 +2,7 @@
 // All algorithms return step-by-step visualization data
 
 // Binary Search
-export function* binarySearchSteps(arr) {
+export function binarySearchSteps(arr) {
     const steps = [];
 
     // Binary search requires sorted array
@@ -77,7 +77,7 @@ export function* binarySearchSteps(arr) {
 }
 
 // Linear Search
-export function* linearSearchSteps(arr) {
+export function linearSearchSteps(arr) {
     const steps = [];
     const target = arr[0]; // Use first element as target for demonstration
 
@@ -119,7 +119,7 @@ export function* linearSearchSteps(arr) {
 }
 
 // Jump Search
-export function* jumpSearchSteps(arr) {
+export function jumpSearchSteps(arr) {
     const steps = [];
     const sortedArr = [...arr].sort((a, b) => a - b);
     const target = sortedArr[0];
@@ -181,7 +181,7 @@ export function* jumpSearchSteps(arr) {
 }
 
 // Interpolation Search
-export function* interpolationSearchSteps(arr) {
+export function interpolationSearchSteps(arr) {
     const steps = [];
     const sortedArr = [...arr].sort((a, b) => a - b);
     const target = sortedArr[Math.floor(sortedArr.length / 2)]; // Use middle element as target
@@ -259,7 +259,7 @@ export function* interpolationSearchSteps(arr) {
 }
 
 // Exponential Search
-export function* exponentialSearchSteps(arr) {
+export function exponentialSearchSteps(arr) {
     const steps = [];
     const sortedArr = [...arr].sort((a, b) => a - b);
     const target = sortedArr[Math.floor(sortedArr.length / 2)];

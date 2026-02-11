@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, ScatterChart, Scatter } from 'recharts';
 import {
   getBubbleSortSteps,
@@ -15,8 +15,7 @@ import {
   getInterpolationSearchSteps,
   getExponentialSearchSteps,
   algorithmCategories,
-  getComplexityRank,
-  compareComplexity
+  getComplexityRank
 } from '../algorithms/comprehensiveAlgorithms';
 
 const Stats = () => {
@@ -41,18 +40,20 @@ const Stats = () => {
 
     for (const algorithm of algorithms) {
       const getSteps = getAlgorithmFunction(algorithm.function);
-      
+
       for (const size of sizes) {
         for (const arrayType of arrayTypes) {
           const testArray = generateTestArray(size, arrayType);
-          
+
+          // eslint-disable-next-line react-hooks/purity
           const startTime = performance.now();
           const steps = getSteps(testArray);
+          // eslint-disable-next-line react-hooks/purity
           const endTime = performance.now();
-          
+
           const comparisons = Math.floor(steps.length * 1.5);
           const swaps = Math.floor(steps.length * 0.3);
-          
+
           data.push({
             algorithm: algorithm.name,
             complexity: algorithm.complexity,
@@ -103,7 +104,7 @@ const Stats = () => {
         return Array.from({ length: size }, (_, i) => i + 1);
       case 'reverse':
         return Array.from({ length: size }, (_, i) => size - i);
-      case 'nearly-sorted':
+      case 'nearly-sorted': {
         const arr = Array.from({ length: size }, (_, i) => i + 1);
         for (let i = 0; i < Math.floor(size / 10); i++) {
           const idx1 = Math.floor(Math.random() * size);
@@ -111,6 +112,7 @@ const Stats = () => {
           [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
         }
         return arr;
+      }
       default:
         return Array.from({ length: size }, () => Math.floor(Math.random() * 100) + 1);
     }
@@ -132,7 +134,7 @@ const Stats = () => {
       const avgSteps = algoData.reduce((sum, d) => sum + d.steps, 0) / algoData.length;
       const avgTime = algoData.reduce((sum, d) => sum + d.time, 0) / algoData.length;
       const avgComparisons = algoData.reduce((sum, d) => sum + d.comparisons, 0) / algoData.length;
-      
+
       return {
         algorithm: algo,
         avgSteps: Math.round(avgSteps),
@@ -148,11 +150,11 @@ const Stats = () => {
     return sizes.map(size => {
       const sizeData = testData.filter(d => d.size === size);
       const result = { size };
-      
+
       sizeData.forEach(d => {
         result[d.algorithm] = d.steps;
       });
-      
+
       return result;
     });
   };
@@ -162,7 +164,7 @@ const Stats = () => {
     testData.forEach(d => {
       complexityCount[d.complexity] = (complexityCount[d.complexity] || 0) + 1;
     });
-    
+
     return Object.entries(complexityCount).map(([complexity, count]) => ({
       complexity,
       count,
@@ -196,7 +198,7 @@ const Stats = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="algorithm" stroke="#9ca3af" angle={-45} textAnchor="end" height={100} />
               <YAxis stroke="#9ca3af" />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}
                 labelStyle={{ color: '#f3f4f6' }}
               />
@@ -214,7 +216,7 @@ const Stats = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="size" stroke="#9ca3af" />
               <YAxis stroke="#9ca3af" />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}
                 labelStyle={{ color: '#f3f4f6' }}
               />
@@ -250,7 +252,7 @@ const Stats = () => {
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}
                 labelStyle={{ color: '#f3f4f6' }}
               />
@@ -265,7 +267,7 @@ const Stats = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="size" stroke="#9ca3af" name="Array Size" />
               <YAxis dataKey="efficiency" stroke="#9ca3af" name="Efficiency Score" />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151' }}
                 labelStyle={{ color: '#f3f4f6' }}
                 cursor={{ strokeDasharray: '3 3' }}
@@ -289,10 +291,10 @@ const Stats = () => {
     const avgComparisons = testData.reduce((sum, d) => sum + d.comparisons, 0) / totalTests;
     const avgSwaps = testData.reduce((sum, d) => sum + d.swaps, 0) / totalTests;
 
-    const bestAlgorithm = testData.reduce((best, current) => 
+    const bestAlgorithm = testData.reduce((best, current) =>
       current.steps < best.steps ? current : best
     );
-    const worstAlgorithm = testData.reduce((worst, current) => 
+    const worstAlgorithm = testData.reduce((worst, current) =>
       current.steps > worst.steps ? current : worst
     );
 
@@ -315,7 +317,7 @@ const Stats = () => {
     <div className="flex-1 p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-6">Algorithm Statistics</h1>
-        
+
         {/* Controls */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -332,7 +334,7 @@ const Stats = () => {
                 <option value="dynamicProgramming">Dynamic Programming</option>
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Chart Type</label>
               <select
@@ -346,7 +348,7 @@ const Stats = () => {
                 <option value="efficiency">Efficiency Analysis</option>
               </select>
             </div>
-            
+
             <div className="flex items-end">
               <button
                 onClick={generateTestData}

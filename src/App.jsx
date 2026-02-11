@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -12,7 +12,8 @@ import HeapPage from './pages/HeapPage';
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('bubble');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation();
+  // const location = useLocation(); // Unused
+
 
   // Helper to determine active tab for passing to Sidebar if we want to keep props there, 
   // but better to let Sidebar handle it. 

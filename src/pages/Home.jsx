@@ -57,7 +57,7 @@ const CubeIcon = () => (
   </svg>
 );
 
-const Home = ({ onAlgorithmSelect }) => {
+const Home = () => {
   const navigate = useNavigate();
 
   const features = [

@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
-import { polygonCentroid } from 'd3-polygon';
 import _ from 'lodash';
 
 const InteractiveGraphVisualizer = ({
     currentStep,
     onGraphChange,
     initialNodes = [],
-    initialEdges = [],
     graphType = 'undirected'
 }) => {
     const containerRef = useRef(null);
@@ -45,6 +43,7 @@ const InteractiveGraphVisualizer = ({
                 setCurrentId(1);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialNodes, currentStep]);
 
     // Sync state with props when currentStep changes (during algorithm run)
@@ -151,9 +150,6 @@ const InteractiveGraphVisualizer = ({
 
         const svg = d3.select(containerRef.current);
         svg.selectAll("*").remove();
-
-        const width = containerRef.current.clientWidth;
-        const height = containerRef.current.clientHeight;
 
         // markers for arrows
         const defs = svg.append('defs');
@@ -477,6 +473,7 @@ const InteractiveGraphVisualizer = ({
                 .attr('stroke-dasharray', '5,5');
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nodes, dragEdge, currentStep, updateNodePosition, addEdge, addNode, graphType]);
 
     return (

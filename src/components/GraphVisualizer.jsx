@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';  
 
 const GraphVisualizer = ({
   currentStep = null,
@@ -9,8 +9,7 @@ const GraphVisualizer = ({
   currentNode: propCurrentNode = -1,
   activeNodes: propActiveNodes = [],
   message: propMessage = "",
-  shortestPath: propShortestPath = [],
-  isCompact = false
+  shortestPath: propShortestPath = []
 }) => {
   // Extract data from currentStep if provided, otherwise use props
   const nodes = currentStep?.nodes || propNodes;
@@ -35,7 +34,7 @@ const GraphVisualizer = ({
       const positions = [];
       const cols = Math.ceil(Math.sqrt(nodeCount));
       const rows = Math.ceil(nodeCount / cols);
-      
+
       // Responsive spacing based on window size
       const isMobile = window.innerWidth < 640;
       const spacing = isMobile ? 50 : 80;
@@ -110,8 +109,8 @@ const GraphVisualizer = ({
 
                 if (!fromNode || !toNode) return null;
 
-                const edgeColor = getEdgeColor(edge, visitedNodes, activeNodes);
-                const edgeWidth = getEdgeWidth(edge, visitedNodes, activeNodes);
+                const edgeColor = getEdgeColor(edge, visitedNodes, activeNodes, shortestPath);
+                const edgeWidth = getEdgeWidth(edge, visitedNodes, activeNodes, shortestPath);
 
                 return (
                   <g key={index}>
@@ -161,45 +160,45 @@ const GraphVisualizer = ({
                       cy={position.y}
                       r={getNodeSize(index)}
                       fill={getNodeColor(index)}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.text
-                    x={position.x}
-                    y={position.y}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fill="white"
-                    fontSize="12"
-                    fontWeight="bold"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                  >
-                    {node.label || `N${index}`}
-                  </motion.text>
-                  <motion.text
-                    x={position.x}
-                    y={position.y + 20}
-                    textAnchor="middle"
-                    dominantBaseline="top"
-                    fill="#9ca3af"
-                    fontSize="10"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3, delay: 0.3 }}
-                  >
-                    {node.value}
-                  </motion.text>
-                </g>
-              );
-            } catch (error) {
-              console.error('Error rendering node:', error);
-              return null;
-            }
-          })}
-        </svg>
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                    <motion.text
+                      x={position.x}
+                      y={position.y}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill="white"
+                      fontSize="12"
+                      fontWeight="bold"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.2 }}
+                    >
+                      {node.label || `N${index}`}
+                    </motion.text>
+                    <motion.text
+                      x={position.x}
+                      y={position.y + 20}
+                      textAnchor="middle"
+                      dominantBaseline="top"
+                      fill="#9ca3af"
+                      fontSize="10"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.3 }}
+                    >
+                      {node.value}
+                    </motion.text>
+                  </g>
+                );
+              } catch (error) {
+                console.error('Error rendering node:', error);
+                return null;
+              }
+            })}
+          </svg>
         </div>
 
         {/* Message */}

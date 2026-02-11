@@ -121,7 +121,7 @@ result
     const pythonResult = pyodide.runPython(wrappedCode);
 
     const jsEndTime = performance.now();
-    const jsDuration = (jsEndTime - jsStartTime) / 1000; // in seconds
+    const _jsDuration = (jsEndTime - jsStartTime) / 1000; // in seconds
     console.log('Raw Python result:', pythonResult);
     console.log('Type of result:', typeof pythonResult);
 

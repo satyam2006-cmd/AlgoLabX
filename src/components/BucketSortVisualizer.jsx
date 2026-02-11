@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const THEME = {
@@ -27,14 +27,6 @@ const BucketSortVisualizer = ({ currentStep, isCompact = false }) => {
 
     // Generate stable keys for both the main array and the buckets
     // This allows elements to "fly" between them using layoutId
-    const getElementKeys = (arr) => {
-        const counts = {};
-        return arr.map((value) => {
-            if (value === null) return null;
-            counts[value] = (counts[value] || 0) + 1;
-            return `${value}-${counts[value]}`;
-        });
-    };
 
     // Since elements can be in EITHER the array OR the buckets (or both during transitions)
     // We need to manage their keys carefully. 

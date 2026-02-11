@@ -9,7 +9,7 @@ const ChartsVisualizer = ({
 }) => {
   // Prepare data for charts
   const prepareLineChartData = () => {
-    return comparisonData.map((item, index) => ({
+    return comparisonData.map((item) => ({
       inputSize: item.inputSize,
       ...algorithmNames.reduce((acc, name, i) => {
         acc[name] = item.algorithms[i]?.[metrics[0]] || 0;

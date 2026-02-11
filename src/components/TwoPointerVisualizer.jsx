@@ -10,8 +10,7 @@ const TwoPointerVisualizer = ({
         pointers = { left: -1, right: -1 },
         currentSum,
         targetValue,
-        found,
-        message
+        found
     } = stepData || {};
 
     const { left, right } = pointers;

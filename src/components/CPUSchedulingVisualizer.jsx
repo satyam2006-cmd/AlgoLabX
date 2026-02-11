@@ -237,6 +237,46 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
         return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alphaRef})`;
     };
 
+    // Function declarations (must be before useEffect hooks that reference them)
+    const stopPlayback = () => {
+        setIsPaused(true);
+        if (timerRef.current) clearInterval(timerRef.current);
+    };
+
+    const resetSimulation = () => {
+        stopPlayback();
+        setCurrentStep(0);
+        setFullTimeline([]);
+        setSimulationFinished(false);
+        setIsPaused(true);
+    };
+
+    const startSimulation = () => {
+        const timeline = runSchedulingEngine(algorithm, processes, { timeQuantum });
+        setFullTimeline(timeline);
+        setCurrentStep(0);
+        setIsPaused(false);
+        setSimulationFinished(false);
+    };
+
+    const handleStepForward = () => {
+        if (fullTimeline.length === 0) {
+            const tl = runSchedulingEngine(algorithm, processes, { timeQuantum });
+            setFullTimeline(tl);
+            setCurrentStep(1);
+            setIsPaused(true);
+            return;
+        }
+        if (currentStep < fullTimeline.length - 1) setCurrentStep(prev => prev + 1);
+    };
+
+    const handleStepBackward = () => {
+        if (currentStep > 0) {
+            setCurrentStep(prev => prev - 1);
+            setSimulationFinished(false);
+        }
+    };
+
     // Keyboard Shortcuts
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -258,6 +298,7 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fullTimeline, isPaused]);
 
     useEffect(() => {
@@ -279,49 +320,19 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
             }
         });
         resetSimulation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [numProcesses]);
 
     useEffect(() => {
         resetSimulation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [algorithm]);
-
-    const handleCreateTable = () => {
-        const newProcesses = Array.from({ length: numProcesses }, (_, i) => ({
-            pid: i + 1,
-            arrivalTime: Math.floor(Math.random() * 5),
-            burstTime: Math.floor(Math.random() * 8) + 2,
-            priority: Math.floor(Math.random() * 5) + 1,
-        }));
-        setProcesses(newProcesses);
-        resetSimulation();
-    };
-
-    const resetSimulation = () => {
-        stopPlayback();
-        setCurrentStep(0);
-        setFullTimeline([]);
-        setSimulationFinished(false);
-        setIsPaused(true);
-    };
 
     const updateProcessField = (pid, field, value) => {
         setProcesses(prev => prev.map(p =>
             p.pid === pid ? { ...p, [field]: parseInt(value) || 0 } : p
         ));
         resetSimulation();
-    };
-
-    const startSimulation = () => {
-        const timeline = runSchedulingEngine(algorithm, processes, { timeQuantum });
-        setFullTimeline(timeline);
-        setCurrentStep(0);
-        setIsPaused(false);
-        setSimulationFinished(false);
-    };
-
-    const stopPlayback = () => {
-        setIsPaused(true);
-        if (timerRef.current) clearInterval(timerRef.current);
     };
 
     useEffect(() => {
@@ -336,24 +347,6 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
         }
         return () => { if (timerRef.current) clearInterval(timerRef.current); };
     }, [isPaused, currentStep, fullTimeline, playbackSpeed]);
-
-    const handleStepForward = () => {
-        if (fullTimeline.length === 0) {
-            const tl = runSchedulingEngine(algorithm, processes, { timeQuantum });
-            setFullTimeline(tl);
-            setCurrentStep(1);
-            setIsPaused(true);
-            return;
-        }
-        if (currentStep < fullTimeline.length - 1) setCurrentStep(prev => prev + 1);
-    };
-
-    const handleStepBackward = () => {
-        if (currentStep > 0) {
-            setCurrentStep(prev => prev - 1);
-            setSimulationFinished(false);
-        }
-    };
 
     const stepData = fullTimeline[currentStep] || null;
 
@@ -635,7 +628,7 @@ const CPUSchedulingVisualizer = ({ algorithm, speed = 1 }) => {
                 <div className="flex items-center gap-1.5 text-white/40"><kbd className="bg-white/5 px-1.5 py-0.5 rounded border border-white/10 mx-1">Space</kbd> Play/Pause</div>
             </div>
 
-            <style jsx>{`
+            <style>{`
                 .custom-scrollbar::-webkit-scrollbar { width: 3px; height: 3px; }
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
                 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 1px; }

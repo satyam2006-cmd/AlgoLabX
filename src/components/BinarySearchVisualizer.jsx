@@ -11,8 +11,7 @@ const BinarySearchVisualizer = ({
         discarded = [],
         targetValue,
         targetIndex,
-        found,
-        message
+        found
     } = stepData || {};
 
     const { low, mid, high } = pointers;
