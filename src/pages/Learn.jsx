@@ -9,6 +9,7 @@ import BucketSortVisualizer from '../components/BucketSortVisualizer';
 import RadixSortVisualizer from '../components/RadixSortVisualizer';
 import TwoPointerVisualizer from '../components/TwoPointerVisualizer';
 import GraphVisualizer from '../components/GraphVisualizer';
+import InteractiveGraphVisualizer from '../components/InteractiveGraphVisualizer';
 import DPVisualizer from './DPVisualizer';
 import CPUSchedulingVisualizer from '../components/CPUSchedulingVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
@@ -23,7 +24,9 @@ import {
   getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps,
   getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps, getTwoPointerSearchSteps, getSublistSearchSteps,
   // Graph
-  bfsSteps, dfsSteps, dijkstraSteps,
+  dijkstraSteps,
+  getBfsInteractiveSteps, getDfsInteractiveSteps,
+  primSteps, bellmanFordSteps,
   // DP
   knapsackSteps,
 } from '../algorithms/comprehensiveAlgorithms';
@@ -146,9 +149,11 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
     linear: { name: 'Linear Search', complexity: 'O(n)', type: 'searching', getSteps: getLinearSearchSteps, description: 'Sequential search algorithm that checks each element in order until the target is found.' },
     twopointer: { name: 'Two Pointer Search', complexity: 'O(n)', type: 'searching', getSteps: getTwoPointerSearchSteps, description: 'Search technique using two pointers converging from both ends (finds pairs summing to target).' },
     // Graph Algorithms
-    bfs: { name: 'BFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: bfsSteps, description: 'Graph traversal algorithm that explores neighbors of nodes level by level, starting from a source node.' },
-    dfs: { name: 'DFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: dfsSteps, description: 'Graph traversal algorithm that explores as far as possible along each branch before backtracking.' },
-    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, description: 'Shortest path algorithm that finds the shortest paths from a source to all other nodes in a weighted graph.' },
+    bfs: { name: 'BFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: getBfsInteractiveSteps, description: 'Graph traversal algorithm that explores neighbors of nodes level by level. (Try construction below!)' },
+    dfs: { name: 'DFS Traversal', complexity: 'O(V + E)', type: 'graph', getSteps: getDfsInteractiveSteps, description: 'Graph traversal algorithm that explores as far as possible along each branch before backtracking.' },
+    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, description: 'Shortest path algorithm that finds the shortest paths from a source node.' },
+    prim: { name: 'Prim\'s MST', complexity: 'O(E log V)', type: 'graph', getSteps: primSteps, description: 'Minimum Spanning Tree algorithm that connects all nodes with minimum total edge weight.' },
+    bellmanford: { name: 'Bellman-Ford', complexity: 'O(VE)', type: 'graph', getSteps: bellmanFordSteps, description: 'Shortest path algorithm that works with negative edge weights (though not typical for villages!).' },
     // CPU Scheduling
     fcfs: { name: 'FCFS Scheduling', complexity: 'O(n)', type: 'cpu', getSteps: () => [], description: 'First-Come, First-Served: The simplest scheduling algorithm that executes processes in order of arrival.' },
     sjf: { name: 'SJF (Non-preemptive)', complexity: 'O(n²)', type: 'cpu', getSteps: () => [], description: 'Shortest Job First: Executes the process with the smallest burst time next.' },
@@ -159,6 +164,12 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
   };
 
   const currentAlgo = algorithms[selectedAlgorithm];
+
+  useEffect(() => {
+    if (currentAlgo.type === 'graph' && inputArray.length > 0 && typeof inputArray[0] !== 'object') {
+      setInputArray([]);
+    }
+  }, [selectedAlgorithm, currentAlgo.type, inputArray]);
 
   let stepsInput = inputArray;
   if (['binary', 'linear', 'twopointer'].includes(selectedAlgorithm)) {
@@ -344,6 +355,8 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                   <option value="bfs">BFS Traversal</option>
                   <option value="dfs">DFS Traversal</option>
                   <option value="dijkstra">Dijkstra's Algorithm</option>
+                  <option value="prim">Prim's MST</option>
+                  <option value="bellmanford">Bellman-Ford</option>
                 </optgroup>
                 <optgroup label="CPU Scheduling">
                   <option value="fcfs">FCFS</option>
@@ -484,23 +497,28 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     <LoadingPlaceholder />
                   )
                 ) : currentAlgo.type === 'graph' ? (
-                  currentStepData ? (
-                    <div className="w-full bg-[#050505] rounded-[2.5rem] border border-white overflow-hidden shadow-2xl p-6 sm:p-8 relative flex flex-col items-center justify-center min-h-[350px]">
+                  <div className="w-full bg-[#050505] rounded-[2.5rem] border border-white overflow-hidden shadow-2xl p-6 sm:p-8 relative flex flex-col items-center justify-center min-h-[450px]">
+                    {['bfs', 'dfs', 'dijkstra', 'prim', 'bellmanford'].includes(selectedAlgorithm) ? (
+                      <InteractiveGraphVisualizer
+                        currentStep={(currentStep > 0 || isPlaying) ? currentStepData : null}
+                        initialNodes={inputArray.length > 0 && typeof inputArray[0] === 'object' ? inputArray : []}
+                        onGraphChange={(newNodes) => setInputArray(newNodes)}
+                        graphType='undirected'
+                      />
+                    ) : (
                       <GraphVisualizer currentStep={currentStepData} />
-                      {currentStepData && (currentStepData.description || currentStepData.message) && (
-                        <motion.div
-                          key={currentStep}
-                          initial={{ opacity: 0, y: 5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="mt-6 p-4 bg-black/40 backdrop-blur-md rounded-xl border border-white/10 w-full max-w-2xl"
-                        >
-                          <p className="text-white text-xs sm:text-sm text-center italic opacity-80">{currentStepData.description || currentStepData.message}</p>
-                        </motion.div>
-                      )}
-                    </div>
-                  ) : (
-                    <LoadingPlaceholder />
-                  )
+                    )}
+                    {currentStepData && (currentStepData.description || currentStepData.message) && (
+                      <motion.div
+                        key={currentStep}
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-6 p-4 bg-black/40 backdrop-blur-md rounded-xl border border-white/10 w-full max-w-2xl"
+                      >
+                        <p className="text-white text-xs sm:text-sm text-center italic opacity-80">{currentStepData.description || currentStepData.message}</p>
+                      </motion.div>
+                    )}
+                  </div>
                 ) : currentAlgo.type === 'dp' ? (
                   currentStepData ? (
                     <div className="w-full bg-[#050505] rounded-[2.5rem] border border-white overflow-hidden shadow-2xl p-6 sm:p-8 relative flex flex-col items-center justify-center min-h-[350px]">
@@ -612,7 +630,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     <div className="flex-1 h-1 sm:h-1.5 bg-dark-700/50 rounded-full overflow-hidden">
                       <motion.div
                         className="h-full bg-gradient-to-r from-dark-400 to-dark-300 rounded-full"
-                        animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
+                        animate={{ width: `${totalSteps > 0 ? ((currentStep + 1) / totalSteps) * 100 : 0}%` }}
                       />
                     </div>
                     <span className="text-xs sm:text-sm text-white w-10 sm:w-12 text-right">{currentStep + 1}/{totalSteps}</span>

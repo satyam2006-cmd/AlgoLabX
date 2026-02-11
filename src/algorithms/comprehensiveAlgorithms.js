@@ -49,6 +49,11 @@ export { bfsSteps } from './graph/bfsSteps.js';
 export { dfsSteps } from './graph/dfsSteps.js';
 export { dijkstraSteps } from './graph/dijkstraSteps.js';
 
+// Interactive Graph Algorithms
+export { getBfsInteractiveSteps, getDfsInteractiveSteps } from './graph/interactiveTraversals.js';
+export { primSteps } from './graph/primSteps.js';
+export { bellmanFordSteps } from './graph/bellmanFordSteps.js';
+
 // Additional Graph Algorithms
 // export {
 //   getBellmanFordSteps,
@@ -112,9 +117,11 @@ export const algorithmCategories = {
     { name: 'Sublist Search', function: 'getSublistSearchSteps', complexity: 'O(m*n)', category: 'Pattern Matching' }
   ],
   graph: [
-    { name: 'BFS Traversal', function: 'bfsSteps', complexity: 'O(V + E)', category: 'Traversal' },
-    { name: 'DFS Traversal', function: 'dfsSteps', complexity: 'O(V + E)', category: 'Traversal' },
-    { name: 'Dijkstra\'s Algorithm', function: 'dijkstraSteps', complexity: 'O((V + E) log V)', category: 'Shortest Path' }
+    { name: 'BFS Traversal', function: 'getBfsInteractiveSteps', complexity: 'O(V + E)', category: 'Traversal' },
+    { name: 'DFS Traversal', function: 'getDfsInteractiveSteps', complexity: 'O(V + E)', category: 'Traversal' },
+    { name: 'Dijkstra\'s Algorithm', function: 'dijkstraSteps', complexity: 'O((V + E) log V)', category: 'Shortest Path' },
+    { name: 'Prim\'s MST', function: 'primSteps', complexity: 'O(E log V)', category: 'MST' },
+    { name: 'Bellman-Ford', function: 'bellmanFordSteps', complexity: 'O(VE)', category: 'Shortest Path' }
   ],
   dynamicProgramming: [
     // Dynamic programming algorithms removed from UI metadata
@@ -153,7 +160,11 @@ export const algorithmFunctions = {
   // Graph
   bfsSteps: (arr) => bfsSteps(arr),
   dfsSteps: (arr) => dfsSteps(arr),
+  getBfsInteractiveSteps: (nodes) => getBfsInteractiveSteps(nodes),
+  getDfsInteractiveSteps: (nodes) => getDfsInteractiveSteps(nodes),
   dijkstraSteps: (arr) => dijkstraSteps(arr),
+  primSteps: (nodes) => primSteps(nodes),
+  bellmanFordSteps: (nodes) => bellmanFordSteps(nodes),
   getBellmanFordSteps: (input) => null,
   getFloydWarshallSteps: (input) => null,
   getPrimMSTSteps: (input) => null,

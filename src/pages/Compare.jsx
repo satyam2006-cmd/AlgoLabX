@@ -4,6 +4,7 @@ import SmartVisualizer from '../components/SmartVisualizer';
 import HeapSortVisualizer from '../components/HeapSortVisualizer';
 import QuickSortVisualizer from '../components/QuickSort3D'; // 2D Tile Implementation
 import GraphVisualizer from "../components/GraphVisualizer";
+import InteractiveGraphVisualizer from '../components/InteractiveGraphVisualizer';
 import DPVisualizer from "./DPVisualizer";
 import BinarySearchVisualizer from '../components/BinarySearchVisualizer';
 import LinearSearchVisualizer from '../components/LinearSearchVisualizer';
@@ -17,7 +18,7 @@ import {
   getBinarySearchSteps, getLinearSearchSteps, getTwoPointerSearchSteps,
   getBucketSortSteps, getCocktailSortSteps, getCombSortSteps, getGnomeSortSteps, getOddEvenSortSteps,
   getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps,
-  bfsSteps, dfsSteps, dijkstraSteps
+  getBfsInteractiveSteps, getDfsInteractiveSteps, dijkstraSteps, primSteps, bellmanFordSteps
 } from '../algorithms/comprehensiveAlgorithms';
 import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
 import { getQuickSort3DSteps as getQuickSortDetailedSteps } from '../algorithms/quickSort3D';
@@ -112,9 +113,11 @@ const Compare = () => {
     linear: { name: 'Linear Search', complexity: 'O(n)', type: 'searching', getSteps: getLinearSearchSteps, color: '#84cc16' },
     twopointer: { name: 'Two Pointer Search', complexity: 'O(n)', type: 'searching', getSteps: getTwoPointerSearchSteps, color: '#10b981' },
     // Graph Algorithms
-    bfs: { name: 'Breadth-First Search', complexity: 'O(V + E)', type: 'graph', getSteps: bfsSteps, color: '#06b6d4' },
-    dfs: { name: 'Depth-First Search', complexity: 'O(V + E)', type: 'graph', getSteps: dfsSteps, color: '#3b82f6' },
-    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O(V²)', type: 'graph', getSteps: dijkstraSteps, color: '#8b5cf6' },
+    bfs: { name: 'Breadth-First Search', complexity: 'O(V + E)', type: 'graph', getSteps: getBfsInteractiveSteps, color: '#06b6d4' },
+    dfs: { name: 'Depth-First Search', complexity: 'O(V + E)', type: 'graph', getSteps: getDfsInteractiveSteps, color: '#3b82f6' },
+    dijkstra: { name: 'Dijkstra\'s Algorithm', complexity: 'O((V + E) log V)', type: 'graph', getSteps: dijkstraSteps, color: '#8b5cf6' },
+    prim: { name: 'Prim\'s MST', complexity: 'O(E log V)', type: 'graph', getSteps: primSteps, color: '#f59e0b' },
+    bellmanford: { name: 'Bellman-Ford', complexity: 'O(VE)', type: 'graph', getSteps: bellmanFordSteps, color: '#ef4444' },
   };
 
   const getStepsWithTarget = (algo, array) => {
@@ -163,6 +166,19 @@ const Compare = () => {
     const currentIndex = speedOptions.indexOf(speedMultiplier);
     if (currentIndex < speedOptions.length - 1) setSpeedMultiplier(speedOptions[currentIndex + 1]);
   };
+
+  useEffect(() => {
+    const type1 = algorithms[algo1].type;
+    const type2 = algorithms[algo2].type;
+    const isGraph = type1 === 'graph' || type2 === 'graph';
+    const isSortingOrSearching = type1 === 'sorting' || type1 === 'searching' || type2 === 'sorting' || type2 === 'searching';
+
+    if (isGraph && !isSortingOrSearching && (inputArray.length === 0 || typeof inputArray[0] !== 'object')) {
+      setInputArray([]); // Reset to empty graph for pure graph comparison
+    } else if (!isGraph && isSortingOrSearching && (inputArray.length > 0 && typeof inputArray[0] === 'object')) {
+      setInputArray([64, 34, 25, 12, 22, 11, 90, 45, 33, 77]); // Reset to numbers
+    }
+  }, [algo1, algo2]);
 
   useEffect(() => { handleReset(); }, [algo1, algo2, inputArray]);
 
@@ -217,6 +233,8 @@ const Compare = () => {
                   <option value="bfs">Breadth-First Search</option>
                   <option value="dfs">Depth-First Search</option>
                   <option value="dijkstra">Dijkstra's Algorithm</option>
+                  <option value="prim">Prim's MST</option>
+                  <option value="bellmanford">Bellman-Ford</option>
                 </optgroup>
               </select>
             </div>
@@ -252,6 +270,8 @@ const Compare = () => {
                   <option value="bfs">Breadth-First Search</option>
                   <option value="dfs">Depth-First Search</option>
                   <option value="dijkstra">Dijkstra's Algorithm</option>
+                  <option value="prim">Prim's MST</option>
+                  <option value="bellmanford">Bellman-Ford</option>
                 </optgroup>
               </select>
             </div>
@@ -396,7 +416,12 @@ const Compare = () => {
                 ) : algo1 === 'radix' ? (
                   <RadixSortVisualizer currentStep={data1} isCompact={true} />
                 ) : algorithms[algo1].type === 'graph' ? (
-                  <GraphVisualizer currentStep={data1} isCompact={true} />
+                  <InteractiveGraphVisualizer
+                    currentStep={data1}
+                    initialNodes={inputArray.length > 0 && typeof inputArray[0] === 'object' ? inputArray : []}
+                    onGraphChange={(newNodes) => setInputArray(newNodes)}
+                    graphType='undirected'
+                  />
                 ) : algorithms[algo1].type === 'dp' ? (
                   <DPVisualizer currentStep={data1} isCompact={true} />
                 ) : (
@@ -445,7 +470,12 @@ const Compare = () => {
                 ) : algo2 === 'radix' ? (
                   <RadixSortVisualizer currentStep={data2} isCompact={true} />
                 ) : algorithms[algo2].type === 'graph' ? (
-                  <GraphVisualizer currentStep={data2} isCompact={true} />
+                  <InteractiveGraphVisualizer
+                    currentStep={data2}
+                    initialNodes={inputArray.length > 0 && typeof inputArray[0] === 'object' ? inputArray : []}
+                    onGraphChange={(newNodes) => setInputArray(newNodes)}
+                    graphType='undirected'
+                  />
                 ) : algorithms[algo2].type === 'dp' ? (
                   <DPVisualizer currentStep={data2} isCompact={true} />
                 ) : (
