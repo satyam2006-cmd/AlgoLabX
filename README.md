@@ -5,12 +5,21 @@ A comprehensive web application for visualizing and learning algorithms through 
 ## 🚀 Features
 
 ### 📊 Algorithm Categories
+
 - **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort, Shell Sort, Counting Sort, Radix Sort, Bucket Sort, Cocktail Sort, Comb Sort, Gnome Sort, Odd-Even Sort
 - **Search Algorithms**: Binary Search, Linear Search, Jump Search, Interpolation Search, Exponential Search, Ternary Search, Fibonacci Search, Sentinel Search, Two-Pointer Search
 - **Graph Algorithms**: BFS Traversal, DFS Traversal, Dijkstra's Algorithm, Bellman-Ford, Floyd-Warshall, Prim's MST, Kruskal's MST, Topological Sort, Cycle Detection
 - **Dynamic Programming**: 0/1 Knapsack, Longest Common Subsequence, Edit Distance, Coin Change, Matrix Chain Multiplication, Rod Cutting, Longest Increasing Subsequence, Fibonacci DP
 
+### 🤖 AI Powered Tools
+
+- **AI DSA Mentor**: An intelligent teaching assistant powered by LLaMA 3 (via Groq) to solve doubts, explain code, and recommend data structures.
+  - **Doubt Solver**: Get conceptual explanations and real-world analogies.
+  - **Code Explainer**: Identification of algorithms and optimization tips for your code snippets.
+  - **DS Recommender**: Personalized data structure recommendations based on problem requirements.
+
 ### 🎨 Specialized Visualizers
+
 - **ArrayVisualizer**: Bar chart visualizations for sorting and searching algorithms
 - **GraphVisualizer**: Node-edge graph visualizations with grid layout
 - **DPVisualizer**: Table-based visualizations for dynamic programming
@@ -18,6 +27,7 @@ A comprehensive web application for visualizing and learning algorithms through 
 - **SmartVisualizer**: Intelligent routing to appropriate visualizer based on algorithm type
 
 ### ⚡ Interactive Features
+
 - **Step-by-step Animation**: Watch algorithms execute step by step
 - **Speed Control**: Adjust animation speed for better understanding
 - **Custom Input**: Provide your own arrays and data
@@ -26,6 +36,7 @@ A comprehensive web application for visualizing and learning algorithms through 
 - **Shortest Path Highlighting**: Visual representation of optimal paths (Dijkstra)
 
 ### 🎯 Learning Tools
+
 - **Algorithm Descriptions**: Detailed explanations for each algorithm
 - **Complexity Analysis**: Time and space complexity information
 - **Interactive Controls**: Play, pause, step forward, step backward, reset
@@ -34,10 +45,12 @@ A comprehensive web application for visualizing and learning algorithms through 
 ## 🛠️ Technology Stack
 
 - **Frontend**: React 18 with hooks
+- **Backend (AI)**: Flask (Python) with Groq SDK
+- **LLM**: LLaMA 3.3 70B (via Groq API)
 - **Build Tool**: Vite for fast development and building
 - **Styling**: Tailwind CSS for modern, responsive design
 - **Animations**: Framer Motion for smooth transitions
-- **Architecture**: Component-based with SmartVisualizer pattern
+- **Architecture**: Component-based with SmartVisualizer pattern and proxied API routes
 
 ## 📁 Project Structure
 
@@ -68,36 +81,76 @@ src/
 │   ├── Compare.jsx                  # Algorithm comparison
 │   ├── Home.jsx                     # Landing page
 │   └── Experiment.jsx               # Python experimentation
-└── engine/              # Core functionality
-    ├── stepPlayer.js               # Animation controller
-    └── pyodideRunner.js            # Python execution
+├── engine/              # Core functionality
+│   ├── stepPlayer.js               # Animation controller
+│   └── pyodideRunner.js            # Python execution
+├── backend/             # AI Mentor API (Flask)
+│   ├── app.py                      # Main Flask server
+│   ├── prompts.py                  # Structured AI prompts
+│   ├── requirements.txt            # Python dependencies
+│   └── .env                        # API keys (Groq)
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (version 16 or higher)
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/satyam2006-cmd/AlgoLabX.git
 cd AlgoLabX
 ```
 
-2. Install dependencies:
+1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-3. Start the development server:
+1. Start the development server:
+
 ```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+1. Open your browser and navigate to `http://localhost:5173`
+
+### 🤖 Setting up AI Mentor (Backend)
+
+1. Navigate to the backend directory:
+
+   ```bash
+   cd backend
+   ```
+
+2. Create a virtual environment (optional but recommended):
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install requirements:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Configure your API key:
+   - Create a `.env` file in the `backend/` directory.
+   - Add your Groq API key: `GROQ_API_KEY=your_key_here`
+
+5. Start the backend:
+
+   ```bash
+   python app.py
+   ```
 
 ### Building for Production
 
@@ -108,6 +161,7 @@ npm run build
 ## 📖 Usage Guide
 
 ### Learning Algorithms
+
 1. Navigate to the **Learn** tab
 2. Select an algorithm from the dropdown menu
 3. Choose between:
@@ -118,6 +172,7 @@ npm run build
 6. Use controls to pause, step forward/backward, or reset
 
 ### Understanding Visualizations
+
 - **Sorting**: Watch bars compare and swap positions
 - **Searching**: See pointers move through the array
 - **Graphs**: Follow node traversal with edge weights
@@ -126,6 +181,7 @@ npm run build
 ### Algorithm Categories
 
 #### Sorting Algorithms
+
 - **Bubble Sort**: O(n²) - Simple comparison-based sorting
 - **Selection Sort**: O(n²) - Selects minimum element repeatedly
 - **Insertion Sort**: O(n²) - Builds sorted array one element at a time
@@ -142,6 +198,7 @@ npm run build
 - **Odd-Even Sort**: O(n²) - Parallel-friendly sorting
 
 #### Search Algorithms
+
 - **Binary Search**: O(log n) - Requires sorted array
 - **Linear Search**: O(n) - Sequential search
 - **Jump Search**: O(√n) - Block-based search
@@ -153,6 +210,7 @@ npm run build
 - **Two-Pointer Search**: O(n) - Finds pairs with given sum
 
 #### Graph Algorithms
+
 - **BFS**: O(V+E) - Level-order traversal
 - **DFS**: O(V+E) - Depth-order traversal
 - **Dijkstra**: O((V+E) log V) - Single-source shortest path
@@ -164,6 +222,7 @@ npm run build
 - **Cycle Detection**: O(V+E) - Detects cycles in directed graphs
 
 #### Dynamic Programming
+
 - **0/1 Knapsack**: O(nW) - Optimization problem solving
 - **Longest Common Subsequence**: O(mn) - Find longest common subsequence
 - **Edit Distance**: O(mn) - Minimum string transformations
@@ -176,20 +235,25 @@ npm run build
 ## 🎨 Design Features
 
 ### SmartVisualizer System
+
 The `SmartVisualizer` component automatically routes to the appropriate visualizer based on algorithm type:
+
 - `sorting` → `ArrayVisualizer`
 - `searching` → `SearchVisualizer`
 - `graph` → `GraphVisualizer`
 - `dp` → `DPVisualizer`
 
 ### Step-Based Animation
+
 All algorithms generate a series of steps containing:
+
 - Current state of data structures
 - Active elements being processed
 - Messages explaining the operation
 - Metadata for visualization
 
 ### Responsive Design
+
 - Mobile-friendly interface
 - Adaptive layouts for different screen sizes
 - Touch-friendly controls
@@ -197,12 +261,14 @@ All algorithms generate a series of steps containing:
 ## 🔧 Customization
 
 ### Adding New Algorithms
+
 1. Implement the algorithm in the appropriate category file
 2. Generate step data following the established format
 3. Register the algorithm in `comprehensiveAlgorithms.js`
 4. Add the algorithm to the UI dropdown
 
 ### Creating New Visualizers
+
 1. Create a new component following the existing pattern
 2. Add routing logic to `SmartVisualizer`
 3. Define the expected data structure for steps

@@ -8,6 +8,7 @@ import Compare from './pages/Compare';
 import Experiment from './pages/Experiment';
 import MergeSortPage from './pages/MergeSortPage';
 import HeapPage from './pages/HeapPage';
+import AIMentor from './pages/AIMentor';
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('bubble');
@@ -76,6 +77,7 @@ function App() {
               <Route path="/experiment" element={<Experiment />} />
               <Route path="/merge-sort" element={<MergeSortPage />} />
               <Route path="/heap" element={<HeapPage />} />
+              <Route path="/ai-mentor" element={<AIMentor />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
