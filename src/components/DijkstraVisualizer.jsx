@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';  
 
 const DijkstraVisualizer = ({
     stepData,
@@ -15,7 +15,7 @@ const DijkstraVisualizer = ({
         checking = null,
         updating = null,
         shortestPath = [],
-        message = ""
+
     } = stepData || {};
 
     // Premium styling constants
@@ -225,15 +225,15 @@ const DijkstraVisualizer = ({
                                 key={`table-row-${node.id}`}
                                 layout
                                 className={`flex items-center justify-between px-5 py-3 rounded-xl border transition-all duration-300 ${isCurrent ? 'bg-yellow-400/10 border-yellow-400/30' :
-                                        isUpdating ? 'bg-purple-500/10 border-purple-500/30' :
-                                            isVisited ? 'bg-green-500/5 border-green-500/20 opacity-60' :
-                                                'bg-white/5 border-white/5'
+                                    isUpdating ? 'bg-purple-500/10 border-purple-500/30' :
+                                        isVisited ? 'bg-green-500/5 border-green-500/20 opacity-60' :
+                                            'bg-white/5 border-white/5'
                                     }`}
                             >
                                 <div className="flex items-center gap-4">
                                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm ${isCurrent ? 'bg-yellow-400 text-black' :
-                                            isVisited ? 'bg-green-500/20 text-green-400' :
-                                                'bg-white/10 text-white/40'
+                                        isVisited ? 'bg-green-500/20 text-green-400' :
+                                            'bg-white/10 text-white/40'
                                         }`}>
                                         {node.label}
                                     </div>
@@ -246,8 +246,8 @@ const DijkstraVisualizer = ({
                                         initial={{ scale: 0.8, opacity: 0 }}
                                         animate={{ scale: 1, opacity: 1 }}
                                         className={`text-xl font-black ${dist === Infinity ? 'text-white/10' :
-                                                isUpdating ? 'text-purple-400' :
-                                                    'text-white'
+                                            isUpdating ? 'text-purple-400' :
+                                                'text-white'
                                             }`}
                                     >
                                         {dist === Infinity ? '∞' : dist}

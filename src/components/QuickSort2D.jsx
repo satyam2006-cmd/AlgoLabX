@@ -3,7 +3,7 @@ import ArrayVisualizer from '../components/ArrayVisualizer';
 
 const QuickSort2D = ({ currentStep }) => {
     if (!currentStep) return null;
-    const { array = [], active = [], swapped = false, description } = currentStep;
+    const { array = [], active = [], swapped = false } = currentStep;
     const values = array.map(item => item.value);
     const swappedIndices = swapped ? active : [];
     return (

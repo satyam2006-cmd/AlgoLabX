@@ -43,7 +43,7 @@ const PivotLabel = () => (
     </motion.div>
 );
 
-const QuickSort3D = ({ currentStep, isDone, isCompact = false }) => {
+const QuickSort3D = ({ currentStep, isCompact = false }) => {
     if (!currentStep) return null;
 
     const {

@@ -5,7 +5,6 @@ const GanttChartVisualizer = ({
   processes = [],
   timeline = [],
   currentTime = -1,
-  currentTimeQuantum = -1,
   timeQuantum = 2
 }) => {
   const getProcessColor = (processId) => {
@@ -20,10 +19,6 @@ const GanttChartVisualizer = ({
       '#ffffff', // white
     ];
     return colors[processId % colors.length];
-  };
-
-  const getTimelineHeight = () => {
-    return Math.max(150, processes.length * 40 + 50);
   };
 
   const maxTime = Math.max(...timeline.map(t => t.endTime), 0);
@@ -43,7 +38,7 @@ const GanttChartVisualizer = ({
       <div className="w-full">
         <h3 className="text-white font-semibold mb-3">Process Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {processes.map((process, index) => (
+          {processes.map((process) => (
             <div
               key={process.id}
               className="bg-gray-700/50 rounded-lg p-3 border border-gray-600"

@@ -7,8 +7,7 @@ const SearchVisualizer = ({
   pointerIndex = -1,
   targetIndex = -1,
   maxValue = 100,
-  barWidth = 40,
-  barGap = 4
+  barWidth = 40
 }) => {
   const getBarColor = (index) => {
     if (index === targetIndex) return '#366346ff'; // User Dark Green for found

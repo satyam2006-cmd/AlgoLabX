@@ -41,7 +41,6 @@ export function generateQuickSortTreeSteps(initialArray) {
     });
 
     // --- PHASE 1: Recursive Construction & Partitioning ---
-    const treeNodesMetaData = []; // To keep track of nodes in recursive order for assembly
 
     function quickSortRecursion(arr, level = 0, parentId = null) {
         if (arr.length === 0) return null;

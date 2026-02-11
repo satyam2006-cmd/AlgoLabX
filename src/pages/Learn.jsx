@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import SmartVisualizer from '../components/SmartVisualizer';
 import QuickSort2D from '../components/QuickSort2D';
@@ -16,19 +16,17 @@ import { useStepPlayer } from '../engine/stepPlayer';
 import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
 import {
   // Sorting
-  getBubbleSortSteps, getQuickSortSteps, getSelectionSortSteps, getInsertionSortSteps,
-  getMergeSortSteps, getMergeSortTreeSteps, getHeapSortSteps, getCountingSortSteps, getRadixSortSteps,
-  getQuickSortTreeSteps, getQuickSort3DSteps,
+  getBubbleSortSteps, getSelectionSortSteps, getInsertionSortSteps,
+  getMergeSortTreeSteps, getCountingSortSteps, getRadixSortSteps,
+  getQuickSort3DSteps,
   getBucketSortSteps, getCocktailSortSteps, getCombSortSteps, getGnomeSortSteps, getOddEvenSortSteps,
   // Searching
-  getBinarySearchSteps, getLinearSearchSteps, getJumpSearchSteps, getInterpolationSearchSteps, getExponentialSearchSteps,
-  getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps, getTwoPointerSearchSteps, getSublistSearchSteps,
+  getBinarySearchSteps, getLinearSearchSteps, getTwoPointerSearchSteps,
   // Graph
   dijkstraSteps,
   getBfsInteractiveSteps, getDfsInteractiveSteps,
   primSteps, bellmanFordSteps,
   // DP
-  knapsackSteps,
 } from '../algorithms/comprehensiveAlgorithms';
 
 // Icon Components
@@ -116,6 +114,8 @@ const LoadingPlaceholder = () => (
   </div>
 );
 
+const speedOptions = [0.5, 1, 1.5, 2, 3];
+
 const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
   const [inputArray, setInputArray] = useState([64, 34, 25, 12, 22, 11, 90, 45, 33, 77]);
@@ -138,12 +138,13 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
         console.error("Failed to decode shared graph:", e);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run once on mount
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const [customInput, setCustomInput] = useState('64, 34, 25, 12, 22, 11, 90, 45, 33, 77');
   const [searchTarget, setSearchTarget] = useState('45');
 
-  const speedOptions = [0.5, 1, 1.5, 2, 3];
+
   const baseSpeed = 1000;
   const speed = baseSpeed / speedMultiplier;
 
@@ -202,11 +203,11 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
   const steps = currentAlgo.getSteps(stepsInput);
   const { currentStep, isPlaying, currentStepData, totalSteps, controls } = useStepPlayer(steps, speed);
 
-  const handleGenerateArray = () => {
+  const handleGenerateArray = useCallback(() => {
     const newArray = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100) + 1);
     setInputArray(newArray);
     setCustomInput(newArray.join(', '));
-  };
+  }, []);
 
   const handleCustomInput = () => {
     try {
@@ -215,7 +216,7 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
         setInputArray(arr);
       }
     } catch (error) {
-      console.error('Invalid input');
+      console.error('Invalid input', error);
     }
   };
 
@@ -282,10 +283,11 @@ const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isPlaying, controls, increaseSpeed, decreaseSpeed]);
+  }, [isPlaying, controls, increaseSpeed, decreaseSpeed, handleGenerateArray]);
 
   useEffect(() => {
     controls.reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAlgorithm, inputArray, speedMultiplier]);
 
   return (

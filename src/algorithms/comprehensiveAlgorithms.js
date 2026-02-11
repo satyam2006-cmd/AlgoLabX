@@ -2,7 +2,8 @@
 // All sorting, searching, and specialized algorithms
 
 // Sorting Algorithms
-export {
+// Sorting Algorithms
+import {
   getBubbleSortSteps,
   getSelectionSortSteps,
   getInsertionSortSteps,
@@ -12,23 +13,23 @@ export {
   getCountingSortSteps
 } from './comprehensiveSorting.js';
 
-export { getQuickSort3DSteps } from './quickSort3D.js';
+import { getQuickSort3DSteps } from './quickSort3D.js';
 
-export { getMergeSortTreeSteps } from './mergeSortTree.js';
-export { getQuickSortTreeSteps } from './quickSortTree.js';
+import { getMergeSortTreeSteps } from './mergeSortTree.js';
+import { getQuickSortTreeSteps } from './quickSortTree.js';
 
 // Additional Sorting Algorithms
-export {
+import {
   getCocktailSortSteps,
   getCombSortSteps,
   getGnomeSortSteps,
   getOddEvenSortSteps
 } from './additionalSorting.js';
-export { getBucketSortSteps } from './bucketSort.js';
-export { getRadixSortSteps } from './radixSort.js';
+import { getBucketSortSteps } from './bucketSort.js';
+import { getRadixSortSteps } from './radixSort.js';
 
 // Searching Algorithms
-export {
+import {
   getBinarySearchSteps,
   getLinearSearchSteps,
   getJumpSearchSteps,
@@ -36,7 +37,7 @@ export {
   getExponentialSearchSteps
 } from './comprehensiveSearching.js';
 
-export {
+import {
   getTernarySearchSteps,
   getFibonacciSearchSteps,
   getSentinelSearchSteps,
@@ -45,14 +46,50 @@ export {
 } from './additionalSearching.js';
 
 // Graph Algorithms (from existing files)
-export { bfsSteps } from './graph/bfsSteps.js';
-export { dfsSteps } from './graph/dfsSteps.js';
-export { dijkstraSteps } from './graph/dijkstraSteps.js';
+import { bfsSteps } from './graph/bfsSteps.js';
+import { dfsSteps } from './graph/dfsSteps.js';
+import { dijkstraSteps } from './graph/dijkstraSteps.js';
 
 // Interactive Graph Algorithms
-export { getBfsInteractiveSteps, getDfsInteractiveSteps } from './graph/interactiveTraversals.js';
-export { primSteps } from './graph/primSteps.js';
-export { bellmanFordSteps } from './graph/bellmanFordSteps.js';
+import { getBfsInteractiveSteps, getDfsInteractiveSteps } from './graph/interactiveTraversals.js';
+import { primSteps } from './graph/primSteps.js';
+import { bellmanFordSteps } from './graph/bellmanFordSteps.js';
+
+export {
+  getBubbleSortSteps,
+  getSelectionSortSteps,
+  getInsertionSortSteps,
+  getMergeSortSteps,
+  getQuickSortSteps,
+  getHeapSortSteps,
+  getCountingSortSteps,
+  getQuickSort3DSteps,
+  getMergeSortTreeSteps,
+  getQuickSortTreeSteps,
+  getCocktailSortSteps,
+  getCombSortSteps,
+  getGnomeSortSteps,
+  getOddEvenSortSteps,
+  getBucketSortSteps,
+  getRadixSortSteps,
+  getBinarySearchSteps,
+  getLinearSearchSteps,
+  getJumpSearchSteps,
+  getInterpolationSearchSteps,
+  getExponentialSearchSteps,
+  getTernarySearchSteps,
+  getFibonacciSearchSteps,
+  getSentinelSearchSteps,
+  getTwoPointerSearchSteps,
+  getSublistSearchSteps,
+  bfsSteps,
+  dfsSteps,
+  dijkstraSteps,
+  getBfsInteractiveSteps,
+  getDfsInteractiveSteps,
+  primSteps,
+  bellmanFordSteps
+};
 
 // Additional Graph Algorithms
 // export {
@@ -165,22 +202,22 @@ export const algorithmFunctions = {
   dijkstraSteps: (arr) => dijkstraSteps(arr),
   primSteps: (nodes) => primSteps(nodes),
   bellmanFordSteps: (nodes) => bellmanFordSteps(nodes),
-  getBellmanFordSteps: (input) => null,
-  getFloydWarshallSteps: (input) => null,
-  getPrimMSTSteps: (input) => null,
-  getKruskalMSTSteps: (input) => null,
-  getTopologicalSortSteps: (input) => null,
-  getCycleDetectionSteps: (input) => null,
+  getBellmanFordSteps: () => null,
+  getFloydWarshallSteps: () => null,
+  getPrimMSTSteps: () => null,
+  getKruskalMSTSteps: () => null,
+  getTopologicalSortSteps: () => null,
+  getCycleDetectionSteps: () => null,
 
   // Dynamic Programming
-  knapsackSteps: (arr) => null,
-  getLCSSteps: (input) => null,
-  getEditDistanceSteps: (input) => null,
-  getCoinChangeSteps: (input) => null,
-  getMatrixChainSteps: (input) => null,
-  getRodCuttingSteps: (input) => null,
-  getLISSteps: (input) => null,
-  getFibonacciDPSteps: (input) => null
+  knapsackSteps: () => null,
+  getLCSSteps: () => null,
+  getEditDistanceSteps: () => null,
+  getCoinChangeSteps: () => null,
+  getMatrixChainSteps: () => null,
+  getRodCuttingSteps: () => null,
+  getLISSteps: () => null,
+  getFibonacciDPSteps: () => null
 };
 
 // Performance Metrics

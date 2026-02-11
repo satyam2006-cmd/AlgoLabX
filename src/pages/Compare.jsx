@@ -13,11 +13,11 @@ import BucketSortVisualizer from '../components/BucketSortVisualizer';
 import RadixSortVisualizer from '../components/RadixSortVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
 import {
-  getBubbleSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps, getMergeSortTreeSteps,
+  getBubbleSortSteps, getSelectionSortSteps, getInsertionSortSteps, getMergeSortSteps as _getMergeSortSteps, getMergeSortTreeSteps,
   getCountingSortSteps, getRadixSortSteps,
   getBinarySearchSteps, getLinearSearchSteps, getTwoPointerSearchSteps,
   getBucketSortSteps, getCocktailSortSteps, getCombSortSteps, getGnomeSortSteps, getOddEvenSortSteps,
-  getTernarySearchSteps, getFibonacciSearchSteps, getSentinelSearchSteps,
+  getTernarySearchSteps as _getTernarySearchSteps, getFibonacciSearchSteps as _getFibonacciSearchSteps, getSentinelSearchSteps as _getSentinelSearchSteps,
   getBfsInteractiveSteps, getDfsInteractiveSteps, dijkstraSteps, primSteps, bellmanFordSteps
 } from '../algorithms/comprehensiveAlgorithms';
 import { getHeapSortDetailedSteps } from '../algorithms/heapSortDetailed';
@@ -154,7 +154,7 @@ const Compare = () => {
     try {
       const arr = customInput.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
       if (arr.length > 0) setInputArray(arr);
-    } catch (error) { }
+    } catch { /* invalid input */ }
   };
 
   const decreaseSpeed = () => {
@@ -178,8 +178,10 @@ const Compare = () => {
     } else if (!isGraph && isSortingOrSearching && (inputArray.length > 0 && typeof inputArray[0] === 'object')) {
       setInputArray([64, 34, 25, 12, 22, 11, 90, 45, 33, 77]); // Reset to numbers
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [algo1, algo2]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { handleReset(); }, [algo1, algo2, inputArray]);
 
   return (

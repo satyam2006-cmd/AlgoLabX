@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const THEME = {
@@ -26,7 +26,7 @@ const RadixSortVisualizer = ({ currentStep, isCompact = false }) => {
     } = currentStep;
 
     // Helper to render number with highlighted digit
-    const RenderNumber = ({ val, exp, isActive }) => {
+    const RenderNumber = ({ val, exp }) => {
         const valStr = val.toString();
         if (!exp || phase === 'done') return <span>{valStr}</span>;
 
@@ -76,8 +76,8 @@ const RadixSortVisualizer = ({ currentStep, isCompact = false }) => {
                         // Handle visibility
                         // In distribution, move element out of array?
                         // Actually, let's keep it in array but lowered opacity unless it's the active one moving
-                        const isMoving = phase === 'distribution' && isActive;
-                        const isGone = phase === 'distribution' && !isActive && activeElement !== null && idx < activeElement;
+                        // const isMoving = phase === 'distribution' && isActive;
+                        // const isGone = phase === 'distribution' && !isActive && activeElement !== null && idx < activeElement;
                         // Actually better: if in distribution, if idx < activeElement, it is already in a bucket.
                         const isInBucket = phase === 'distribution' && idx < activeElement;
                         const isBeingCollected = phase === 'collecting' && idx <= activeElement;
@@ -100,7 +100,7 @@ const RadixSortVisualizer = ({ currentStep, isCompact = false }) => {
                                         ${(isInBucket && !isBeingCollected) ? 'opacity-0 scale-50' : 'opacity-100 scale-100'}
                                     `}
                                 >
-                                    <RenderNumber val={value} exp={digitPlace} isActive={isActive} />
+                                    <RenderNumber val={value} exp={digitPlace} />
                                 </motion.div>
                                 <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">{idx}</span>
                             </div>
@@ -139,7 +139,7 @@ const RadixSortVisualizer = ({ currentStep, isCompact = false }) => {
                                     {bucketItems.map((val, itemIdx) => {
                                         // Occurrence count for stable layoutId
                                         // This is a bit complex since we need to match the global occurrence
-                                        let globalOcc = 0;
+                                        // let globalOcc = 0;
                                         // In collection phase, buckets are emptied. 
                                         // This makes layoutId tracking hard if we don't know the ORIGINAL index.
                                         // However, Radix Sort STABILITY is key.
@@ -172,7 +172,7 @@ const RadixSortVisualizer = ({ currentStep, isCompact = false }) => {
                                                     ${isActiveBucket ? 'bg-[#ffeb3b]/20 border-[#ffeb3b]/40 text-[#ffeb3b]' : 'bg-white/5 border-white/10 text-white/60'}
                                                 `}
                                             >
-                                                <RenderNumber val={val} exp={digitPlace} isActive={false} />
+                                                <RenderNumber val={val} exp={digitPlace} />
                                             </motion.div>
                                         );
                                     })}
@@ -199,7 +199,7 @@ const RadixSortVisualizer = ({ currentStep, isCompact = false }) => {
                 </div>
             </div>
 
-            <style jsx>{`
+            <style>{`
                 .custom-scrollbar::-webkit-scrollbar { width: 3px; }
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
                 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }

@@ -118,7 +118,6 @@ export function getBucketSortSteps(inputArr) {
 
     // Step 4: Merge Buckets Back
     let currentIndex = 0;
-    const resultArr = new Array(n).fill(null); // Used for visual transition if needed
 
     for (let i = 0; i < bucketCount; i++) {
         if (buckets[i].length > 0) {

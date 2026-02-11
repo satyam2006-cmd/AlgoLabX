@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';  
 import ArrayVisualizer from './ArrayVisualizer';
 import ArrayBlockVisualizer from './ArrayBlockVisualizer';
 import LinearSearchVisualizer from './LinearSearchVisualizer';

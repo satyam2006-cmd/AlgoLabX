@@ -27,7 +27,7 @@ const DPVisualizer = () => {
 
   // Initialize DP table
   const initializeTable = (items, capacity) => {
-    const table = Array(items.length + 1).fill().map(() => 
+    const table = Array(items.length + 1).fill().map(() =>
       Array(capacity + 1).fill(0)
     );
     return table;
@@ -42,10 +42,10 @@ const DPVisualizer = () => {
   }, [itemCount, capacity]);
 
   // Get algorithm steps
-  const steps = selectedAlgorithm === 'knapsack' ? 
+  const steps = selectedAlgorithm === 'knapsack' ?
     knapsackSteps([...items.map(i => i.weight), ...items.map(i => i.value)]) : [];
-  
-  const { currentStepData, totalSteps, controls } = useStepPlayer(steps, speed);
+
+  const { isPlaying, currentStepData, totalSteps, controls } = useStepPlayer(steps, speed);
 
   // Update DP table based on current step
   useEffect(() => {
@@ -82,7 +82,7 @@ const DPVisualizer = () => {
   };
 
   const handlePlayPause = () => {
-    if (controls.isPlaying) {
+    if (isPlaying) {
       controls.pause();
     } else {
       controls.play();
@@ -128,11 +128,10 @@ const DPVisualizer = () => {
                 Items \ Capacity
               </th>
               {Array.from({ length: capacity + 1 }, (_, i) => (
-                <th 
-                  key={i} 
-                  className={`border border-gray-600 text-white p-2 text-sm font-mono ${
-                    currentCell.col === i ? 'bg-amber-600' : 'bg-gray-700'
-                  }`}
+                <th
+                  key={i}
+                  className={`border border-gray-600 text-white p-2 text-sm font-mono ${currentCell.col === i ? 'bg-amber-600' : 'bg-gray-700'
+                    }`}
                   style={{ width: `${cellWidth}px` }}
                 >
                   {i}
@@ -140,15 +139,14 @@ const DPVisualizer = () => {
               ))}
             </tr>
           </thead>
-          
+
           {/* Table Body */}
           <tbody>
             {dpTable.map((row, rowIndex) => (
               <tr key={rowIndex}>
-                <td 
-                  className={`border border-gray-600 text-white p-2 text-sm font-semibold ${
-                    currentCell.row === rowIndex ? 'bg-amber-600' : 'bg-gray-700'
-                  }`}
+                <td
+                  className={`border border-gray-600 text-white p-2 text-sm font-semibold ${currentCell.row === rowIndex ? 'bg-amber-600' : 'bg-gray-700'
+                    }`}
                   style={{ width: '80px' }}
                 >
                   {rowIndex === 0 ? '∅' : `Item ${rowIndex}`}
@@ -157,14 +155,14 @@ const DPVisualizer = () => {
                   <td
                     key={colIndex}
                     className={`border border-gray-600 text-center p-1 transition-all duration-300`}
-                    style={{ 
+                    style={{
                       width: `${cellWidth}px`,
                       height: `${cellHeight}px`
                     }}
                   >
                     <motion.div
                       className={`w-full h-full flex items-center justify-center text-white font-mono text-sm ${getCellAnimation(
-                        rowIndex, 
+                        rowIndex,
                         colIndex
                       )}`}
                       animate={{
@@ -193,7 +191,7 @@ const DPVisualizer = () => {
         <h3 className="text-lg font-semibold text-white mb-4">Step Explanation</h3>
         <div className="space-y-3">
           <p className="text-gray-300">{currentStepData.message}</p>
-          
+
           {currentCell.row >= 0 && currentCell.col >= 0 && (
             <div className="bg-gray-700/50 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Current Operation:</h4>
@@ -213,11 +211,11 @@ const DPVisualizer = () => {
     if (dpTable.length === 0) return null;
 
     const maxValue = dpTable[items.length][capacity];
-    
+
     // Backtrack to find selected items
     const selectedItems = [];
     let remainingCapacity = capacity;
-    
+
     for (let i = items.length; i > 0 && remainingCapacity > 0; i--) {
       if (dpTable[i][remainingCapacity] !== dpTable[i - 1][remainingCapacity]) {
         selectedItems.push(items[i - 1]);
@@ -256,7 +254,7 @@ const DPVisualizer = () => {
     <div className="flex-1 p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-6">📊 DP Visualizer</h1>
-        
+
         {/* Controls */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -272,7 +270,7 @@ const DPVisualizer = () => {
                 <option value="lcs">Longest Common Subsequence (Coming Soon)</option>
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Item Count</label>
               <input
@@ -285,7 +283,7 @@ const DPVisualizer = () => {
               />
               <span className="text-white text-sm">{itemCount} items</span>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Knapsack Capacity</label>
               <input
@@ -298,7 +296,7 @@ const DPVisualizer = () => {
               />
               <span className="text-white text-sm">{capacity} capacity</span>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Speed (ms)</label>
               <input
@@ -313,16 +311,16 @@ const DPVisualizer = () => {
               <span className="text-white text-sm">{speed}ms</span>
             </div>
           </div>
-          
+
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePlayPause}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
               >
-                {controls.isPlaying ? 'Pause' : 'Play'}
+                {isPlaying ? 'Pause' : 'Play'}
               </button>
-              
+
               <button
                 onClick={handleStepForward}
                 disabled={controls.currentStep >= totalSteps - 1}
@@ -330,7 +328,7 @@ const DPVisualizer = () => {
               >
                 Step Forward
               </button>
-              
+
               <button
                 onClick={handleStepBackward}
                 disabled={controls.currentStep <= 0}
@@ -338,14 +336,14 @@ const DPVisualizer = () => {
               >
                 Step Backward
               </button>
-              
+
               <button
                 onClick={handleReset}
                 className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
               >
                 Reset
               </button>
-              
+
               <button
                 onClick={regenerateItems}
                 className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
@@ -353,7 +351,7 @@ const DPVisualizer = () => {
                 New Items
               </button>
             </div>
-            
+
             <div className="text-white">
               <span className="text-sm text-gray-400">Step: </span>
               <span className="font-medium">{controls.currentStep + 1} / {totalSteps}</span>
@@ -365,7 +363,7 @@ const DPVisualizer = () => {
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <h3 className="text-lg font-semibold text-white mb-4">Items Information</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {items.map((item, index) => (
+            {items.map((item) => (
               <div key={item.id} className="bg-gray-700/50 rounded-lg p-3 border border-gray-600">
                 <h4 className="text-white font-medium mb-2">Item {item.id + 1}</h4>
                 <div className="text-sm text-gray-300 space-y-1">

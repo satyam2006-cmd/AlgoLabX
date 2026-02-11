@@ -10,7 +10,7 @@ const GraphVisualizer = () => {
   const [nodeCount, setNodeCount] = useState(8);
   const [speed, setSpeed] = useState(1000);
   const [graphData, setGraphData] = useState({ nodes: [], edges: [] });
-  const [currentStep, setCurrentStep] = useState(0);
+  const [_currentStep, _setCurrentStep] = useState(0);
 
   // Algorithm functions
   const algorithmFunctions = {
@@ -41,12 +41,12 @@ const GraphVisualizer = () => {
   const generateGraph = (nodeCount) => {
     const nodes = [];
     const edges = [];
-    
+
     // Create nodes in a circular layout
     const centerX = 300;
     const centerY = 250;
     const radius = 150;
-    
+
     for (let i = 0; i < nodeCount; i++) {
       const angle = (2 * Math.PI * i) / nodeCount - Math.PI / 2;
       nodes.push({
@@ -57,26 +57,26 @@ const GraphVisualizer = () => {
         label: `Node ${i}`
       });
     }
-    
+
     // Create edges (connect each node to 2-3 neighbors)
     for (let i = 0; i < nodeCount; i++) {
       const connectionCount = Math.floor(Math.random() * 2) + 2;
       const connectedNodes = new Set();
-      
+
       for (let j = 0; j < connectionCount; j++) {
         let targetNode;
         do {
           targetNode = Math.floor(Math.random() * nodeCount);
         } while (targetNode === i || connectedNodes.has(targetNode));
-        
+
         connectedNodes.add(targetNode);
-        
+
         // Avoid duplicate edges
-        const edgeExists = edges.some(e => 
-          (e.from === i && e.to === targetNode) || 
+        const edgeExists = edges.some(e =>
+          (e.from === i && e.to === targetNode) ||
           (e.from === targetNode && e.to === i)
         );
-        
+
         if (!edgeExists) {
           edges.push({
             from: i,
@@ -86,7 +86,7 @@ const GraphVisualizer = () => {
         }
       }
     }
-    
+
     return { nodes, edges };
   };
 
@@ -97,33 +97,33 @@ const GraphVisualizer = () => {
   }, [nodeCount]);
 
   // Get algorithm steps
-  const steps = algorithmFunctions[selectedAlgorithm] ? 
+  const steps = algorithmFunctions[selectedAlgorithm] ?
     algorithmFunctions[selectedAlgorithm](graphData.nodes.map(n => n.value)) : [];
-  
-  const { currentStepData, totalSteps, controls } = useStepPlayer(steps, speed);
+
+  const { isPlaying, currentStepData, totalSteps, controls } = useStepPlayer(steps, speed);
 
   // Canvas drawing function
   const drawGraph = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     if (graphType === 'canvas') {
       // Draw edges
       graphData.edges.forEach(edge => {
         const fromNode = graphData.nodes[edge.from];
         const toNode = graphData.nodes[edge.to];
-        
+
         ctx.beginPath();
         ctx.moveTo(fromNode.x, fromNode.y);
         ctx.lineTo(toNode.x, toNode.y);
-        
+
         // Color edges based on algorithm state
         let strokeColor = '#4b5563'; // gray-600
         let lineWidth = 2;
-        
+
         if (currentStepData) {
           if (currentStepData.active?.includes(edge.from) && currentStepData.active?.includes(edge.to)) {
             strokeColor = '#f59e0b'; // amber-500
@@ -132,11 +132,11 @@ const GraphVisualizer = () => {
             strokeColor = '#10b981'; // green-500
           }
         }
-        
+
         ctx.strokeStyle = strokeColor;
         ctx.lineWidth = lineWidth;
         ctx.stroke();
-        
+
         // Draw weight label
         const midX = (fromNode.x + toNode.x) / 2;
         const midY = (fromNode.y + toNode.y) / 2;
@@ -145,12 +145,12 @@ const GraphVisualizer = () => {
         ctx.textAlign = 'center';
         ctx.fillText(edge.weight, midX, midY);
       });
-      
+
       // Draw nodes
       graphData.nodes.forEach(node => {
         let fillColor = '#6b7280'; // gray-500
         let radius = 20;
-        
+
         if (currentStepData) {
           if (currentStepData.current === node.id) {
             fillColor = '#ef4444'; // red-500
@@ -162,7 +162,7 @@ const GraphVisualizer = () => {
             fillColor = '#10b981'; // green-500
           }
         }
-        
+
         ctx.beginPath();
         ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
         ctx.fillStyle = fillColor;
@@ -170,7 +170,7 @@ const GraphVisualizer = () => {
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 2;
         ctx.stroke();
-        
+
         // Draw node label
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 14px sans-serif';
@@ -186,6 +186,7 @@ const GraphVisualizer = () => {
     if (graphType === 'canvas') {
       drawGraph();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graphData, currentStepData, graphType]);
 
   // Grid-based rendering
@@ -193,7 +194,7 @@ const GraphVisualizer = () => {
     const gridSize = 50;
     const cols = 12;
     const rows = 10;
-    
+
     return (
       <div className="relative bg-gray-900 rounded-lg p-4" style={{ width: '600px', height: '500px' }}>
         {/* Grid lines */}
@@ -220,15 +221,15 @@ const GraphVisualizer = () => {
               strokeWidth="1"
             />
           ))}
-          
+
           {/* Edges */}
           {graphData.edges.map((edge, index) => {
             const fromNode = graphData.nodes[edge.from];
             const toNode = graphData.nodes[edge.to];
-            
+
             let strokeColor = '#4b5563';
             let strokeWidth = 2;
-            
+
             if (currentStepData) {
               if (currentStepData.active?.includes(edge.from) && currentStepData.active?.includes(edge.to)) {
                 strokeColor = '#f59e0b';
@@ -237,7 +238,7 @@ const GraphVisualizer = () => {
                 strokeColor = '#10b981';
               }
             }
-            
+
             return (
               <g key={index}>
                 <line
@@ -260,12 +261,12 @@ const GraphVisualizer = () => {
               </g>
             );
           })}
-          
+
           {/* Nodes */}
           {graphData.nodes.map(node => {
             let fillColor = '#6b7280';
             let radius = 20;
-            
+
             if (currentStepData) {
               if (currentStepData.current === node.id) {
                 fillColor = '#ef4444';
@@ -277,7 +278,7 @@ const GraphVisualizer = () => {
                 fillColor = '#10b981';
               }
             }
-            
+
             return (
               <g key={node.id}>
                 <circle
@@ -308,7 +309,7 @@ const GraphVisualizer = () => {
   };
 
   const handlePlayPause = () => {
-    if (controls.isPlaying) {
+    if (isPlaying) {
       controls.pause();
     } else {
       controls.play();
@@ -337,7 +338,7 @@ const GraphVisualizer = () => {
     <div className="flex-1 p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-6">🕸️ Graph Visualizer</h1>
-        
+
         {/* Controls */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -353,7 +354,7 @@ const GraphVisualizer = () => {
                 <option value="dijkstra">Dijkstra's Algorithm</option>
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Visualization Type</label>
               <select
@@ -365,7 +366,7 @@ const GraphVisualizer = () => {
                 <option value="grid">Grid/SVG</option>
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Node Count</label>
               <input
@@ -378,7 +379,7 @@ const GraphVisualizer = () => {
               />
               <span className="text-white text-sm">{nodeCount} nodes</span>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Speed (ms)</label>
               <input
@@ -393,16 +394,16 @@ const GraphVisualizer = () => {
               <span className="text-white text-sm">{speed}ms</span>
             </div>
           </div>
-          
+
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePlayPause}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
               >
-                {controls.isPlaying ? 'Pause' : 'Play'}
+                {isPlaying ? 'Pause' : 'Play'}
               </button>
-              
+
               <button
                 onClick={handleStepForward}
                 disabled={controls.currentStep >= totalSteps - 1}
@@ -410,7 +411,7 @@ const GraphVisualizer = () => {
               >
                 Step Forward
               </button>
-              
+
               <button
                 onClick={handleStepBackward}
                 disabled={controls.currentStep <= 0}
@@ -418,14 +419,14 @@ const GraphVisualizer = () => {
               >
                 Step Backward
               </button>
-              
+
               <button
                 onClick={handleReset}
                 className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
               >
                 Reset
               </button>
-              
+
               <button
                 onClick={regenerateGraph}
                 className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
@@ -433,7 +434,7 @@ const GraphVisualizer = () => {
                 New Graph
               </button>
             </div>
-            
+
             <div className="text-white">
               <span className="text-sm text-gray-400">Step: </span>
               <span className="font-medium">{controls.currentStep + 1} / {totalSteps}</span>
@@ -453,7 +454,7 @@ const GraphVisualizer = () => {
         {/* Graph Visualization */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <h3 className="text-lg font-semibold text-white mb-4">Graph Visualization</h3>
-          
+
           <div className="flex justify-center">
             {graphType === 'canvas' ? (
               <canvas

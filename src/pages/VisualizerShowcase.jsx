@@ -3,13 +3,8 @@ import SmartVisualizer from '../components/SmartVisualizer';
 import { useStepPlayer } from '../engine/stepPlayer';
 import {
   selectionSortSteps,
-  insertionSortSteps,
-  mergeSortSteps,
-  heapSortSteps,
   binarySearchSteps,
   bfsSteps,
-  dfsSteps,
-  dijkstraSteps,
   knapsackSteps
 } from '../algorithms/newIndex.js';
 
@@ -27,7 +22,7 @@ const VisualizerShowcase = () => {
       data: [64, 34, 25, 12, 22, 11, 90, 45, 33, 77],
       getSteps: (data) => selectionSortSteps(data)
     },
-    
+
     searching: {
       title: '📍 Search Visualizer',
       description: 'Bars with pointer highlights for search algorithms',
@@ -36,7 +31,7 @@ const VisualizerShowcase = () => {
       data: [11, 22, 25, 33, 34, 45, 64, 77, 90, 12],
       getSteps: (data) => binarySearchSteps(data)
     },
-    
+
     graph: {
       title: '🕸️ Graph Visualizer',
       description: 'Nodes and edges for graph algorithms',
@@ -45,7 +40,7 @@ const VisualizerShowcase = () => {
       data: [64, 34, 25, 12, 22, 11, 90, 45, 33, 77],
       getSteps: (data) => bfsSteps(data)
     },
-    
+
     dp: {
       title: '📋 DP Table Visualizer',
       description: 'Table/grid visualization for dynamic programming',
@@ -54,7 +49,7 @@ const VisualizerShowcase = () => {
       data: [10, 20, 30, 15, 25, 60, 40, 55, 35, 45],
       getSteps: (data) => knapsackSteps(data)
     },
-    
+
     os: {
       title: '⏱️ Gantt Chart Visualizer',
       description: 'Timeline visualization for OS scheduling',
@@ -92,7 +87,7 @@ const VisualizerShowcase = () => {
         { currentTime: 16, processes: data.processes, timeline: data.timeline, timeQuantum: 2 }
       ]
     },
-    
+
     compare: {
       title: '📈 Charts Visualizer',
       description: 'Performance comparison charts',
@@ -146,7 +141,7 @@ const VisualizerShowcase = () => {
     <div className="flex-1 p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-6">Advanced Algorithm Visualizers</h1>
-        
+
         {/* Demo Selection */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -154,11 +149,10 @@ const VisualizerShowcase = () => {
               <button
                 key={key}
                 onClick={() => setSelectedDemo(key)}
-                className={`p-4 rounded-lg border-2 transition-all ${
-                  selectedDemo === key
+                className={`p-4 rounded-lg border-2 transition-all ${selectedDemo === key
                     ? 'border-blue-500 bg-blue-500/20 text-blue-300'
                     : 'border-gray-600 bg-gray-700/50 text-gray-300 hover:border-gray-500'
-                }`}
+                  }`}
               >
                 <div className="text-2xl mb-2">{demo.title}</div>
                 <div className="text-sm text-left">{demo.description}</div>
@@ -183,7 +177,7 @@ const VisualizerShowcase = () => {
               />
               <span className="text-white text-sm">{speed}ms</span>
             </div>
-            
+
             <div className="flex items-end gap-2">
               <button
                 onClick={controls.play}
@@ -206,7 +200,7 @@ const VisualizerShowcase = () => {
                 Reset
               </button>
             </div>
-            
+
             <div className="flex items-end gap-2">
               <button
                 onClick={controls.stepForward}
@@ -230,7 +224,7 @@ const VisualizerShowcase = () => {
               </button>
             </div>
           </div>
-          
+
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <span className="text-gray-400 text-sm">Current Step:</span>
@@ -254,7 +248,7 @@ const VisualizerShowcase = () => {
         {/* Visualization */}
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50">
           <h2 className="text-xl font-semibold text-white mb-4">{currentDemo.title}</h2>
-          
+
           <SmartVisualizer
             algorithmType={currentDemo.algorithmType}
             stepData={currentStepData}
@@ -268,7 +262,7 @@ const VisualizerShowcase = () => {
             chartType="line"
             metrics={['time', 'steps', 'comparisons']}
           />
-          
+
           {currentStepData?.message && (
             <div className="mt-4 bg-gray-700/50 rounded-lg p-3">
               <p className="text-white text-sm">{currentStepData.message}</p>

@@ -11,8 +11,7 @@ const LinearSearchVisualizer = ({
         failed = [],
         targetValue,
         targetIndex,
-        found,
-        message
+        found
     } = stepData || {};
 
     const pointerIndex = active.length > 0 ? active[0] : -1;

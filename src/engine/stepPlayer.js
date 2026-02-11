@@ -5,7 +5,7 @@ export const useStepPlayer = (steps, speed = 1000) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const intervalRef = useRef(null);
   const stepsRef = useRef(steps);
-  
+
   // Update steps ref when steps change
   useEffect(() => {
     stepsRef.current = steps;
@@ -28,27 +28,36 @@ export const useStepPlayer = (steps, speed = 1000) => {
   }, [isPlaying, currentStep, speed]);
 
   const play = useCallback(() => {
-    if (currentStep >= stepsRef.current.length - 1) {
-      setCurrentStep(0);
-    }
+    setCurrentStep(prev => {
+      if (prev >= stepsRef.current.length - 1) {
+        return 0;
+      }
+      return prev;
+    });
     setIsPlaying(true);
-  }, [currentStep]);
+  }, []);
 
   const pause = useCallback(() => {
     setIsPlaying(false);
   }, []);
 
   const stepForward = useCallback(() => {
-    if (currentStep < stepsRef.current.length - 1) {
-      setCurrentStep(prev => prev + 1);
-    }
-  }, [currentStep]);
+    setCurrentStep(prev => {
+      if (prev < stepsRef.current.length - 1) {
+        return prev + 1;
+      }
+      return prev;
+    });
+  }, []);
 
   const stepBackward = useCallback(() => {
-    if (currentStep > 0) {
-      setCurrentStep(prev => prev - 1);
-    }
-  }, [currentStep]);
+    setCurrentStep(prev => {
+      if (prev > 0) {
+        return prev - 1;
+      }
+      return prev;
+    });
+  }, []);
 
   const reset = useCallback(() => {
     setCurrentStep(0);

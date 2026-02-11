@@ -33,7 +33,7 @@ const LightBulbIcon = () => (
   </svg>
 );
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+const Sidebar = ({ setSidebarOpen }) => {
   const location = useLocation();
 
   // Map paths to active tab IDs for styling

@@ -20,27 +20,7 @@ const HeapPage = () => {
 
     const timerRef = useRef(null);
 
-    useEffect(() => {
-        // Initialize random heap
-        handleRandom();
-    }, []);
-
-    useEffect(() => {
-        if (isPlaying) {
-            timerRef.current = setTimeout(() => {
-                if (currentStep < animationSteps.length) {
-                    executeStep(animationSteps[currentStep]);
-                    setCurrentStep(prev => prev + 1);
-                } else {
-                    setIsPlaying(false);
-                    setMessage('Finished');
-                    resetHighlights();
-                }
-            }, speed);
-        }
-        return () => clearTimeout(timerRef.current);
-    }, [isPlaying, currentStep, animationSteps, speed]);
-
+    // Function declarations (must be before useEffect hooks that reference them)
     const executeStep = (step) => {
         setMessage(step.label || 'Processing...');
 
@@ -59,13 +39,6 @@ const HeapPage = () => {
                 break;
             case 'swap':
                 setActiveIndices(step.indices);
-                // We actually perform the swap in the visual state array to animate it
-                // BUT, since we updated the heap strictly at the end of operations usually, 
-                // we might want to manually swap the display array here for the visual effect if the array is static.
-                // However, standard React pattern: State drives render. 
-                // If we want smooth swap animation, we need to update the `heapArray` state to reflect the swap.
-                // Let's allow the visualizer to handle positions, but we need to swap the data in `heapArray`.
-
                 setHeapArray(prev => {
                     const newArr = [...prev];
                     const [i, j] = step.indices;
@@ -97,6 +70,29 @@ const HeapPage = () => {
         setSortedIndices([]);
         setMessage('Random Heap Created');
     };
+
+    useEffect(() => {
+        // Initialize random heap
+        handleRandom();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (isPlaying) {
+            timerRef.current = setTimeout(() => {
+                if (currentStep < animationSteps.length) {
+                    executeStep(animationSteps[currentStep]);
+                    setCurrentStep(prev => prev + 1);
+                } else {
+                    setIsPlaying(false);
+                    setMessage('Finished');
+                    resetHighlights();
+                }
+            }, speed);
+        }
+        return () => clearTimeout(timerRef.current);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isPlaying, currentStep, animationSteps, speed]);
 
     const handleInsert = () => {
         if (!inputValue) return;
@@ -138,7 +134,7 @@ const HeapPage = () => {
     const handleExtractMax = () => {
         // Initial State: Current Heap (already set)
         // We need to mimic the "replace root with last" step visually.
-        const { max, steps } = heapObj.extractMax();
+        const { max: _max, steps } = heapObj.extractMax();
         // Special handling: The first step usually assumes the array is intact.
         // We will let the steps drive the transformations.
         // The `extractMax` logic in `MaxHeap` does: 
