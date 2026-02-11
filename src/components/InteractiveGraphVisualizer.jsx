@@ -16,6 +16,15 @@ const InteractiveGraphVisualizer = ({
     const [editingEdge, setEditingEdge] = useState(null);
     const [weightInput, setWeightInput] = useState("");
     const [localFinalPath, setLocalFinalPath] = useState(null);
+    const [copyStatus, setCopyStatus] = useState(false);
+
+    // Reset copy status after 2 seconds
+    useEffect(() => {
+        if (copyStatus) {
+            const timer = setTimeout(() => setCopyStatus(false), 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [copyStatus]);
 
     // Reset local path when steps change
     useEffect(() => {
@@ -486,6 +495,30 @@ const InteractiveGraphVisualizer = ({
                         <p><span className="text-white/80">Right Click Node</span> to delete •</p>
                         <p><span className="text-white/80">Drag to Space</span> to move a node •</p>
                     </div>
+                    <button
+                        onClick={() => {
+                            try {
+                                const graphData = JSON.stringify(nodes);
+                                const encoded = btoa(unescape(encodeURIComponent(graphData)));
+                                const url = new URL(window.location.href);
+                                url.searchParams.set('graph', encoded);
+                                navigator.clipboard.writeText(url.toString());
+                                setCopyStatus(true);
+                            } catch (e) {
+                                console.error("Failed to share graph:", e);
+                            }
+                        }}
+                        className={`px-5 py-2 ${copyStatus ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border-blue-500/20'} text-xs font-medium rounded-xl border transition-all pointer-events-auto backdrop-blur-sm shadow-lg active:scale-95 flex items-center gap-2`}
+                    >
+                        {copyStatus ? (
+                            <>
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                                Link Copied!
+                            </>
+                        ) : "Share Village link"}
+                    </button>
                     <button
                         onClick={() => { if (onGraphChange) onGraphChange([]); }}
                         className="px-5 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium rounded-xl border border-red-500/20 transition-all pointer-events-auto backdrop-blur-sm shadow-lg active:scale-95"

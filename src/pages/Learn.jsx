@@ -119,6 +119,26 @@ const LoadingPlaceholder = () => (
 const Learn = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
 
   const [inputArray, setInputArray] = useState([64, 34, 25, 12, 22, 11, 90, 45, 33, 77]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const encodedGraph = params.get('graph');
+    if (encodedGraph) {
+      try {
+        const decoded = decodeURIComponent(escape(atob(encodedGraph)));
+        const parsedNodes = JSON.parse(decoded);
+        if (Array.isArray(parsedNodes)) {
+          setInputArray(parsedNodes);
+          // If a graph is shared, switch to Dijkstra to show it immediately if not already on a graph algo
+          if (!['bfs', 'dfs', 'dijkstra', 'prim', 'bellmanford'].includes(selectedAlgorithm)) {
+            setSelectedAlgorithm('dijkstra');
+          }
+        }
+      } catch (e) {
+        console.error("Failed to decode shared graph:", e);
+      }
+    }
+  }, []); // Run once on mount
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const [customInput, setCustomInput] = useState('64, 34, 25, 12, 22, 11, 90, 45, 33, 77');
   const [searchTarget, setSearchTarget] = useState('45');
