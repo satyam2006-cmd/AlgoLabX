@@ -485,48 +485,54 @@ const InteractiveGraphVisualizer = ({
                 ref={containerRef}
                 className="w-full h-full touch-none"
             />
-            {!currentStep && (
-                <div className="absolute top-6 right-6 flex flex-col items-end gap-3 pointer-events-none select-none">
-                    <div className="px-4 py-3 bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 text-[11px] text-white/50 shadow-2xl space-y-1 text-right">
-                        <p className="font-bold text-white/90 mb-1 tracking-wider uppercase">Interactive Graph Builder</p>
-                        <p><span className="text-white/80">Click Canvas</span> to place a node •</p>
-                        <p><span className="text-white/80">Drag Node to Node</span> to create an edge •</p>
-                        <p><span className="text-white/80">Click Edge</span> to edit weight/cost •</p>
-                        <p><span className="text-white/80">Right Click Node</span> to delete •</p>
-                        <p><span className="text-white/80">Drag to Space</span> to move a node •</p>
-                    </div>
-                    <button
-                        onClick={() => {
-                            try {
-                                const graphData = JSON.stringify(nodes);
-                                const encoded = btoa(unescape(encodeURIComponent(graphData)));
-                                const url = new URL(window.location.href);
-                                url.searchParams.set('graph', encoded);
-                                navigator.clipboard.writeText(url.toString());
-                                setCopyStatus(true);
-                            } catch (e) {
-                                console.error("Failed to share graph:", e);
-                            }
-                        }}
-                        className={`px-5 py-2 ${copyStatus ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border-blue-500/20'} text-xs font-medium rounded-xl border transition-all pointer-events-auto backdrop-blur-sm shadow-lg active:scale-95 flex items-center gap-2`}
-                    >
-                        {copyStatus ? (
-                            <>
-                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                </svg>
-                                Link Copied!
-                            </>
-                        ) : "Share Village link"}
-                    </button>
+            <div className="absolute top-6 right-6 flex flex-col items-end gap-3 pointer-events-none select-none">
+                {!currentStep && (
+                    <>
+                        <div className="px-4 py-3 bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 text-[11px] text-white/50 shadow-2xl space-y-1 text-right">
+                            <p className="font-bold text-white/90 mb-1 tracking-wider uppercase">Interactive Graph Builder</p>
+                            <p><span className="text-white/80">Click Canvas</span> to place a node •</p>
+                            <p><span className="text-white/80">Drag Node to Node</span> to create an edge •</p>
+                            <p><span className="text-white/80">Click Edge</span> to edit weight/cost •</p>
+                            <p><span className="text-white/80">Right Click Node</span> to delete •</p>
+                            <p><span className="text-white/80">Drag to Space</span> to move a node •</p>
+                        </div>
+                    </>
+                )}
+
+                <button
+                    onClick={() => {
+                        try {
+                            const graphData = JSON.stringify(nodes);
+                            const encoded = btoa(unescape(encodeURIComponent(graphData)));
+                            const url = new URL(window.location.href);
+                            url.searchParams.set('graph', encoded);
+                            navigator.clipboard.writeText(url.toString());
+                            setCopyStatus(true);
+                        } catch (e) {
+                            console.error("Failed to share graph:", e);
+                        }
+                    }}
+                    className={`px-5 py-2 ${copyStatus ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border-blue-500/20'} text-xs font-medium rounded-xl border transition-all pointer-events-auto backdrop-blur-sm shadow-lg active:scale-95 flex items-center gap-2`}
+                >
+                    {copyStatus ? (
+                        <>
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Link Copied!
+                        </>
+                    ) : "Share Village link"}
+                </button>
+
+                {!currentStep && (
                     <button
                         onClick={() => { if (onGraphChange) onGraphChange([]); }}
                         className="px-5 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium rounded-xl border border-red-500/20 transition-all pointer-events-auto backdrop-blur-sm shadow-lg active:scale-95"
                     >
                         Reset Environment
                     </button>
-                </div>
-            )}
+                )}
+            </div>
 
             {editingEdge && (
                 <div
