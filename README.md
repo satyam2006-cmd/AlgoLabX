@@ -54,7 +54,7 @@ A comprehensive web application for visualizing and learning algorithms through 
 
 ## 📁 Project Structure
 
-```
+```text
 src/
 ├── algorithms/           # Algorithm implementations
 │   ├── comprehensiveAlgorithms.js  # Central algorithm registry
